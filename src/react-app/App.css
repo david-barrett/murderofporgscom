@@ -1,45 +1,80 @@
 #root {
-	max-width: 1280px;
-	margin: 0 auto;
-	padding: 2rem;
+	min-height: 100vh;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
 	text-align: center;
 }
 
-.logo {
-	height: 6em;
-	padding: 1.5em;
+.app-layout {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+	width: 100%;
+}
+
+.site-header {
+	background: #000;
+	width: 100%;
+	padding: 0.875rem 1.25rem;
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	box-sizing: border-box;
+}
+
+.site-header__logo {
+	height: 6.5rem;
+	width: auto;
+	display: block;
+	object-fit: contain;
 	will-change: filter;
 	transition: filter 300ms;
 }
-.logo:hover {
-	filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-	filter: drop-shadow(0 0 2em #61dafbaa);
-}
-.logo.cloudflare:hover {
-	filter: drop-shadow(0 0 2em #f6821faa);
+
+.site-header__logo:hover {
+	filter: brightness(1.08) drop-shadow(0 0 0.75rem rgba(255, 255, 255, 0.25));
 }
 
-@keyframes logo-spin {
-	from {
-		transform: rotate(0deg);
-	}
-	to {
-		transform: rotate(360deg);
-	}
+.main-content {
+	flex: 1;
+	max-width: 1280px;
+	width: 100%;
+	margin: 0 auto;
+	padding: 2rem;
+	box-sizing: border-box;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-	a:nth-of-type(2) .logo {
-		animation: logo-spin infinite 20s linear;
-	}
-}
-
-.card {
+.links-card {
 	padding: 2em;
+	margin-top: 2.5rem;
+	max-width: 28rem;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: left;
+	border-radius: 12px;
+	border: 1px solid rgba(255, 255, 255, 0.12);
+	background: rgba(255, 255, 255, 0.05);
 }
 
-.read-the-docs {
-	color: #888;
+.links-card h3 {
+	margin-top: 0;
+}
+
+.links-card ul {
+	margin-bottom: 0;
+	padding-left: 1.25rem;
+}
+
+.links-card li + li {
+	margin-top: 0.5rem;
+}
+
+@media (prefers-color-scheme: light) {
+	.links-card {
+		border-color: rgba(0, 0, 0, 0.12);
+		background: rgba(0, 0, 0, 0.04);
+	}
 }
