@@ -14,7 +14,16 @@ function App() {
 			<main className="main-content">
 				<h1>Murder of Porgs</h1>
 				<h2>A SWU Team</h2>
-				<section className="links-card" aria-labelledby="links-heading">
+				<section className="content-card definition-card">
+					<p>
+						A &quot;murder of porgs&quot; is the specific collective noun used to
+						describe a group of porgs.
+					</p>
+				</section>
+				<section
+					className="content-card links-card"
+					aria-labelledby="links-heading"
+				>
 					<h3 id="links-heading">Links</h3>
 					<ul>
 						<li>
