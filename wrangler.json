@@ -10,6 +10,11 @@
 	"compatibility_flags": [
 		"nodejs_compat"
 	],
+	"workers_dev": false,
+  	"routes": [
+    	{ "pattern": "murderofporgs.com", "custom_domain": true },
+    	{ "pattern": "www.murderofporgs.com", "custom_domain": true }
+  	],
 	"observability": {
 		"enabled": true
 	},
