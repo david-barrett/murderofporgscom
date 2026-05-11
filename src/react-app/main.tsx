@@ -1,6 +1,6 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import favicon from "./assets/mop_logo.jpeg";
+import favicon from "./assets/mop_favicon.jpeg";
 import "./index.css";
 import App from "./App.tsx";
 
