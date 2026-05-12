@@ -11,4 +11,4 @@ tags:
 
 ![Logo](./assets/mop_alt_logo.jpeg)
 
-We are team of players from our local store [Leisure Games](https://leisuregames.com)
+We are a team of casual players from our local store [Leisure Games](https://leisuregames.com).
