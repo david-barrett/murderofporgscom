@@ -126,6 +126,7 @@
 	flex: 1;
 	max-width: 1280px;
 	width: 100%;
+	min-width: 0;
 	margin: 0 auto;
 	padding: calc(var(--site-header-height) + 2rem) 2rem 2rem;
 	box-sizing: border-box;
@@ -314,6 +315,8 @@ a.tag-pill--link:focus-visible {
 	margin-right: auto;
 	padding: 1.75em 2em;
 	text-align: left;
+	min-width: 0;
+	box-sizing: border-box;
 }
 
 .blog-post__back {
@@ -360,6 +363,25 @@ a.tag-pill--link:focus-visible {
 	font-size: 1rem;
 	line-height: 1.6;
 	color: rgba(255, 255, 255, 0.9);
+	min-width: 0;
+}
+
+.blog-post__body :where(img, video) {
+	max-width: 100%;
+	width: auto;
+	height: auto;
+	display: block;
+	margin: 0.75rem auto 1.25rem;
+	border-radius: 8px;
+}
+
+.blog-post__body :where(figure) {
+	margin: 0.75rem 0 1.25rem;
+	max-width: 100%;
+}
+
+.blog-post__body :where(figure img) {
+	margin: 0 auto;
 }
 
 .blog-post__body :where(p) {
