@@ -3,7 +3,11 @@ import { posts } from "#velite";
 import { AllTagsNav } from "../components/AllTagsNav";
 import { PageViewMetrics } from "../components/PageViewMetrics";
 import { PostTagList } from "../components/PostTagList";
+import { Seo } from "../components/Seo";
 import { getAuthorBySlug } from "../lib/authors";
+
+const BLOG_INDEX_DESCRIPTION =
+	"Murder of Porgs team blog: Star Wars: Unlimited tournament reports, events, and updates.";
 
 function publishedPosts() {
 	return posts
@@ -20,6 +24,7 @@ export function BlogIndexPage() {
 	if (list.length === 0) {
 		return (
 			<>
+				<Seo title="Blog" description={BLOG_INDEX_DESCRIPTION} path="/blog" />
 				<h2 className="page-title">Blog</h2>
 				<AllTagsNav />
 				<p className="content-card page-card">No posts yet.</p>
@@ -30,6 +35,7 @@ export function BlogIndexPage() {
 
 	return (
 		<>
+			<Seo title="Blog" description={BLOG_INDEX_DESCRIPTION} path="/blog" />
 			<h2 className="page-title">Blog</h2>
 			<AllTagsNav />
 			<ul className="blog-list content-card page-card">

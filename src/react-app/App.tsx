@@ -5,6 +5,7 @@ import { BlogPostPage } from "./pages/BlogPostPage";
 import { BlogTagPage } from "./pages/BlogTagPage";
 import { HomePage } from "./pages/HomePage";
 import { LinksPage } from "./pages/LinksPage";
+import { NotFoundPage } from "./pages/NotFoundPage";
 import "./App.css";
 
 export default function App() {
@@ -17,6 +18,7 @@ export default function App() {
 					<Route path="blog" element={<BlogIndexPage />} />
 					<Route path="blog/tag/:tagSlug" element={<BlogTagPage />} />
 					<Route path="blog/:slug" element={<BlogPostPage />} />
+					<Route path="*" element={<NotFoundPage />} />
 				</Route>
 			</Routes>
 		</BrowserRouter>

@@ -1,11 +1,18 @@
 import { PageViewMetrics } from "../components/PageViewMetrics";
+import { Seo } from "../components/Seo";
 
 export function LinksPage() {
 	return (
-		<section
-			className="content-card links-card page-card"
-			aria-labelledby="links-card-heading"
-		>
+		<>
+			<Seo
+				title="Links"
+				description="Discord, Holocron Rating Index, Leisure Games, and other links for Murder of Porgs, a Star Wars: Unlimited team."
+				path="/links"
+			/>
+			<section
+				className="content-card links-card page-card"
+				aria-labelledby="links-card-heading"
+			>
 			<h3 id="links-card-heading" className="links-card__title">
 				Links
 			</h3>
@@ -40,6 +47,7 @@ export function LinksPage() {
 				</li>
 			</ul>
 			<PageViewMetrics route="links" />
-		</section>
+			</section>
+		</>
 	);
 }

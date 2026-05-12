@@ -2,8 +2,10 @@ import { Link, Navigate, useParams } from "react-router-dom";
 import { posts } from "#velite";
 import { AllTagsNav } from "../components/AllTagsNav";
 import { PostTagList } from "../components/PostTagList";
+import { Seo } from "../components/Seo";
 import { getAuthorBySlug } from "../lib/authors";
 import { getTagBySlug } from "../lib/tags";
+import { SITE_NAME } from "../lib/site";
 
 function publishedPosts() {
 	return posts.filter((p) => !p.draft);
@@ -20,6 +22,12 @@ export function BlogTagPage() {
 	if (!tag) {
 		return (
 			<>
+				<Seo
+					title="Unknown tag"
+					description={`No tag matches "${tagSlug}". ${SITE_NAME} blog.`}
+					path={`/blog/tag/${tagSlug}`}
+					noIndex
+				/>
 				<h2 className="page-title">Unknown tag</h2>
 				<p>
 					There is no tag <code>{tagSlug}</code>.{" "}
@@ -38,6 +46,11 @@ export function BlogTagPage() {
 
 	return (
 		<>
+			<Seo
+				title={`Posts tagged ${tag.label}`}
+				description={`Blog posts tagged "${tag.label}" on the ${SITE_NAME} team site.`}
+				path={`/blog/tag/${tagSlug}`}
+			/>
 			<Link to="/blog" className="blog-post__back">
 				← All posts
 			</Link>

@@ -62,6 +62,19 @@ npm run dev
 
 Your application will be available at [http://localhost:5173](http://localhost:5173). The Cloudflare Vite plugin runs the Worker alongside the client, so `/api/metrics/...` hits **local** D1, not production.
 
+### SEO and sitemap
+
+Route-level **title**, **meta description**, **canonical**, and **Open Graph / Twitter** tags are applied in the client with `react-helmet-async`. Set **`VITE_SITE_URL`** to your public origin (for example `https://murderofporgs.com`) in `.env.production` or the Cloudflare build environment so canonicals and social previews stay correct on preview URLs.
+
+Every **`npm run build`** runs **`scripts/generate-sitemap.mjs`**, which refreshes **`public/sitemap.xml`**, **`public/robots.txt`**, and **`public/og-default.jpeg`** (used when a post has no lead image for `og:image`). The sitemap script defaults the site base to `https://murderofporgs.com` unless **`VITE_SITE_URL`** is set in the environment for that step.
+
+**Checklist (after you are happy with the live domain):**
+
+- **Should — `VITE_SITE_URL` in Cloudflare build:** Set to your canonical origin (e.g. `https://murderofporgs.com`) so preview deployments do not emit canonicals and Open Graph URLs pointing at `*.pages.dev`. On the real apex domain alone, runtime Helmet already uses `window.location.origin`, so production is fine without it; previews benefit most.
+- **Should — Search Console:** Add the property and submit **`https://murderofporgs.com/sitemap.xml`** (or your canonical host + `/sitemap.xml`). Skipping this does not break the site; discovery may be slower.
+- **Could — `www` vs apex:** Pick one public URL, redirect the other in Cloudflare, and set **`VITE_SITE_URL`** (and sitemap generation env) to that same host so links, sitemap, and `robots.txt` stay consistent.
+- **Could — crawlers without JavaScript:** Per-page meta comes from Helmet in the browser; the shipped **`index.html`** only carries a default description. Bots that do not run JS see that default, not post-specific titles. Improving that would mean prerendering or HTML per route, not a small config tweak.
+
 ### Metrics and local D1
 
 Blog posts and a few fixed routes record views in the `post_metrics` table. Reserved route slugs (for `/`, `/links`, and `/blog`) are `route-home`, `route-links`, and `route-blog`.

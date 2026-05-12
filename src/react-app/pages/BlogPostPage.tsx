@@ -1,8 +1,13 @@
 import { Link, Navigate, useParams } from "react-router-dom";
 import { posts } from "#velite";
+import { PostAdjacentNav } from "../components/PostAdjacentNav";
 import { PostMetrics } from "../components/PostMetrics";
 import { PostTagList } from "../components/PostTagList";
+import { Seo } from "../components/Seo";
 import { getAuthorBySlug } from "../lib/authors";
+import { adjacentPublishedPosts } from "../lib/postNav";
+import { DEFAULT_DESCRIPTION, SITE_NAME } from "../lib/site";
+import { firstImageUrlFromHtml } from "../lib/og";
 
 function publishedPosts() {
 	return posts.filter((p) => !p.draft);
@@ -19,6 +24,12 @@ export function BlogPostPage() {
 	if (!post) {
 		return (
 			<>
+				<Seo
+					title="Post not found"
+					description={`No blog post matches this URL on ${SITE_NAME}.`}
+					path={`/blog/${slug}`}
+					noIndex
+				/>
 				<h2 className="page-title">Not found</h2>
 				<p>
 					No post matches that address.{" "}
@@ -29,37 +40,50 @@ export function BlogPostPage() {
 	}
 
 	const author = getAuthorBySlug(post.author);
+	const description = post.description?.trim() || DEFAULT_DESCRIPTION;
+	const ogImage = firstImageUrlFromHtml(post.content);
+	const { older, newer } = adjacentPublishedPosts(post.slug);
 
 	return (
-		<article className="blog-post page-card">
-			<Link to="/blog" className="blog-post__back">
-				← Blog
-			</Link>
-			<h2 className="blog-post__title">{post.title}</h2>
-			<p className="blog-post__meta">
-				<time className="blog-post__date" dateTime={post.date}>
-					{new Date(post.date).toLocaleDateString(undefined, {
-						year: "numeric",
-						month: "long",
-						day: "numeric",
-					})}
-				</time>
-				{author ? (
-					<>
-						{" · "}
-						<span className="blog-post__author">By {author.name}</span>
-					</>
-				) : null}
-			</p>
-			<PostTagList tagSlugs={post.tags} />
-			{post.description ? (
-				<p className="blog-post__lede">{post.description}</p>
-			) : null}
-			<div
-				className="blog-post__body"
-				dangerouslySetInnerHTML={{ __html: post.content }}
+		<>
+			<Seo
+				title={post.title}
+				description={description}
+				path={`/blog/${post.slug}`}
+				ogType="article"
+				ogImage={ogImage}
 			/>
-			<PostMetrics slug={post.slug} />
-		</article>
+			<article className="blog-post page-card">
+				<Link to="/blog" className="blog-post__back">
+					← Blog
+				</Link>
+				<h2 className="blog-post__title">{post.title}</h2>
+				<p className="blog-post__meta">
+					<time className="blog-post__date" dateTime={post.date}>
+						{new Date(post.date).toLocaleDateString(undefined, {
+							year: "numeric",
+							month: "long",
+							day: "numeric",
+						})}
+					</time>
+					{author ? (
+						<>
+							{" · "}
+							<span className="blog-post__author">By {author.name}</span>
+						</>
+					) : null}
+				</p>
+				<PostTagList tagSlugs={post.tags} />
+				{post.description ? (
+					<p className="blog-post__lede">{post.description}</p>
+				) : null}
+				<div
+					className="blog-post__body"
+					dangerouslySetInnerHTML={{ __html: post.content }}
+				/>
+				<PostAdjacentNav older={older} newer={newer} />
+				<PostMetrics slug={post.slug} />
+			</article>
+		</>
 	);
 }

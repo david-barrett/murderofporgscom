@@ -15,6 +15,7 @@
     "hono": "4.11.1",
     "react": "19.2.1",
     "react-dom": "19.2.1",
+    "react-helmet-async": "^3.0.0",
     "react-router-dom": "^7.15.0"
   },
   "devDependencies": {
@@ -36,9 +37,9 @@
   },
   "private": true,
   "scripts": {
-    "build": "velite build --strict && tsc -b && vite build",
+    "build": "velite build --strict && node scripts/generate-sitemap.mjs && tsc -b && vite build",
     "cf-typegen": "wrangler types",
-    "check": "velite build --strict && tsc && vite build && wrangler deploy --dry-run",
+    "check": "velite build --strict && node scripts/generate-sitemap.mjs && tsc && vite build && wrangler deploy --dry-run",
     "db:migrate:local": "wrangler d1 migrations apply murderofporgs-metrics --local",
     "db:migrate:remote": "wrangler d1 migrations apply murderofporgs-metrics --remote",
     "deploy": "wrangler deploy",
