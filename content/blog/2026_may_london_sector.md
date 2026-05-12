@@ -15,3 +15,8 @@ tags:
 
 ![Fifteth](./assets/2026-05-10_fiftieth.jpeg)
 *Porg with 50th Place with Top 64 Uncut Sheet and Tobias Beckett Showcase*
+
+### Decks
+* Porg - Tobias Beckett
+* David - [Yularen Red](https://swudb.com/deck/QcLNTjuzF)
+* Vicky - Hera Splash
