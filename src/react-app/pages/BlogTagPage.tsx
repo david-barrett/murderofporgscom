@@ -1,5 +1,6 @@
 import { Link, Navigate, useParams } from "react-router-dom";
 import { posts } from "#velite";
+import { AllTagsNav } from "../components/AllTagsNav";
 import { PostTagList } from "../components/PostTagList";
 import { getAuthorBySlug } from "../lib/authors";
 import { getTagBySlug } from "../lib/tags";
@@ -43,6 +44,7 @@ export function BlogTagPage() {
 			<h2 className="page-title">
 				Posts tagged <span className="page-title__tag">{tag.label}</span>
 			</h2>
+			<AllTagsNav activeTagSlug={tagSlug} />
 			{list.length === 0 ? (
 				<p className="content-card page-card">No posts use this tag yet.</p>
 			) : (

@@ -297,6 +297,16 @@ a.tag-pill--link:focus-visible {
 	color: #fff;
 }
 
+.tag-pill--all-posts {
+	border-style: dashed;
+	border-color: rgba(255, 255, 255, 0.35);
+	background: rgba(255, 255, 255, 0.06);
+}
+
+a.tag-pill--all-posts:hover {
+	border-style: solid;
+}
+
 .page-title__tag {
 	color: #646cff;
 }
@@ -436,6 +446,11 @@ a.tag-pill--link:focus-visible {
 		border-color: rgba(80, 90, 200, 0.35);
 		background: rgba(100, 108, 255, 0.12);
 		color: #213547;
+	}
+
+	.tag-pill--all-posts {
+		border-color: rgba(0, 0, 0, 0.22);
+		background: rgba(0, 0, 0, 0.04);
 	}
 
 	a.tag-pill--link:hover {
