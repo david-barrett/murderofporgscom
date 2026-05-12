@@ -6,8 +6,9 @@ import { PostTagList } from "../components/PostTagList";
 import { Seo } from "../components/Seo";
 import { getAuthorBySlug } from "../lib/authors";
 import { adjacentPublishedPosts } from "../lib/postNav";
-import { DEFAULT_DESCRIPTION, SITE_NAME } from "../lib/site";
+import { DEFAULT_DESCRIPTION } from "../lib/site";
 import { firstImageUrlFromHtml } from "../lib/og";
+import { NotFoundPage } from "./NotFoundPage";
 
 function publishedPosts() {
 	return posts.filter((p) => !p.draft);
@@ -22,21 +23,7 @@ export function BlogPostPage() {
 	}
 
 	if (!post) {
-		return (
-			<>
-				<Seo
-					title="Post not found"
-					description={`No blog post matches this URL on ${SITE_NAME}.`}
-					path={`/blog/${slug}`}
-					noIndex
-				/>
-				<h2 className="page-title">Not found</h2>
-				<p>
-					No post matches that address.{" "}
-					<Link to="/blog">Back to blog</Link>
-				</p>
-			</>
-		);
+		return <NotFoundPage />;
 	}
 
 	const author = getAuthorBySlug(post.author);

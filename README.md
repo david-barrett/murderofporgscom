@@ -77,7 +77,7 @@ Every **`npm run build`** runs **`scripts/generate-sitemap.mjs`**, which refresh
 
 ### Metrics and local D1
 
-Blog posts and a few fixed routes record views in the `post_metrics` table. Reserved route slugs (for `/`, `/links`, and `/blog`) are `route-home`, `route-links`, and `route-blog`.
+Blog posts and a few fixed routes record views in the `post_metrics` table. Reserved route slugs (for `/`, `/links`, `/blog`, and aggregate **404** hits) are `route-home`, `route-links`, `route-blog`, and `route-not-found` (404 views are counted but not shown on the page).
 
 Inspect local rows:
 
