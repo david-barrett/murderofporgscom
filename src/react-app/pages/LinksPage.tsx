@@ -7,7 +7,17 @@ export function LinksPage() {
 			<h3 id="links-card-heading" className="links-card__title">
 				Links
 			</h3>
+			
 			<ul>
+				<li>
+					<a
+						href="https://discord.gg/A7H7eaR56"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						Discord Server
+					</a>
+				</li>
 				<li>
 					<a
 						href="https://hri.gg/teams/mop"

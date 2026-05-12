@@ -1,7 +1,7 @@
 ---
 title: May 2026 London Sector Qualifier
 slug: 2026-london-sector
-date: 2026-05-13
+date: 2026-05-12
 # description: London Sector Qualifier
 author: david
 draft: false

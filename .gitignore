@@ -193,6 +193,8 @@ dist
 
 ### Velite (generated from content/) ###
 .velite/
+# Processed / hashed images from Markdown (Velite default output.assets)
+public/static/
 
 ### Wrangler ###
 .wrangler/
