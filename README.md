@@ -85,7 +85,7 @@ Inspect local rows:
 npx wrangler d1 execute murderofporgs-metrics --local --command "SELECT slug, views, likes FROM post_metrics ORDER BY slug"
 ```
 
-The UI records at most **one view per browser tab** per slug using `sessionStorage`. To test another increment in the same tab, clear session storage for the site in devtools, or use a new private/incognito window.
+The UI records at most **one view per browser tab** per slug using `sessionStorage` (`post_view_recorded:<slug>`). **Likes** use the same pattern after a successful like (`post_like_recorded:<slug>`), and the Like control shows **Liked** and stays disabled. To test again in the same tab, clear those keys in devtools or use a new private/incognito window.
 
 For **production** schema changes, apply migrations remotely after deploy prep:
 

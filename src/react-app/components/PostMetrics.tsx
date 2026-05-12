@@ -6,9 +6,24 @@ function viewSessionKey(slug: string) {
 	return `post_view_recorded:${slug}`;
 }
 
+function likeSessionKey(slug: string) {
+	return `post_like_recorded:${slug}`;
+}
+
 export function PostMetrics({ slug }: { slug: string }) {
 	const [metrics, setMetrics] = useState<Metrics | null>(null);
 	const [likeBusy, setLikeBusy] = useState(false);
+	const [hasLiked, setHasLiked] = useState(() =>
+		typeof sessionStorage !== "undefined" &&
+			!!sessionStorage.getItem(likeSessionKey(slug)),
+	);
+
+	useEffect(() => {
+		setHasLiked(
+			typeof sessionStorage !== "undefined" &&
+				!!sessionStorage.getItem(likeSessionKey(slug)),
+		);
+	}, [slug]);
 
 	const loadMetrics = useCallback(async () => {
 		const r = await fetch(`/api/metrics/${encodeURIComponent(slug)}`);
@@ -59,18 +74,24 @@ export function PostMetrics({ slug }: { slug: string }) {
 	}, [slug, loadMetrics]);
 
 	const onLike = async () => {
+		if (hasLiked || likeBusy || metrics === null) {
+			return;
+		}
 		setLikeBusy(true);
 		try {
 			const r = await fetch(`/api/metrics/${encodeURIComponent(slug)}/like`, {
 				method: "POST",
 			});
-			if (r.ok) {
-				const data = (await r.json()) as Metrics;
-				setMetrics({
-					likes: Number(data.likes) || 0,
-					views: Number(data.views) || 0,
-				});
+			if (!r.ok) {
+				return;
 			}
+			const data = (await r.json()) as Metrics;
+			sessionStorage.setItem(likeSessionKey(slug), "1");
+			setHasLiked(true);
+			setMetrics({
+				likes: Number(data.likes) || 0,
+				views: Number(data.views) || 0,
+			});
 		} finally {
 			setLikeBusy(false);
 		}
@@ -96,10 +117,10 @@ export function PostMetrics({ slug }: { slug: string }) {
 				type="button"
 				className="post-metrics__like-btn"
 				onClick={() => void onLike()}
-				disabled={likeBusy || metrics === null}
-				aria-label="Like this post"
+				disabled={likeBusy || metrics === null || hasLiked}
+				aria-label={hasLiked ? "You liked this post" : "Like this post"}
 			>
-				{likeBusy ? "…" : "Like"}
+				{hasLiked ? "Liked" : likeBusy ? "…" : "Like"}
 			</button>
 		</div>
 	);
