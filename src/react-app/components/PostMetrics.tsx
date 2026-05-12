@@ -35,14 +35,17 @@ export function PostMetrics({ slug }: { slug: string }) {
 			if (sessionStorage.getItem(key)) {
 				return;
 			}
-			sessionStorage.setItem(key, "1");
 			const r = await fetch(`/api/metrics/${encodeURIComponent(slug)}/view`, {
 				method: "POST",
 			});
-			if (cancelled || !r.ok) {
+			if (!r.ok) {
 				return;
 			}
 			const data = (await r.json()) as Metrics;
+			sessionStorage.setItem(key, "1");
+			if (cancelled) {
+				return;
+			}
 			setMetrics({
 				likes: Number(data.likes) || 0,
 				views: Number(data.views) || 0,
