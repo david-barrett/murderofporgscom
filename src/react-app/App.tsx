@@ -1,42 +1,24 @@
-import mopLogo from "./assets/mop_logo.jpeg";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { SiteLayout } from "./layout/SiteLayout";
+import { BlogIndexPage } from "./pages/BlogIndexPage";
+import { BlogPostPage } from "./pages/BlogPostPage";
+import { BlogTagPage } from "./pages/BlogTagPage";
+import { HomePage } from "./pages/HomePage";
+import { LinksPage } from "./pages/LinksPage";
 import "./App.css";
 
-function App() {
+export default function App() {
 	return (
-		<div className="app-layout">
-			<header className="site-header">
-				<img
-					src={mopLogo}
-					className="site-header__logo"
-					alt="Murder of Porgs"
-				/>
-			</header>
-			<main className="main-content">
-				<h1>Murder of Porgs</h1>
-				<h2>A SWU Team</h2>
-				<section className="content-card definition-card">
-					<p>
-						A &quot;murder of porgs&quot; is the specific collective noun used to
-						describe a group of porgs.
-					</p>
-				</section>
-				<section
-					className="content-card links-card"
-					aria-labelledby="links-heading"
-				>
-					<h3 id="links-heading">Links</h3>
-					<ul>
-						<li>
-							<a href="https://hri.gg/teams/mop">Holocron Rating Index</a>
-						</li>
-						<li>
-							<a href="https://leisuregames.com/">Leisure Games</a>
-						</li>
-					</ul>
-				</section>
-			</main>
-		</div>
+		<BrowserRouter>
+			<Routes>
+				<Route element={<SiteLayout />}>
+					<Route index element={<HomePage />} />
+					<Route path="links" element={<LinksPage />} />
+					<Route path="blog" element={<BlogIndexPage />} />
+					<Route path="blog/tag/:tagSlug" element={<BlogTagPage />} />
+					<Route path="blog/:slug" element={<BlogPostPage />} />
+				</Route>
+			</Routes>
+		</BrowserRouter>
 	);
 }
-
-export default App;
