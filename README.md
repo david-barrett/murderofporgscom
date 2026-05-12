@@ -80,6 +80,24 @@ For **production** schema changes, apply migrations remotely after deploy prep:
 npm run db:migrate:remote
 ```
 
+### Querying production D1
+
+Use **`--remote`** instead of **`--local`** against the same database name (`murderofporgs-metrics`):
+
+```bash
+npx wrangler d1 execute murderofporgs-metrics --remote --command "SELECT slug, views, likes FROM post_metrics ORDER BY slug"
+```
+
+Ensure Wrangler is authenticated to the account that owns the database:
+
+```bash
+npx wrangler login
+```
+
+You can also open the database in the [Cloudflare dashboard](https://dash.cloudflare.com): **Workers & Pages** → **D1** → **murderofporgs-metrics**, and run queries from the console there.
+
+`--remote` targets **live** production data; use **`--local`** for development and experiments unless you intend to read or change production.
+
 ## Production
 
 Build your project for production:
