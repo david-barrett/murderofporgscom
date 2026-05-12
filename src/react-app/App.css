@@ -414,6 +414,60 @@ a.tag-pill--all-posts:hover {
 	background: rgba(255, 255, 255, 0.08);
 }
 
+.post-metrics {
+	margin-top: 2rem;
+	padding-top: 1.25rem;
+	border-top: 1px solid rgba(255, 255, 255, 0.12);
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0.75rem 1rem;
+}
+
+.post-metrics--page {
+	justify-content: flex-start;
+}
+
+.post-metrics__counts {
+	margin: 0;
+	font-size: 0.95rem;
+	color: rgba(255, 255, 255, 0.65);
+}
+
+.post-metrics__loading {
+	color: rgba(255, 255, 255, 0.45);
+}
+
+.post-metrics__sep {
+	color: rgba(255, 255, 255, 0.35);
+}
+
+.post-metrics__like-btn {
+	border-radius: 8px;
+	border: 1px solid rgba(255, 255, 255, 0.2);
+	padding: 0.45rem 1rem;
+	font-size: 0.95rem;
+	font-weight: 600;
+	font-family: inherit;
+	cursor: pointer;
+	background: rgba(100, 108, 255, 0.2);
+	color: #fff;
+	transition:
+		background 0.15s ease,
+		border-color 0.15s ease;
+}
+
+.post-metrics__like-btn:hover:not(:disabled) {
+	background: rgba(100, 108, 255, 0.35);
+	border-color: rgba(100, 108, 255, 0.55);
+}
+
+.post-metrics__like-btn:disabled {
+	opacity: 0.55;
+	cursor: not-allowed;
+}
+
 @media (prefers-color-scheme: light) {
 	.content-card {
 		border-color: rgba(0, 0, 0, 0.12);
@@ -479,5 +533,31 @@ a.tag-pill--all-posts:hover {
 
 	.blog-post__body :where(code) {
 		background: rgba(0, 0, 0, 0.06);
+	}
+
+	.post-metrics {
+		border-top-color: rgba(0, 0, 0, 0.1);
+	}
+
+	.post-metrics__counts {
+		color: rgba(0, 0, 0, 0.6);
+	}
+
+	.post-metrics__loading {
+		color: rgba(0, 0, 0, 0.4);
+	}
+
+	.post-metrics__sep {
+		color: rgba(0, 0, 0, 0.3);
+	}
+
+	.post-metrics__like-btn {
+		border-color: rgba(0, 0, 0, 0.15);
+		background: rgba(100, 108, 255, 0.15);
+		color: #213547;
+	}
+
+	.post-metrics__like-btn:hover:not(:disabled) {
+		background: rgba(100, 108, 255, 0.28);
 	}
 }

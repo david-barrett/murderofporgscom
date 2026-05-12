@@ -1,5 +1,6 @@
 import { Link, Navigate, useParams } from "react-router-dom";
 import { posts } from "#velite";
+import { PostMetrics } from "../components/PostMetrics";
 import { PostTagList } from "../components/PostTagList";
 import { getAuthorBySlug } from "../lib/authors";
 
@@ -58,6 +59,7 @@ export function BlogPostPage() {
 				className="blog-post__body"
 				dangerouslySetInnerHTML={{ __html: post.content }}
 			/>
+			<PostMetrics slug={post.slug} />
 		</article>
 	);
 }

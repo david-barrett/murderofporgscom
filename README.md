@@ -48,13 +48,37 @@ Install dependencies:
 npm install
 ```
 
+Apply D1 migrations to the **local** database (do this once, and again whenever you add a migration under `migrations/`):
+
+```bash
+npm run db:migrate:local
+```
+
 Start the development server with:
 
 ```bash
 npm run dev
 ```
 
-Your application will be available at [http://localhost:5173](http://localhost:5173).
+Your application will be available at [http://localhost:5173](http://localhost:5173). The Cloudflare Vite plugin runs the Worker alongside the client, so `/api/metrics/...` hits **local** D1, not production.
+
+### Metrics and local D1
+
+Blog posts and a few fixed routes record views in the `post_metrics` table. Reserved route slugs (for `/`, `/links`, and `/blog`) are `route-home`, `route-links`, and `route-blog`.
+
+Inspect local rows:
+
+```bash
+npx wrangler d1 execute murderofporgs-metrics --local --command "SELECT slug, views, likes FROM post_metrics ORDER BY slug"
+```
+
+The UI records at most **one view per browser tab** per slug using `sessionStorage`. To test another increment in the same tab, clear session storage for the site in devtools, or use a new private/incognito window.
+
+For **production** schema changes, apply migrations remotely after deploy prep:
+
+```bash
+npm run db:migrate:remote
+```
 
 ## Production
 

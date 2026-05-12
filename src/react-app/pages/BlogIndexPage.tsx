@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { posts } from "#velite";
 import { AllTagsNav } from "../components/AllTagsNav";
+import { PageViewMetrics } from "../components/PageViewMetrics";
 import { PostTagList } from "../components/PostTagList";
 import { getAuthorBySlug } from "../lib/authors";
 
@@ -22,6 +23,7 @@ export function BlogIndexPage() {
 				<h2 className="page-title">Blog</h2>
 				<AllTagsNav />
 				<p className="content-card page-card">No posts yet.</p>
+				<PageViewMetrics route="blog" />
 			</>
 		);
 	}
@@ -59,6 +61,7 @@ export function BlogIndexPage() {
 					);
 				})}
 			</ul>
+			<PageViewMetrics route="blog" />
 		</>
 	);
 }

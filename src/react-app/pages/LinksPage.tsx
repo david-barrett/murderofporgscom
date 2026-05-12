@@ -1,3 +1,5 @@
+import { PageViewMetrics } from "../components/PageViewMetrics";
+
 export function LinksPage() {
 	return (
 		<section
@@ -37,6 +39,7 @@ export function LinksPage() {
 					</a>
 				</li>
 			</ul>
+			<PageViewMetrics route="links" />
 		</section>
 	);
 }

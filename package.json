@@ -39,6 +39,8 @@
     "build": "velite build --strict && tsc -b && vite build",
     "cf-typegen": "wrangler types",
     "check": "velite build --strict && tsc && vite build && wrangler deploy --dry-run",
+    "db:migrate:local": "wrangler d1 migrations apply murderofporgs-metrics --local",
+    "db:migrate:remote": "wrangler d1 migrations apply murderofporgs-metrics --remote",
     "deploy": "wrangler deploy",
     "dev": "vite",
     "lint": "eslint .",

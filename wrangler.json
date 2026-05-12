@@ -11,10 +11,16 @@
 		"nodejs_compat"
 	],
 	"workers_dev": false,
-  	"routes": [
-    	{ "pattern": "murderofporgs.com", "custom_domain": true },
-    	{ "pattern": "www.murderofporgs.com", "custom_domain": true }
-  	],
+	"routes": [
+		{
+			"pattern": "murderofporgs.com",
+			"custom_domain": true
+		},
+		{
+			"pattern": "www.murderofporgs.com",
+			"custom_domain": true
+		}
+	],
 	"observability": {
 		"enabled": true
 	},
@@ -22,7 +28,14 @@
 	"assets": {
 		"directory": "./dist/client",
 		"not_found_handling": "single-page-application"
-	}
+	},
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "murderofporgs-metrics",
+			"database_id": "55006d00-a7ca-41e4-b3b7-f62a6c2c82b5"
+		}
+	]
 	/**
 	 * Smart Placement
 	 * https://developers.cloudflare.com/workers/configuration/smart-placement/#smart-placement

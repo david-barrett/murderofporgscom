@@ -14,7 +14,7 @@ tags:
 *Placements*
 
 ### Decks
-* Ediz - ![Yularen Red](https://swudb.com/deck/vpSFVPcNf) - 1st 
+* Ediz - [Yularen Red](https://swudb.com/deck/vpSFVPcNf) - 1st 
 * Porg - Tobias Beckett - 2nd
 * Shane - Boba Lake - 4th
 * Paul - Luke - 5th
