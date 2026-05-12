@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { SHOW_PUBLIC_VIEW_COUNTS } from "../lib/site";
 
 type Metrics = { likes: number; views: number };
 
@@ -104,11 +105,15 @@ export function PostMetrics({ slug }: { slug: string }) {
 					<span className="post-metrics__loading">Loading stats…</span>
 				) : (
 					<>
-						<span>{metrics.views} views</span>
-						<span className="post-metrics__sep" aria-hidden="true">
-							{" "}
-							·{" "}
-						</span>
+						{SHOW_PUBLIC_VIEW_COUNTS ? (
+							<>
+								<span>{metrics.views} views</span>
+								<span className="post-metrics__sep" aria-hidden="true">
+									{" "}
+									·{" "}
+								</span>
+							</>
+						) : null}
 						<span>{metrics.likes} likes</span>
 					</>
 				)}

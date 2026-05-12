@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { SHOW_PUBLIC_VIEW_COUNTS } from "../lib/site";
 
 /** Reserved metrics keys for non-post routes (must match worker slug validation). */
 export const ROUTE_METRICS_SLUG = {
@@ -66,6 +67,10 @@ export function PageViewMetrics({ route }: { route: RouteMetricsKey }) {
 			cancelled = true;
 		};
 	}, [slug, loadMetrics]);
+
+	if (!SHOW_PUBLIC_VIEW_COUNTS) {
+		return null;
+	}
 
 	return (
 		<div className="post-metrics post-metrics--page">
