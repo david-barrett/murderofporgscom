@@ -1,5 +1,22 @@
 :root {
 	--site-header-height: calc(6.5rem + 0.875rem * 2);
+	/* Default (mobile): keep current comfortable widths */
+	--content-card-max: 28rem;
+	--blog-reading-max: 36rem;
+}
+
+@media (min-width: 768px) {
+	:root {
+		--content-card-max: min(42rem, 100%);
+		--blog-reading-max: min(48rem, 100%);
+	}
+}
+
+@media (min-width: 1100px) {
+	:root {
+		--content-card-max: min(52rem, 100%);
+		--blog-reading-max: min(62rem, 100%);
+	}
 }
 
 #root {
@@ -32,7 +49,7 @@
 }
 
 .site-header__inner {
-	max-width: 1280px;
+	max-width: min(1440px, 100%);
 	width: 100%;
 	margin: 0 auto;
 	display: flex;
@@ -124,7 +141,7 @@
 
 .main-content {
 	flex: 1;
-	max-width: 1280px;
+	max-width: min(1440px, 100%);
 	width: 100%;
 	min-width: 0;
 	margin: 0 auto;
@@ -134,7 +151,8 @@
 
 .content-card {
 	padding: 2em;
-	max-width: 28rem;
+	max-width: var(--content-card-max);
+	width: 100%;
 	margin-left: auto;
 	margin-right: auto;
 	text-align: left;
@@ -235,7 +253,7 @@
 
 .tag-list--all {
 	margin: 0;
-	max-width: 36rem;
+	max-width: var(--blog-reading-max);
 	margin-left: auto;
 	margin-right: auto;
 	justify-content: flex-start;
@@ -243,7 +261,7 @@
 
 .blog-all-tags {
 	margin: 0 auto 1.35rem;
-	max-width: 36rem;
+	max-width: var(--blog-reading-max);
 	padding: 0 0.25rem;
 	text-align: left;
 	box-sizing: border-box;
@@ -320,7 +338,8 @@ a.tag-pill--all-posts:hover {
 }
 
 .blog-post {
-	max-width: 36rem;
+	max-width: var(--blog-reading-max);
+	width: 100%;
 	margin-left: auto;
 	margin-right: auto;
 	padding: 1.75em 2em;
