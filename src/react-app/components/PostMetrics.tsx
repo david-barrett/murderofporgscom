@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import favicon from "../assets/mop_favicon.jpeg";
 import { SHOW_PUBLIC_VIEW_COUNTS } from "../lib/site";
 
 type Metrics = { likes: number; views: number };
@@ -114,7 +115,7 @@ export function PostMetrics({ slug }: { slug: string }) {
 								</span>
 							</>
 						) : null}
-						<span>{metrics.likes} likes</span>
+						<span>{metrics.likes} porg{metrics.likes === 1 ? "" : "s"}</span>
 					</>
 				)}
 			</p>
@@ -123,9 +124,26 @@ export function PostMetrics({ slug }: { slug: string }) {
 				className="post-metrics__like-btn"
 				onClick={() => void onLike()}
 				disabled={likeBusy || metrics === null || hasLiked}
-				aria-label={hasLiked ? "You liked this post" : "Like this post"}
+				aria-label={hasLiked ? "You porged this post" : "Porg this post (add a porg)"}
 			>
-				{hasLiked ? "Liked" : likeBusy ? "…" : "Like"}
+				{likeBusy ? (
+					<span className="post-metrics__like-label">…</span>
+				) : (
+					<>
+						<img
+							className="post-metrics__like-icon"
+							src={favicon}
+							alt=""
+							width={20}
+							height={20}
+							decoding="async"
+							draggable={false}
+						/>
+						<span className="post-metrics__like-label">
+							{hasLiked ? "Porged" : "Porg"}
+						</span>
+					</>
+				)}
 			</button>
 		</div>
 	);

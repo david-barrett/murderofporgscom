@@ -664,9 +664,13 @@ a.tag-pill--all-posts:hover {
 }
 
 .post-metrics__like-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.45rem;
 	border-radius: 8px;
 	border: 1px solid rgba(255, 255, 255, 0.2);
-	padding: 0.45rem 1rem;
+	padding: 0.4rem 0.95rem;
 	font-size: 0.95rem;
 	font-weight: 600;
 	font-family: inherit;
@@ -676,6 +680,19 @@ a.tag-pill--all-posts:hover {
 	transition:
 		background 0.15s ease,
 		border-color 0.15s ease;
+}
+
+.post-metrics__like-icon {
+	width: 1.25rem;
+	height: 1.25rem;
+	border-radius: 4px;
+	object-fit: cover;
+	display: block;
+	flex-shrink: 0;
+}
+
+.post-metrics__like-label {
+	line-height: 1.2;
 }
 
 .post-metrics__like-btn:hover:not(:disabled) {

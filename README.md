@@ -85,7 +85,7 @@ Inspect local rows:
 npx wrangler d1 execute murderofporgs-metrics --local --command "SELECT slug, views, likes FROM post_metrics ORDER BY slug"
 ```
 
-The UI records at most **one view per browser tab** per slug using `sessionStorage` (`post_view_recorded:<slug>`). **Likes** use the same pattern after a successful like (`post_like_recorded:<slug>`), and the Like control shows **Liked** and stays disabled. To test again in the same tab, clear those keys in devtools or use a new private/incognito window.
+The UI records at most **one view per browser tab** per slug using `sessionStorage` (`post_view_recorded:<slug>`). **Likes** (the **Porg** button with favicon) use the same pattern after a successful like (`post_like_recorded:<slug>`), then show **Porged** and stay disabled. To test again in the same tab, clear those keys in devtools or use a new private/incognito window.
 
 View counts are **hidden in the UI** when **`SHOW_PUBLIC_VIEW_COUNTS`** in `src/react-app/lib/site.ts` is `false` (the default); views are still written to D1. Set it to `true` to show “N views” on posts and route pages again.
 
