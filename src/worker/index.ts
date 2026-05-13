@@ -74,6 +74,13 @@ app.post("/api/metrics/:slug/view", async (c) => {
 	});
 });
 
+app.get("/api/debug/stats", async (c) => {
+	const res = await c.env.DB.prepare(
+		"SELECT slug, likes, views, updated_at FROM post_metrics ORDER BY slug ASC",
+	).all<{ slug: string; likes: number; views: number; updated_at: number }>();
+	return c.json({ rows: res.results ?? [] });
+});
+
 app.all("*", async (c) => {
 	return c.env.ASSETS.fetch(c.req.raw);
 });

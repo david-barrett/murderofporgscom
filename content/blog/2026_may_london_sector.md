@@ -14,7 +14,7 @@ tags:
 *Feeling Ccnfident at start of the day 1*
 
 ![Fifteth](./assets/2026-05-10_fiftieth.jpeg)
-*Porg with 50th place with top 64 uncut sheet and Tobias Beckett showcase*
+*Porg earning 50th place with top 64 uncut sheet and Tobias Beckett showcase*
 
 ### Decks
 * Porg - Tobias Beckett

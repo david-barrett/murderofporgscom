@@ -1,7 +1,7 @@
 ---
 title: April 2026 Leisure Games Showdown
 slug: 2026-leisure-games-showdown
-date: 2026-05-14
+date: 2026-05-15
 # description: London Sector Qualifier
 author: david
 draft: true

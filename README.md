@@ -89,6 +89,8 @@ The UI records at most **one view per browser tab** per slug using `sessionStora
 
 View counts are **hidden in the UI** when **`SHOW_PUBLIC_VIEW_COUNTS`** in `src/react-app/lib/site.ts` is `false` (the default); views are still written to D1. Set it to `true` to show “N views” on posts and route pages again.
 
+**Debug dashboard (not linked in the nav):** open **`/debug/stats`** in the browser to see all `post_metrics` rows (slug, views, likes, `updated_at`) via **`GET /api/debug/stats`**. The page is **`noindex`** and omitted from the sitemap; it is still **public** if someone guesses the URL—treat it as convenience, not a secret.
+
 For **production** schema changes, apply migrations remotely after deploy prep:
 
 ```bash

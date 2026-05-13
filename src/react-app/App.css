@@ -414,6 +414,36 @@ a.tag-pill--all-posts:hover {
 	background: rgba(255, 255, 255, 0.08);
 }
 
+.blog-post__embed {
+	margin: 1rem 0 1.25rem;
+	position: relative;
+	width: 100%;
+	max-width: 100%;
+	border-radius: 8px;
+	overflow: hidden;
+	background: #0a0a0a;
+}
+
+.blog-post__embed iframe {
+	width: 100%;
+	border: 0;
+	display: block;
+	aspect-ratio: 16 / 9;
+	min-height: 12rem;
+}
+
+.blog-post__embed--short {
+	max-width: min(100%, 22rem);
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.blog-post__embed--short iframe {
+	aspect-ratio: 9 / 16;
+	max-height: min(80vh, 36rem);
+	min-height: 14rem;
+}
+
 .blog-post__adjacent {
 	margin-top: 1.75rem;
 	display: grid;
@@ -487,6 +517,102 @@ a.tag-pill--all-posts:hover {
 .not-found__links {
 	margin: 0;
 	font-size: 1rem;
+}
+
+.debug-stats__note {
+	margin: 0 0 0.75rem;
+	font-size: 0.95rem;
+	line-height: 1.5;
+	color: rgba(255, 255, 255, 0.72);
+	text-align: left;
+}
+
+.debug-stats__note code {
+	font-size: 0.88em;
+}
+
+.debug-stats__actions {
+	margin: 0 0 1rem;
+	text-align: left;
+}
+
+.debug-stats__actions button {
+	border-radius: 8px;
+	border: 1px solid rgba(255, 255, 255, 0.25);
+	padding: 0.4rem 0.9rem;
+	font-size: 0.9rem;
+	font-weight: 600;
+	font-family: inherit;
+	cursor: pointer;
+	background: rgba(255, 255, 255, 0.08);
+	color: #fff;
+}
+
+.debug-stats__actions button:hover {
+	background: rgba(255, 255, 255, 0.14);
+}
+
+.debug-stats__error {
+	margin: 0 0 1rem;
+	color: #f87171;
+	text-align: left;
+}
+
+.debug-stats__loading,
+.debug-stats__empty {
+	margin: 0;
+	color: rgba(255, 255, 255, 0.55);
+	text-align: left;
+}
+
+.debug-stats__table-wrap {
+	overflow-x: auto;
+	margin-top: 0.5rem;
+	text-align: left;
+}
+
+.debug-stats__table {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 0.9rem;
+}
+
+.debug-stats__table th,
+.debug-stats__table td {
+	padding: 0.5rem 0.65rem;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+	vertical-align: top;
+}
+
+.debug-stats__table th {
+	text-align: left;
+	font-weight: 600;
+	color: rgba(255, 255, 255, 0.55);
+}
+
+.debug-stats__table td code {
+	font-size: 0.85em;
+	word-break: break-all;
+}
+
+.debug-stats__num {
+	text-align: right;
+	font-variant-numeric: tabular-nums;
+	white-space: nowrap;
+}
+
+.debug-stats__table th.debug-stats__num {
+	text-align: right;
+}
+
+.debug-stats__time {
+	font-size: 0.88rem;
+	color: rgba(255, 255, 255, 0.85);
+}
+
+.debug-stats__unix {
+	color: rgba(255, 255, 255, 0.45);
+	font-size: 0.82em;
 }
 
 .post-metrics {
@@ -628,6 +754,42 @@ a.tag-pill--all-posts:hover {
 
 	.not-found__path code {
 		background: rgba(0, 0, 0, 0.06);
+	}
+
+	.debug-stats__note {
+		color: rgba(0, 0, 0, 0.68);
+	}
+
+	.debug-stats__actions button {
+		border-color: rgba(0, 0, 0, 0.2);
+		background: rgba(0, 0, 0, 0.06);
+		color: #213547;
+	}
+
+	.debug-stats__actions button:hover {
+		background: rgba(0, 0, 0, 0.1);
+	}
+
+	.debug-stats__loading,
+	.debug-stats__empty {
+		color: rgba(0, 0, 0, 0.5);
+	}
+
+	.debug-stats__table th,
+	.debug-stats__table td {
+		border-bottom-color: rgba(0, 0, 0, 0.1);
+	}
+
+	.debug-stats__table th {
+		color: rgba(0, 0, 0, 0.5);
+	}
+
+	.debug-stats__time {
+		color: rgba(0, 0, 0, 0.82);
+	}
+
+	.debug-stats__unix {
+		color: rgba(0, 0, 0, 0.45);
 	}
 
 	.post-metrics {
