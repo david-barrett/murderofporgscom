@@ -3,7 +3,7 @@ title: DJ Lake Country Deck profile
 slug: dj-lake-deck-profile
 date: 2026-05-14
 # description: Example deck profile page with an embedded YouTube Short (vertical video).
-draft: true
+draft: false
 author: david
 tags:
   - swu
