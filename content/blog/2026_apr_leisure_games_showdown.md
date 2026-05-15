@@ -4,7 +4,7 @@ slug: 2026-leisure-games-showdown
 date: 2026-05-15
 # description: London Sector Qualifier
 author: david
-draft: true
+draft: false
 tags:
   - swu
   - showdown
