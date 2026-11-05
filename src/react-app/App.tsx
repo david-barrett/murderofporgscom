@@ -7,6 +7,8 @@ import { DebugStatsPage } from "./pages/DebugStatsPage";
 import { HomePage } from "./pages/HomePage";
 import { LinksPage } from "./pages/LinksPage";
 import { NotFoundPage } from "./pages/NotFoundPage";
+import DeckGrader  from './pages/DeckGrader';
+
 import "./App.css";
 
 export default function App() {
@@ -21,6 +23,7 @@ export default function App() {
 					<Route path="blog/:slug" element={<BlogPostPage />} />
 					<Route path="debug/stats" element={<DebugStatsPage />} />
 					<Route path="*" element={<NotFoundPage />} />
+					<Route path="/deckgrader" element={<DeckGrader />} />
 				</Route>
 			</Routes>
 		</BrowserRouter>

@@ -13,10 +13,12 @@
   },
   "dependencies": {
     "hono": "4.11.1",
+    "lucide-react": "^1.69.0",
     "react": "19.2.1",
     "react-dom": "19.2.1",
     "react-helmet-async": "^3.0.0",
-    "react-router-dom": "^7.15.0"
+    "react-router-dom": "^7.15.0",
+    "recharts": "^3.10.1"
   },
   "devDependencies": {
     "@cloudflare/vite-plugin": "1.15.3",
@@ -37,6 +39,9 @@
   },
   "private": true,
   "scripts": {
+    "regen-cards": "node scripts/build-card-cache.cjs",
+    "regen-meta": "node scripts/fetch-meta-decks.cjs",
+    "regen": "node scripts/build-card-cache.cjs && node scripts/fetch-meta-decks.cjs",
     "build": "velite build --strict && node scripts/generate-sitemap.mjs && tsc -b && vite build",
     "cf-typegen": "wrangler types",
     "check": "velite build --strict && node scripts/generate-sitemap.mjs && tsc && vite build && wrangler deploy --dry-run",
