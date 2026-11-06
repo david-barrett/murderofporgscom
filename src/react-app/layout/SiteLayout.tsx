@@ -32,6 +32,9 @@ export function SiteLayout() {
 						<NavLink to="/links" className={navClass}>
 							Links
 						</NavLink>
+						<NavLink to="/deckgrader" className={navClass}>
+							Deck Grader
+						</NavLink>
 					</nav>
 				</div>
 			</header>

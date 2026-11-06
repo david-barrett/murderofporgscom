@@ -7,7 +7,7 @@ import { DebugStatsPage } from "./pages/DebugStatsPage";
 import { HomePage } from "./pages/HomePage";
 import { LinksPage } from "./pages/LinksPage";
 import { NotFoundPage } from "./pages/NotFoundPage";
-import DeckGrader  from './pages/DeckGrader';
+import DeckGrader from "./pages/DeckGrader";
 
 import "./App.css";
 
@@ -18,12 +18,13 @@ export default function App() {
 				<Route element={<SiteLayout />}>
 					<Route index element={<HomePage />} />
 					<Route path="links" element={<LinksPage />} />
+					<Route path="deckgrader" element={<DeckGrader />} />
+					<Route path="deckguide" element={<DeckGrader />} />
 					<Route path="blog" element={<BlogIndexPage />} />
 					<Route path="blog/tag/:tagSlug" element={<BlogTagPage />} />
 					<Route path="blog/:slug" element={<BlogPostPage />} />
 					<Route path="debug/stats" element={<DebugStatsPage />} />
 					<Route path="*" element={<NotFoundPage />} />
-					<Route path="/deckgrader" element={<DeckGrader />} />
 				</Route>
 			</Routes>
 		</BrowserRouter>
