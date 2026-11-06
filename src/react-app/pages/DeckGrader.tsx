@@ -115,6 +115,7 @@ export default function DeckGrader() {
   const [activeTab, setActiveTab] = useState<string>('overview');
   const [showKeyModal, setShowKeyModal] = useState(false);
   const [aiAnalysis, setAiAnalysis] = useState<any>(null);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
 
   const currentDeckData = metaDecks[selectedPreset] || { 
     metadata: { name: "Custom Build", author: "User", winRate: "N/A" },
@@ -333,19 +334,59 @@ export default function DeckGrader() {
   }, [rawDeckInput, resolvedCards]);
 
   const runAiAnalysis = () => {
-    setAiAnalysis({
-      summary: `Your deck layout indicates a ${analysis.inferredArchetype} profile led by ${leaderName}${leaderSubtitle ? ` (${leaderSubtitle})` : ''} on ${baseName}. Total aspects: ${allAspects.join(', ')}. Detected average unit cost of ${analysis.avgUnitCost} with a ${analysis.spaceRatio}% space allocation.`,
-      mulligan: [
-        "Priority 1: Secure early 1-2 cost units to contest initiative on turn 1.",
-        "Priority 2: Hold targeted removal events if facing fast aggressive archetypes.",
-        "Redraw: Pitch high-cost 5+ bombs if appearing in opening hand."
-      ],
-      sideboardPlan: [
-        { matchup: "vs. Hyper Aggro", out: "-2 High-cost bombs", in: "+2 Cheap sentinels / base healing" },
-        { matchup: "vs. Control", out: "-3 Low-impact defenders", in: "+3 Hand disruption / shield breakers" },
-        { matchup: "vs. Midrange", out: "-1 Situational card", in: "+1 Targeted removal" }
-      ]
-    });
+    setIsAnalyzing(true);
+    setActiveTab('ai');
+
+    setTimeout(() => {
+      document.getElementById('tabs-section')?.scrollIntoView({ behavior: 'smooth' });
+    }, 50);
+
+    setTimeout(() => {
+      const isAggro = analysis.inferredArchetype.includes('Aggro');
+      const isControl = analysis.inferredArchetype.includes('Control');
+      const hasSpaceBias = analysis.spaceRatio > 40;
+      const hasGroundBias = analysis.groundRatio > 70;
+
+      const mulliganNotes = isAggro
+        ? [
+            "Priority 1: Mulligan aggressively for 1-cost and 2-cost ground units to guarantee turn-1 initiative.",
+            "Priority 2: Ensure you have an aggressive reach event (e.g. direct base damage or attack buff) for turns 3-4.",
+            "Redraw: Pitch high-cost 5+ cards immediately if they appear in your opening hand."
+          ]
+        : isControl
+        ? [
+            "Priority 1: Keep at least 1 cheap removal event or sentinel to stall the opponent's early round blitz.",
+            "Priority 2: Hold card-draw or ramp infrastructure to accelerate into late-game leader deployment.",
+            "Redraw: Pitch situational late-game bombs early to guarantee hitting your resource curve every turn."
+          ]
+        : [
+            "Priority 1: Look for on-curve 2-cost and 3-cost units that contest both ground and space arenas.",
+            "Priority 2: Keep action-compression cards to seize initiative going into leadership deployment turn.",
+            "Redraw: Resource situational answers that don't match the opponent's visible leader color profile."
+          ];
+
+      const tacticalNotes = [
+        `Leader Synergy: Leverage ${leaderName}${leaderSubtitle ? ` (${leaderSubtitle})` : ''} at key deployment resource points to swing tempo.`,
+        `Arena Split: ${analysis.groundRatio}% Ground / ${analysis.spaceRatio}% Space. ${
+          hasSpaceBias ? 'Strong space lane presence allows evading heavy ground blockers.' :
+          hasGroundBias ? 'Heavy ground presence demands vigilance against space raid flankers.' :
+          'Balanced dual-arena coverage allows contesting wherever the opponent is weakest.'
+        }`,
+        `Resource Curve: Average unit cost of ${analysis.avgUnitCost} requires aiming for ${isAggro ? 'quick 5-resource games' : isControl ? 'extended 7+ resource games' : '6-resource leader deployment'}.`
+      ];
+
+      setAiAnalysis({
+        summary: `AI Tactical Assessment: Your deck exhibits a competitive ${analysis.inferredArchetype} profile running ${leaderName}${leaderSubtitle ? ` (${leaderSubtitle})` : ''} on ${baseName} (${allAspects.join(', ')}). Average unit cost is ${analysis.avgUnitCost} across ${analysis.totalCards} cards.`,
+        mulligan: mulliganNotes,
+        tactics: tacticalNotes,
+        sideboardPlan: [
+          { matchup: "vs. Hyper Aggro", out: "-2 Slow high-cost units", in: "+2 Cheap sentinels / base healing" },
+          { matchup: "vs. Heavy Control", out: "-3 Low-impact ground blockers", in: "+3 Hand disruption / shield removal / fast space units" },
+          { matchup: "vs. Midrange Mirror", out: "-1 Situational card", in: "+1 Targeted removal / initiative compression" }
+        ]
+      });
+      setIsAnalyzing(false);
+    }, 500);
   };
 
   return (
@@ -429,9 +470,11 @@ export default function DeckGrader() {
             />
             <button 
               onClick={runAiAnalysis}
-              className="w-full py-3 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-slate-950 font-bold rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-cyan-950/30 transition-all text-xs tracking-wide cursor-pointer"
+              disabled={isAnalyzing}
+              className="w-full py-3 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 disabled:opacity-60 text-slate-950 font-bold rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-cyan-950/30 transition-all text-xs tracking-wide cursor-pointer"
             >
-              <Cpu size={16} /> Run AI Edge Coach Analysis
+              <Cpu size={16} className={isAnalyzing ? "animate-spin" : ""} />
+              {isAnalyzing ? "Analyzing Deck Profile..." : "Run AI Edge Coach Analysis"}
             </button>
           </div>
 
@@ -583,7 +626,7 @@ export default function DeckGrader() {
         </div>
 
         {/* DETAILED TABS SECTION */}
-        <div className="bg-slate-900/80 backdrop-blur-md border border-slate-800/80 rounded-2xl overflow-hidden shadow-2xl">
+        <div id="tabs-section" className="bg-slate-900/80 backdrop-blur-md border border-slate-800/80 rounded-2xl overflow-hidden shadow-2xl">
           <div className="flex border-b border-slate-800/80 bg-slate-950/80 overflow-x-auto">
             {[
               { id: 'overview', label: 'Curve Visualizer', icon: BarChart3 },
@@ -685,15 +728,57 @@ export default function DeckGrader() {
             {activeTab === 'ai' && (
               <div className="space-y-4">
                 <div className="flex justify-between items-center bg-slate-950/90 p-5 rounded-2xl border border-slate-800/90 shadow-md">
-                  <span className="text-xs font-bold text-slate-200 tracking-wide uppercase">AI Strategic Edge Coach</span>
-                  <button onClick={runAiAnalysis} className="bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold px-3.5 py-2 rounded-xl text-xs transition shadow-md cursor-pointer">Refresh Analysis</button>
+                  <div className="flex items-center gap-2">
+                    <Sparkles className="w-4 h-4 text-cyan-400" />
+                    <span className="text-xs font-bold text-slate-200 tracking-wide uppercase">AI Strategic Edge Coach</span>
+                  </div>
+                  <button 
+                    onClick={runAiAnalysis} 
+                    disabled={isAnalyzing} 
+                    className="bg-cyan-500 hover:bg-cyan-400 disabled:opacity-50 text-slate-950 font-bold px-3.5 py-2 rounded-xl text-xs transition shadow-md cursor-pointer flex items-center gap-1.5"
+                  >
+                    <Cpu size={14} className={isAnalyzing ? "animate-spin" : ""} />
+                    {isAnalyzing ? "Analyzing..." : "Refresh Analysis"}
+                  </button>
                 </div>
-                {aiAnalysis && (
+                {isAnalyzing ? (
+                  <div className="bg-slate-950/90 p-8 rounded-2xl border border-slate-800/90 text-center space-y-3">
+                    <div className="inline-block animate-spin rounded-full h-8 w-8 border-2 border-cyan-400 border-t-transparent" />
+                    <p className="text-xs text-slate-400">Evaluating curve, arena pressure, and mulligan priorities...</p>
+                  </div>
+                ) : aiAnalysis ? (
                   <div className="bg-slate-950/90 p-6 rounded-2xl border border-slate-800/90 text-xs text-slate-300 space-y-4 leading-relaxed shadow-md">
-                    <p className="font-semibold text-slate-100 text-sm">{aiAnalysis.summary}</p>
-                    <ul className="space-y-2 pt-2 border-t border-slate-800/80">
-                      {aiAnalysis.mulligan.map((m: string, i: number) => <li key={i} className="flex items-start gap-2"><span className="text-cyan-400 font-bold">•</span> <span>{m}</span></li>)}
-                    </ul>
+                    <p className="font-semibold text-slate-100 text-sm leading-relaxed">{aiAnalysis.summary}</p>
+                    
+                    <div className="pt-3 border-t border-slate-800/80 space-y-2">
+                      <h4 className="font-bold text-cyan-400 uppercase tracking-wider text-[11px]">Recommended Mulligan Priorities</h4>
+                      <ul className="space-y-1.5">
+                        {aiAnalysis.mulligan.map((m: string, i: number) => (
+                          <li key={i} className="flex items-start gap-2">
+                            <span className="text-cyan-400 font-bold">•</span>
+                            <span>{m}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    {aiAnalysis.tactics && (
+                      <div className="pt-3 border-t border-slate-800/80 space-y-2">
+                        <h4 className="font-bold text-amber-400 uppercase tracking-wider text-[11px]">Tactical Gameplay Advice</h4>
+                        <ul className="space-y-1.5">
+                          {aiAnalysis.tactics.map((t: string, i: number) => (
+                            <li key={i} className="flex items-start gap-2">
+                              <span className="text-amber-400 font-bold">•</span>
+                              <span>{t}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <div className="bg-slate-950/90 p-8 rounded-2xl border border-slate-800/90 text-center space-y-2">
+                    <p className="text-xs text-slate-400">Click &quot;Run AI Edge Coach Analysis&quot; above to generate strategic advice for this deck.</p>
                   </div>
                 )}
               </div>
