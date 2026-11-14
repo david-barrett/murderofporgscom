@@ -14,3 +14,9 @@ body {
 	background-color: #030712;
 	color: #f3f4f6;
 }
+
+.social-content {
+    display: inline-flex; /* Keeps it aligned nicely with the bullet point */
+    align-items: center;  /* Centers the text and icons vertically */
+    gap: 12px;            /* Spacing between text and icons */
+}
