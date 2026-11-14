@@ -2,7 +2,7 @@ import { useState, useMemo } from 'react';
 import { 
   Cpu, Database, TrendingUp, Swords, 
   CheckCircle2, AlertTriangle, ArrowRightLeft, BarChart3, Sparkles, Key, Crosshair, FileText,
-  Crown, Shield, Compass
+  Crown, Shield, Compass, Download, HelpCircle, Eye, X
 } from 'lucide-react';
 import { 
   BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Legend 
@@ -59,6 +59,111 @@ function getAspectConfig(name: string) {
       };
 }
 
+/** Resolve an image URL for a card, preferring official CDN URLs from meta-decks data */
+function getCardImageUrl(cardData: any, metaDeckCard?: any): string | null {
+  if (metaDeckCard?.imageUrl) return metaDeckCard.imageUrl;
+  if (cardData?.imageUrl) return cardData.imageUrl;
+  if (cardData?.set && cardData?.number) {
+    return `https://api.swu-db.com/cards/${cardData.set.toLowerCase()}/${cardData.number}?format=image`;
+  }
+  return null;
+}
+
+/** Classify a deck by archetype based on its cost and unit distribution */
+function classifyArchetype(costDist: Record<string, number>, totalUnits: number, costSum: number, spaceUnits: number) {
+  const avgUnitCost = totalUnits > 0 ? costSum / totalUnits : 0;
+  const spaceRatio = totalUnits > 0 ? Math.round((spaceUnits / totalUnits) * 100) : 0;
+  const earlyGame = (costDist['1'] || 0) + (costDist['2'] || 0);
+  const lateGame = (costDist['5'] || 0) + (costDist['6+'] || 0);
+
+  if (earlyGame >= 18 && avgUnitCost <= 2.6) return "Aggro Rush";
+  if (lateGame >= 12 && avgUnitCost >= 3.6) return "Hard Control Ramp";
+  if (spaceRatio >= 55) return "Space Swarm Tempo";
+  return "Midrange Tempo";
+}
+
+/** Compute target curves by averaging meta deck distributions, grouped by archetype */
+function computeMetaTargetCurves(metaDecks: Record<string, any>, resolvedCards: Record<string, any>) {
+  const archetypeBuckets: Record<string, { curves: Record<string, number>[]; count: number }> = {};
+
+  const findCard = (identifier: string) => {
+    if (!identifier) return null;
+    const cleanId = String(identifier).trim().toUpperCase();
+    if (resolvedCards[cleanId]) return resolvedCards[cleanId];
+    const m = cleanId.match(/^([A-Z0-9]+)_0*(\d+)$/);
+    if (m) {
+      const paddedKey = `${m[1]}_${m[2].padStart(3, '0')}`;
+      if (resolvedCards[paddedKey]) return resolvedCards[paddedKey];
+    }
+    return null;
+  };
+
+  for (const key of Object.keys(metaDecks)) {
+    const deck = metaDecks[key];
+    if (!deck?.deck || !Array.isArray(deck.deck)) continue;
+
+    const c: Record<string, number> = { '1': 0, '2': 0, '3': 0, '4': 0, '5': 0, '6+': 0 };
+    let unitCount = 0, costSum = 0, spaceUnits = 0;
+
+    for (const item of deck.deck) {
+      const rawId = item.id || '';
+      const qty = item.count || 1;
+      const card = findCard(rawId) || item;
+      const cost = typeof card.cost === 'number' ? card.cost : parseInt(card.cost || '2', 10);
+      const costKey = cost >= 6 ? '6+' : String(cost);
+      c[costKey] = (c[costKey] || 0) + qty;
+
+      const type = (card.type || '').toLowerCase();
+      if (type === 'unit') {
+        unitCount += qty;
+        costSum += cost * qty;
+        if ((card.arena || '').toLowerCase() === 'space') spaceUnits += qty;
+      }
+    }
+
+    const archetype = classifyArchetype(c, unitCount, costSum, spaceUnits);
+    if (!archetypeBuckets[archetype]) {
+      archetypeBuckets[archetype] = { curves: [], count: 0 };
+    }
+    archetypeBuckets[archetype].curves.push(c);
+    archetypeBuckets[archetype].count += 1;
+  }
+
+  // Average each archetype's curves
+  const result: Record<string, { curve: Record<string, number>; sampleSize: number }> = {};
+  for (const [archetype, bucket] of Object.entries(archetypeBuckets)) {
+    const avg: Record<string, number> = {};
+    const keys = ['1', '2', '3', '4', '5', '6+'];
+    for (const k of keys) {
+      const total = bucket.curves.reduce((sum, curve) => sum + (curve[k] || 0), 0);
+      avg[k] = Math.round(total / bucket.count);
+    }
+    result[archetype] = { curve: avg, sampleSize: bucket.count };
+  }
+
+  return result;
+}
+
+// Hardcoded competitive baseline curves
+const FALLBACK_CURVES: Record<string, Record<string, number>> = {
+  "Aggro Rush": { '1': 9, '2': 18, '3': 12, '4': 6, '5': 3, '6+': 2 },
+  "Hard Control Ramp": { '1': 3, '2': 8, '3': 10, '4': 9, '5': 8, '6+': 12 },
+  "Space Swarm Tempo": { '1': 6, '2': 15, '3': 14, '4': 8, '5': 4, '6+': 3 },
+  "Midrange Tempo": { '1': 4, '2': 12, '3': 12, '4': 8, '5': 6, '6+': 8 },
+};
+
+interface ParsedCard {
+  name: string;
+  count: number;
+  cost: number;
+  type: string;
+  arena: string;
+  traits: string[];
+  set: string;
+  number: string;
+  imageUrl: string | null;
+}
+
 export default function DeckGrader() {
   const [fetchStats] = useState({ 
     cached: Object.keys(cardCache || {}).length, 
@@ -94,6 +199,15 @@ export default function DeckGrader() {
     return found || null;
   };
 
+  /** Find the matching meta-deck card entry (which may have imageUrl) */
+  const findMetaDeckCard = (cardName: string, selectedKey: string) => {
+    const preset = metaDecks[selectedKey];
+    if (!preset?.deck) return null;
+    return preset.deck.find((item: any) =>
+      item.name && item.name.toLowerCase().includes(cardName.toLowerCase())
+    ) || null;
+  };
+
   const getDeckListText = (key: string) => {
     const preset = metaDecks[key];
     if (preset && Array.isArray(preset.deck)) {
@@ -111,22 +225,116 @@ export default function DeckGrader() {
   };
 
   const [selectedPreset, setSelectedPreset] = useState<string>(defaultKey);
+  const [customDeckData, setCustomDeckData] = useState<any>(null);
   const [rawDeckInput, setRawDeckInput] = useState<string>(() => getDeckListText(defaultKey));
   const [activeTab, setActiveTab] = useState<string>('overview');
   const [showKeyModal, setShowKeyModal] = useState(false);
+  const [showTargetExplainer, setShowTargetExplainer] = useState(false);
   const [aiAnalysis, setAiAnalysis] = useState<any>(null);
+  const [aiSource, setAiSource] = useState<'gemini' | 'heuristic' | null>(null);
+  const [aiError, setAiError] = useState<string | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
 
-  const currentDeckData = metaDecks[selectedPreset] || { 
-    metadata: { name: "Custom Build", author: "User", winRate: "N/A" },
-    leader: { id: "", count: 1 },
-    base: { id: "", count: 1 },
-    deck: [] 
-  };
+  // SWUDB Import state
+  const [importUrl, setImportUrl] = useState('');
+  const [importLoading, setImportLoading] = useState(false);
+  const [importError, setImportError] = useState('');
+
+  // Card image hover/lightbox preview state
+  const [previewCard, setPreviewCard] = useState<{ name: string; url: string } | null>(null);
+
+  const currentDeckData = selectedPreset && metaDecks[selectedPreset]
+    ? metaDecks[selectedPreset]
+    : customDeckData || { 
+        metadata: { name: "Custom Deck", author: "User", winRate: "N/A" },
+        leader: { id: "", count: 1 },
+        base: { id: "", count: 1 },
+        deck: [],
+        sideboard: []
+      };
 
   const handleSelectPreset = (key: string) => {
     setSelectedPreset(key);
+    setCustomDeckData(null);
     setRawDeckInput(getDeckListText(key));
+    setImportError('');
+  };
+
+  /** Import a deck from SWUDB by URL or alphanumeric deck ID */
+  const handleSwudbImport = async () => {
+    if (!importUrl.trim()) return;
+    setImportLoading(true);
+    setImportError('');
+
+    try {
+      // Extract deck ID: handle full URL, /deck/view/ID, /deck/ID, or plain ID
+      let input = importUrl.trim();
+      const match = input.match(/\/deck(?:\/view)?\/([a-zA-Z0-9_\-]+)/);
+      const deckId = match ? match[1] : input.replace(/^https?:\/\/[^/]+\//, '').replace(/^\/+/, '');
+      
+      if (!/^[a-zA-Z0-9_\-]+$/.test(deckId)) {
+        throw new Error('Please enter a valid SWUDB deck URL or alphanumeric ID (e.g. ABCD1234).');
+      }
+
+      const res = await fetch(`/api/swudb/${deckId}`);
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}));
+        throw new Error(errData.error || `Failed to fetch from SWUDB (status ${res.status})`);
+      }
+
+      const data = await res.json();
+      
+      // Build deck list lines from SWUDB response
+      const deckLines: string[] = [];
+      const cardsList = Array.isArray(data.deck) ? data.deck : [];
+      
+      for (const card of cardsList) {
+        const cardId = card.id || card.cardId || card.card?.id || card.card?.setNumber || '';
+        const cardName = card.name || card.card?.name || '';
+        const count = card.count || card.quantity || 1;
+        const resolved = findCardData(cardId) || findCardData(cardName);
+        const displayName = resolved?.name || cardName || cardId || 'Unknown Card';
+        deckLines.push(`${count}x ${displayName}`);
+      }
+
+      if (deckLines.length === 0) {
+        throw new Error('No cards found in the imported deck payload.');
+      }
+
+      // Configure custom deck data including leader, base, aspects, sideboard
+      const importedLeader = data.leader || {};
+      const importedBase = data.base || {};
+      const importedSideboard = Array.isArray(data.sideboard) ? data.sideboard : [];
+
+      setCustomDeckData({
+        metadata: {
+          name: data.metadata?.name || data.name || "Imported SWUDB Deck",
+          author: data.metadata?.author || data.author || "SWUDB Player",
+          winRate: "N/A"
+        },
+        leader: {
+          id: importedLeader.id || importedLeader.cardId || '',
+          name: importedLeader.name || '',
+          aspect: importedLeader.aspect || importedLeader.aspects || ''
+        },
+        base: {
+          id: importedBase.id || importedBase.cardId || '',
+          name: importedBase.name || '',
+          aspect: importedBase.aspect || importedBase.aspects || '',
+          baseGroup: importedBase.baseGroup || ''
+        },
+        deck: cardsList,
+        sideboard: importedSideboard
+      });
+
+      setSelectedPreset('');
+      setRawDeckInput(deckLines.join('\n'));
+      setImportUrl('');
+    } catch (err: any) {
+      setImportError(err.message || 'Import failed');
+    } finally {
+      setImportLoading(false);
+    }
   };
 
   // Leader resolution
@@ -154,7 +362,7 @@ export default function DeckGrader() {
   const leaderAspects: string[] = useMemo(() => {
     if (currentDeckData.leader?.aspect) {
       const raw = currentDeckData.leader.aspect;
-      return (Array.isArray(raw) ? raw : raw.split(','))
+      return (Array.isArray(raw) ? raw : String(raw).split(','))
         .map((s: string) => s.trim())
         .filter(Boolean);
     }
@@ -164,7 +372,7 @@ export default function DeckGrader() {
   const baseAspects: string[] = useMemo(() => {
     if (currentDeckData.base?.aspect) {
       const raw = currentDeckData.base.aspect;
-      return (Array.isArray(raw) ? raw : raw.split(','))
+      return (Array.isArray(raw) ? raw : String(raw).split(','))
         .map((s: string) => s.trim())
         .filter(Boolean);
     }
@@ -174,6 +382,11 @@ export default function DeckGrader() {
   const allAspects = useMemo(() => {
     return Array.from(new Set([...leaderAspects, ...baseAspects]));
   }, [leaderAspects, baseAspects]);
+
+  // Compute target curves dynamically from cached tournament meta decks
+  const metaTargetData = useMemo(() => {
+    return computeMetaTargetCurves(metaDecks, resolvedCards);
+  }, [metaDecks, resolvedCards]);
 
   const analysis = useMemo(() => {
     const c: Record<string, number> = { '1': 0, '2': 0, '3': 0, '4': 0, '5': 0, '6+': 0 };
@@ -185,6 +398,7 @@ export default function DeckGrader() {
     let events = 0;
     let upgrades = 0;
     const traitCounts: Record<string, number> = {};
+    const parsedCards: ParsedCard[] = [];
 
     const lines = rawDeckInput.split('\n');
     lines.forEach(line => {
@@ -193,24 +407,24 @@ export default function DeckGrader() {
         const qty = parseInt(match[1], 10) || 1;
         const queryTerm = match[2].trim();
         const cardData: any = findCardData(queryTerm);
+        const metaDeckCard = findMetaDeckCard(queryTerm, selectedPreset);
 
         if (cardData) {
-          const cost = cardData.cost ?? 2;
+          const cost = typeof cardData.cost === 'number' ? cardData.cost : parseInt(cardData.cost || '2', 10);
           const costKey = cost >= 6 ? '6+' : String(cost);
           c[costKey] = (c[costKey] || 0) + qty;
           countTotal += qty;
 
           const type = cardData.type || '';
-          if (type === 'Unit' || type.toLowerCase() === 'unit') {
+          if (type.toLowerCase() === 'unit') {
             unitCount += qty;
             costSum += cost * qty;
             const arena = cardData.arena || '';
-            if (arena === 'Ground') groundUnits += qty;
-            else if (arena === 'Space') spaceUnits += qty;
+            if (arena.toLowerCase() === 'space') spaceUnits += qty;
             else groundUnits += qty;
-          } else if (type === 'Event' || type.toLowerCase() === 'event') {
+          } else if (type.toLowerCase() === 'event') {
             events += qty;
-          } else if (type === 'Upgrade' || type.toLowerCase() === 'upgrade') {
+          } else if (type.toLowerCase() === 'upgrade') {
             upgrades += qty;
           }
 
@@ -219,12 +433,35 @@ export default function DeckGrader() {
               traitCounts[t] = (traitCounts[t] || 0) + qty;
             });
           }
+
+          parsedCards.push({
+            name: cardData.name || queryTerm,
+            count: qty,
+            cost,
+            type: cardData.type || 'Unknown',
+            arena: cardData.arena || '',
+            traits: cardData.traits || [],
+            set: cardData.set || '',
+            number: cardData.number || '',
+            imageUrl: getCardImageUrl(cardData, metaDeckCard),
+          });
         } else {
           c['2'] = (c['2'] || 0) + qty;
           countTotal += qty;
           unitCount += qty;
           costSum += 2 * qty;
           groundUnits += qty;
+          parsedCards.push({
+            name: queryTerm,
+            count: qty,
+            cost: 2,
+            type: 'Unit',
+            arena: 'Ground',
+            traits: [],
+            set: '',
+            number: '',
+            imageUrl: null,
+          });
         }
       }
     });
@@ -233,28 +470,13 @@ export default function DeckGrader() {
     const spaceRatio = unitCount > 0 ? Math.round((spaceUnits / unitCount) * 100) : 0;
     const groundRatio = unitCount > 0 ? Math.round((groundUnits / unitCount) * 100) : 0;
 
-    let inferredArchetype = "Midrange Control";
-    const earlyGameCards = (c['1'] || 0) + (c['2'] || 0);
-    const lateGameCards = (c['5'] || 0) + (c['6+'] || 0);
+    const inferredArchetype = classifyArchetype(c, unitCount, costSum, spaceUnits);
 
-    if (earlyGameCards >= 18 && avgUnitCost <= 2.6) {
-      inferredArchetype = "Aggro Rush";
-    } else if (lateGameCards >= 12 && avgUnitCost >= 3.6) {
-      inferredArchetype = "Hard Control Ramp";
-    } else if (spaceRatio >= 55) {
-      inferredArchetype = "Space Swarm Tempo";
-    } else {
-      inferredArchetype = "Midrange Tempo";
-    }
-
-    let targetCurve: Record<string, number> = { '1': 4, '2': 12, '3': 12, '4': 8, '5': 6, '6+': 8 };
-    if (inferredArchetype === "Aggro Rush") {
-      targetCurve = { '1': 9, '2': 18, '3': 12, '4': 6, '5': 3, '6+': 2 };
-    } else if (inferredArchetype === "Hard Control Ramp") {
-      targetCurve = { '1': 3, '2': 8, '3': 10, '4': 9, '5': 8, '6+': 12 };
-    } else if (inferredArchetype === "Space Swarm Tempo") {
-      targetCurve = { '1': 6, '2': 15, '3': 14, '4': 8, '5': 4, '6+': 3 };
-    }
+    // Dynamic curve selection: averaged from meta or fallback baseline
+    const targetMetaBucket = metaTargetData[inferredArchetype];
+    const targetCurve = targetMetaBucket?.curve || FALLBACK_CURVES[inferredArchetype] || FALLBACK_CURVES["Midrange Tempo"];
+    const targetSource = targetMetaBucket ? 'meta' : 'fallback';
+    const sampleSize = targetMetaBucket?.sampleSize || 0;
 
     const chartData = Object.keys(c).map(cost => ({
       cost: `${cost} Cost`,
@@ -315,6 +537,8 @@ export default function DeckGrader() {
     return {
       curve: c,
       targetCurve,
+      targetSource,
+      sampleSize,
       chartData,
       totalCards: countTotal,
       totalUnits: unitCount,
@@ -329,11 +553,83 @@ export default function DeckGrader() {
       score: Math.max(0, Math.min(100, score)),
       grade,
       warnings,
-      bonuses
+      bonuses,
+      parsedCards,
+      traitCounts,
     };
-  }, [rawDeckInput, resolvedCards]);
+  }, [rawDeckInput, resolvedCards, metaTargetData, selectedPreset]);
 
-  const runAiAnalysis = () => {
+  // Compute specific sideboard recommendations naming actual cards to add/remove
+  const sideboardPlan = useMemo(() => {
+    const { parsedCards } = analysis;
+    const metaSideboard: any[] = currentDeckData.sideboard || [];
+
+    const sortedByCostDesc = [...parsedCards].sort((a, b) => b.cost - a.cost);
+    const sortedByCostAsc = [...parsedCards].sort((a, b) => a.cost - b.cost);
+
+    const sideboardSentinels = metaSideboard.filter((c: any) => {
+      const type = (c.type || '').toLowerCase();
+      const cost = typeof c.cost === 'number' ? c.cost : parseInt(c.cost || '99', 10);
+      return type === 'unit' && cost <= 3;
+    });
+
+    const sideboardHighImpact = metaSideboard.filter((c: any) => {
+      const type = (c.type || '').toLowerCase();
+      const cost = typeof c.cost === 'number' ? c.cost : parseInt(c.cost || '0', 10);
+      return type === 'event' || cost >= 4;
+    });
+
+    const sideboardMid = metaSideboard.filter((c: any) => {
+      const cost = typeof c.cost === 'number' ? c.cost : parseInt(c.cost || '0', 10);
+      return cost >= 2 && cost <= 4;
+    });
+
+    // vs Aggro: cut slow 5+ cost units; bring in sentinels or cheap answers
+    const vsAggroCuts = sortedByCostDesc.filter(c => c.type !== 'Event' && c.cost >= 5).slice(0, 3);
+    const vsAggroAdds = sideboardSentinels.length > 0 ? sideboardSentinels.slice(0, 3) : metaSideboard.slice(0, 3);
+
+    // vs Control: cut low-threat 1-2 cost ground units; bring in high-impact control/disruption
+    const vsControlCuts = sortedByCostAsc.filter(c => c.type === 'Unit' && c.cost <= 2).slice(0, 3);
+    const vsControlAdds = sideboardHighImpact.length > 0 ? sideboardHighImpact.slice(0, 3) : metaSideboard.slice(0, 3);
+
+    // vs Midrange: swap 1-of situational cards or upgrades
+    const vsMidCuts = parsedCards.filter(c => c.count === 1 || c.type === 'Upgrade').slice(0, 2);
+    const vsMidAdds = sideboardMid.length > 0 ? sideboardMid.slice(0, 2) : metaSideboard.slice(0, 2);
+
+    const formatCardList = (cards: any[], prefix: string) => {
+      if (cards.length === 0) return `${prefix}: General flex adjustments`;
+      return cards
+        .map(c => `${prefix === 'Out' ? '-' : '+'}${c.count || 1} ${c.name?.split('|')[0]?.trim() || c.name}${c.cost != null ? ` (${c.cost}c)` : ''}`)
+        .join(', ');
+    };
+
+    return [
+      {
+        matchup: "vs. Hyper Aggro",
+        out: formatCardList(vsAggroCuts, 'Out'),
+        in: formatCardList(vsAggroAdds, 'In'),
+        outCards: vsAggroCuts,
+        inCards: vsAggroAdds,
+      },
+      {
+        matchup: "vs. Hard Control",
+        out: formatCardList(vsControlCuts, 'Out'),
+        in: formatCardList(vsControlAdds, 'In'),
+        outCards: vsControlCuts,
+        inCards: vsControlAdds,
+      },
+      {
+        matchup: "vs. Midrange Mirror",
+        out: formatCardList(vsMidCuts, 'Out'),
+        in: formatCardList(vsMidAdds, 'In'),
+        outCards: vsMidCuts,
+        inCards: vsMidAdds,
+      },
+    ];
+  }, [analysis, currentDeckData]);
+
+  // Execute AI Coach Analysis via Edge /api/coach with graceful heuristic fallback
+  const runAiAnalysis = async () => {
     setIsAnalyzing(true);
     setActiveTab('ai');
 
@@ -341,52 +637,88 @@ export default function DeckGrader() {
       document.getElementById('tabs-section')?.scrollIntoView({ behavior: 'smooth' });
     }, 50);
 
-    setTimeout(() => {
-      const isAggro = analysis.inferredArchetype.includes('Aggro');
-      const isControl = analysis.inferredArchetype.includes('Control');
-      const hasSpaceBias = analysis.spaceRatio > 40;
-      const hasGroundBias = analysis.groundRatio > 70;
+    const payload = {
+      archetype: analysis.inferredArchetype,
+      leader: leaderName,
+      base: baseName,
+      aspects: allAspects,
+      totalCards: analysis.totalCards,
+      avgUnitCost: analysis.avgUnitCost,
+      groundRatio: analysis.groundRatio,
+      spaceRatio: analysis.spaceRatio,
+      curve: analysis.curve,
+      deckList: rawDeckInput,
+    };
 
-      const mulliganNotes = isAggro
-        ? [
-            "Priority 1: Mulligan aggressively for 1-cost and 2-cost ground units to guarantee turn-1 initiative.",
-            "Priority 2: Ensure you have an aggressive reach event (e.g. direct base damage or attack buff) for turns 3-4.",
-            "Redraw: Pitch high-cost 5+ cards immediately if they appear in your opening hand."
-          ]
-        : isControl
-        ? [
-            "Priority 1: Keep at least 1 cheap removal event or sentinel to stall the opponent's early round blitz.",
-            "Priority 2: Hold card-draw or ramp infrastructure to accelerate into late-game leader deployment.",
-            "Redraw: Pitch situational late-game bombs early to guarantee hitting your resource curve every turn."
-          ]
-        : [
-            "Priority 1: Look for on-curve 2-cost and 3-cost units that contest both ground and space arenas.",
-            "Priority 2: Keep action-compression cards to seize initiative going into leadership deployment turn.",
-            "Redraw: Resource situational answers that don't match the opponent's visible leader color profile."
-          ];
-
-      const tacticalNotes = [
-        `Leader Synergy: Leverage ${leaderName}${leaderSubtitle ? ` (${leaderSubtitle})` : ''} at key deployment resource points to swing tempo.`,
-        `Arena Split: ${analysis.groundRatio}% Ground / ${analysis.spaceRatio}% Space. ${
-          hasSpaceBias ? 'Strong space lane presence allows evading heavy ground blockers.' :
-          hasGroundBias ? 'Heavy ground presence demands vigilance against space raid flankers.' :
-          'Balanced dual-arena coverage allows contesting wherever the opponent is weakest.'
-        }`,
-        `Resource Curve: Average unit cost of ${analysis.avgUnitCost} requires aiming for ${isAggro ? 'quick 5-resource games' : isControl ? 'extended 7+ resource games' : '6-resource leader deployment'}.`
-      ];
-
-      setAiAnalysis({
-        summary: `AI Tactical Assessment: Your deck exhibits a competitive ${analysis.inferredArchetype} profile running ${leaderName}${leaderSubtitle ? ` (${leaderSubtitle})` : ''} on ${baseName} (${allAspects.join(', ')}). Average unit cost is ${analysis.avgUnitCost} across ${analysis.totalCards} cards.`,
-        mulligan: mulliganNotes,
-        tactics: tacticalNotes,
-        sideboardPlan: [
-          { matchup: "vs. Hyper Aggro", out: "-2 Slow high-cost units", in: "+2 Cheap sentinels / base healing" },
-          { matchup: "vs. Heavy Control", out: "-3 Low-impact ground blockers", in: "+3 Hand disruption / shield removal / fast space units" },
-          { matchup: "vs. Midrange Mirror", out: "-1 Situational card", in: "+1 Targeted removal / initiative compression" }
-        ]
+    try {
+      const res = await fetch('/api/coach', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
       });
-      setIsAnalyzing(false);
-    }, 500);
+
+      const data = await res.json().catch(() => ({}));
+      if (res.ok && data.success && data.analysis && data.source === 'gemini') {
+        setAiAnalysis(data.analysis);
+        setAiSource('gemini');
+        setAiError(null);
+        setIsAnalyzing(false);
+        return;
+      } else if (data.error && data.configured) {
+        setAiError(data.error);
+      } else {
+        setAiError(null);
+      }
+    } catch (err: any) {
+      setAiError(err?.message || "Could not reach edge /api/coach endpoint");
+    }
+
+    // Heuristic Edge fallback when GEMINI_API_KEY is not configured
+    const isAggro = analysis.inferredArchetype.includes('Aggro');
+    const isControl = analysis.inferredArchetype.includes('Control');
+    const hasSpaceBias = analysis.spaceRatio > 40;
+    const hasGroundBias = analysis.groundRatio > 70;
+
+    const mulliganNotes = isAggro
+      ? [
+          "Priority 1: Mulligan aggressively for 1-cost and 2-cost ground units to guarantee turn-1 initiative.",
+          "Priority 2: Ensure you have an aggressive reach event (e.g. direct base damage or attack buff) for turns 3-4.",
+          "Redraw: Pitch high-cost 5+ cards immediately if they appear in your opening hand."
+        ]
+      : isControl
+      ? [
+          "Priority 1: Keep at least 1 cheap removal event or sentinel to stall the opponent's opening round blitz.",
+          "Priority 2: Hold card-draw or ramp infrastructure to accelerate into late-game leader deployment.",
+          "Redraw: Pitch situational late-game bombs early to guarantee hitting your resource curve every turn."
+        ]
+      : [
+          "Priority 1: Look for on-curve 2-cost and 3-cost units that contest both ground and space arenas.",
+          "Priority 2: Keep action-compression cards to seize initiative going into leadership deployment turn.",
+          "Redraw: Resource situational answers that don't match the opponent's visible leader color profile."
+        ];
+
+    const tacticalNotes = [
+      `Leader Synergy: Leverage ${leaderName}${leaderSubtitle ? ` (${leaderSubtitle})` : ''} at key deployment resource points to swing tempo.`,
+      `Arena Split: ${analysis.groundRatio}% Ground / ${analysis.spaceRatio}% Space. ${
+        hasSpaceBias ? 'Strong space lane presence allows evading heavy ground blockers.' :
+        hasGroundBias ? 'Heavy ground presence demands vigilance against space raid flankers.' :
+        'Balanced dual-arena coverage allows contesting wherever the opponent is weakest.'
+      }`,
+      `Resource Curve: Average unit cost of ${analysis.avgUnitCost} requires aiming for ${isAggro ? 'quick 5-resource games' : isControl ? 'extended 7+ resource games' : '6-resource leader deployment'}.`
+    ];
+
+    setAiAnalysis({
+      summary: `Tactical Edge Assessment: Your deck exhibits a competitive ${analysis.inferredArchetype} profile running ${leaderName}${leaderSubtitle ? ` (${leaderSubtitle})` : ''} on ${baseName} (${allAspects.join(', ')}). Average unit cost is ${analysis.avgUnitCost} across ${analysis.totalCards} cards.`,
+      mulligan: mulliganNotes,
+      tactics: tacticalNotes,
+      sideboardPlan: sideboardPlan.map(p => ({
+        matchup: p.matchup,
+        out: p.out,
+        in: p.in,
+      })),
+    });
+    setAiSource('heuristic');
+    setIsAnalyzing(false);
   };
 
   return (
@@ -421,7 +753,7 @@ export default function DeckGrader() {
               className="flex items-center space-x-1.5 text-cyan-400 hover:text-cyan-300 border-l border-slate-800 pl-3 transition font-medium cursor-pointer"
             >
               <Key className="w-3.5 h-3.5" />
-              <span>Architecture</span>
+              <span>Edge Architecture</span>
             </button>
           </div>
         </header>
@@ -461,12 +793,38 @@ export default function DeckGrader() {
               </label>
               <span className="text-xs font-medium px-2 py-0.5 rounded bg-slate-950 text-slate-400 border border-slate-800">{analysis.totalCards} cards</span>
             </div>
+
+            {/* SWUDB IMPORT BOX */}
+            <div className="space-y-1.5">
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  value={importUrl}
+                  onChange={(e) => { setImportUrl(e.target.value); setImportError(''); }}
+                  placeholder="Paste SWUDB URL (e.g. swudb.com/deck/view/...) or ID..."
+                  className="flex-1 bg-slate-950/90 border border-slate-800/90 rounded-lg px-3 py-2 text-xs font-mono text-slate-200 focus:outline-none focus:ring-2 focus:ring-cyan-500/50 placeholder:text-slate-600"
+                  onKeyDown={(e) => { if (e.key === 'Enter') handleSwudbImport(); }}
+                />
+                <button
+                  onClick={handleSwudbImport}
+                  disabled={importLoading || !importUrl.trim()}
+                  className="px-3.5 py-2 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 disabled:opacity-40 text-slate-950 font-bold rounded-lg text-xs transition flex items-center gap-1.5 cursor-pointer shadow-md"
+                >
+                  <Download size={13} className={importLoading ? "animate-spin" : ""} />
+                  {importLoading ? "Loading..." : "Import"}
+                </button>
+              </div>
+              {importError && (
+                <p className="text-[11px] text-red-400 font-medium pl-1">{importError}</p>
+              )}
+            </div>
+
             <textarea
               value={rawDeckInput}
               onChange={(e) => setRawDeckInput(e.target.value)}
               rows={11}
               className="w-full bg-slate-950/90 border border-slate-800/90 rounded-xl p-3.5 text-xs font-mono text-slate-200 focus:outline-none focus:ring-2 focus:ring-cyan-500/50 resize-none shadow-inner"
-              placeholder="Select a meta deck above or paste cards..."
+              placeholder="Paste decklist (e.g. '3x Luke Skywalker') or import above..."
             />
             <button 
               onClick={runAiAnalysis}
@@ -514,6 +872,17 @@ export default function DeckGrader() {
                       <span className="font-bold text-slate-100">{leaderName}</span>
                       {leaderSubtitle && (
                         <span className="text-slate-400 italic">· {leaderSubtitle}</span>
+                      )}
+                      {leaderCardFromCache && (
+                        <button
+                          onClick={() => setPreviewCard({
+                            name: leaderName,
+                            url: getCardImageUrl(leaderCardFromCache) || ''
+                          })}
+                          className="text-[10px] text-cyan-400 hover:text-cyan-300 ml-1 inline-flex items-center gap-1 opacity-80 hover:opacity-100 cursor-pointer"
+                        >
+                          <Eye size={12} /> View Art
+                        </button>
                       )}
                     </div>
 
@@ -625,6 +994,47 @@ export default function DeckGrader() {
           </div>
         </div>
 
+        {/* CARD GALLERY — Parsed deck with lazy card art and lightbox click */}
+        {analysis.parsedCards.length > 0 && (
+          <section className="bg-slate-900/80 backdrop-blur-md border border-slate-800/80 rounded-2xl p-6 shadow-xl space-y-4">
+            <div className="flex justify-between items-center">
+              <h3 className="text-xs font-semibold text-slate-300 uppercase tracking-wider flex items-center gap-2">
+                <BarChart3 className="w-4 h-4 text-cyan-400" /> Deck Visual Gallery ({analysis.parsedCards.length} unique cards)
+              </h3>
+              <span className="text-[11px] text-slate-400 italic">Click any card to preview full art</span>
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+              {analysis.parsedCards.map((card, idx) => (
+                <div
+                  key={idx}
+                  onClick={() => card.imageUrl && setPreviewCard({ name: card.name, url: card.imageUrl })}
+                  className="group relative bg-slate-950/90 border border-slate-800/90 rounded-xl overflow-hidden hover:border-cyan-500/70 hover:scale-[1.02] transition-all cursor-pointer shadow-md"
+                >
+                  {card.imageUrl ? (
+                    <img
+                      src={card.imageUrl}
+                      alt={card.name}
+                      loading="lazy"
+                      className="w-full aspect-[5/7] object-cover opacity-90 group-hover:opacity-100 transition-opacity"
+                    />
+                  ) : (
+                    <div className="w-full aspect-[5/7] bg-slate-900 flex items-center justify-center p-2">
+                      <span className="text-[10px] text-slate-400 text-center font-medium">{card.name}</span>
+                    </div>
+                  )}
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-slate-950 via-slate-950/90 to-transparent p-2.5 pt-6">
+                    <p className="text-[11px] font-semibold text-slate-100 leading-tight truncate">{card.name}</p>
+                    <div className="flex items-center justify-between mt-1">
+                      <span className="text-[10px] text-slate-400">{card.type} · {card.cost}c</span>
+                      <span className="text-[10px] font-bold text-cyan-400 bg-cyan-950/80 px-1.5 py-0.2 rounded border border-cyan-800/60">×{card.count}</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
         {/* DETAILED TABS SECTION */}
         <div id="tabs-section" className="bg-slate-900/80 backdrop-blur-md border border-slate-800/80 rounded-2xl overflow-hidden shadow-2xl">
           <div className="flex border-b border-slate-800/80 bg-slate-950/80 overflow-x-auto">
@@ -657,14 +1067,48 @@ export default function DeckGrader() {
               <div className="space-y-5">
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                   <div>
-                    <h3 className="text-sm font-bold text-slate-100 uppercase tracking-wider">Resource Curve vs. Inferred Target ({analysis.inferredArchetype})</h3>
-                    <p className="text-xs text-slate-400 mt-0.5">Comparing your actual deck distribution against the automatically inferred competitive model.</p>
+                    <div className="flex items-center gap-2">
+                      <h3 className="text-sm font-bold text-slate-100 uppercase tracking-wider">
+                        Resource Curve vs. Inferred Target ({analysis.inferredArchetype})
+                      </h3>
+                      <button 
+                        onClick={() => setShowTargetExplainer(!showTargetExplainer)}
+                        className="text-cyan-400 hover:text-cyan-300 transition cursor-pointer"
+                        title="How are target numbers derived?"
+                      >
+                        <HelpCircle size={14} />
+                      </button>
+                    </div>
+                    <p className="text-xs text-slate-400 mt-0.5">
+                      Comparing your actual distribution against {analysis.targetSource === 'meta' 
+                        ? `averaged top-8 tournament meta (${analysis.sampleSize} cached decks)`
+                        : 'standard 50-card competitive baseline model'}.
+                    </p>
                   </div>
                   <div className="flex items-center space-x-5 text-xs bg-slate-950 px-4 py-2 rounded-xl border border-slate-800">
                     <div className="flex items-center space-x-2"><div className="w-3 h-3 bg-cyan-500 rounded-sm shadow-sm" /><span className="text-slate-300 font-medium">Your Deck</span></div>
                     <div className="flex items-center space-x-2"><div className="w-3 h-3 bg-slate-700 rounded-sm" /><span className="text-slate-400 font-medium">Inferred Target</span></div>
                   </div>
                 </div>
+
+                {/* TARGET NUMBERS EXPLAINER */}
+                {showTargetExplainer && (
+                  <div className="bg-slate-950/90 border border-cyan-800/50 rounded-xl p-4 text-xs space-y-2 text-slate-300">
+                    <div className="flex justify-between items-center text-cyan-400 font-bold">
+                      <span>How Inferred Target Numbers Work</span>
+                      <button onClick={() => setShowTargetExplainer(false)} className="hover:text-cyan-200 cursor-pointer">
+                        <X size={14} />
+                      </button>
+                    </div>
+                    <p className="leading-relaxed">
+                      Target curve numbers are computed dynamically by classifying cached top-8 tournament decklists from <code className="text-cyan-300">meta-decks.json</code> into archetypes based on their early game card count (1 & 2 drops) and average unit cost.
+                    </p>
+                    <p className="leading-relaxed text-slate-400">
+                      When tournament lists are present, their cost distributions are averaged to establish a real-world meta baseline. If no matching archetype decks are in cache, the system falls back to standard 50-card competitive curve targets (e.g., Aggro Rush prioritizes 18+ 1-2 drops, Hard Control favors 12+ 5+ bombs).
+                    </p>
+                  </div>
+                )}
+
                 <div className="w-full h-72 pt-4 min-w-0">
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={analysis.chartData}>
@@ -706,18 +1150,76 @@ export default function DeckGrader() {
 
             {activeTab === 'sideboard' && (
               <div className="space-y-4">
-                <h3 className="text-sm font-bold text-slate-100 uppercase tracking-wider">Sideboard Swap Guide</h3>
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-2">
+                  <div>
+                    <h3 className="text-sm font-bold text-slate-100 uppercase tracking-wider">Sideboard Swap Guide</h3>
+                    <p className="text-xs text-slate-400 mt-0.5">Named card cuts and additions derived by cross-referencing your deck against tournament sideboards.</p>
+                  </div>
+                  {currentDeckData.sideboard && currentDeckData.sideboard.length > 0 && (
+                    <span className="text-[10px] px-2.5 py-1 rounded-full bg-emerald-950/60 text-emerald-400 border border-emerald-800/40 font-semibold">
+                      {currentDeckData.sideboard.length} sideboard cards available
+                    </span>
+                  )}
+                </div>
                 <div className="divide-y divide-slate-800/80 border border-slate-800/80 rounded-2xl bg-slate-950/90 overflow-hidden shadow-md">
-                  {[
-                    { matchup: "vs. Hyper Aggro", out: "-2 High-cost bombs", in: "+2 Cheap sentinels / base healing" },
-                    { matchup: "vs. Control", out: "-3 Low-impact defenders", in: "+3 Hand disruption / shield breakers" },
-                    { matchup: "vs. Midrange", out: "-1 Situational card", in: "+1 Targeted removal" }
-                  ].map((plan, idx) => (
-                    <div key={idx} className="p-4 md:p-5 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 text-xs">
-                      <span className="font-bold text-cyan-400 w-36">{plan.matchup}</span>
-                      <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-3 w-full">
-                        <div className="bg-red-950/30 border border-red-900/30 p-2.5 rounded-xl text-red-300 font-medium">Out: {plan.out}</div>
-                        <div className="bg-emerald-950/30 border border-emerald-900/30 p-2.5 rounded-xl text-emerald-300 font-medium">In: {plan.in}</div>
+                  {sideboardPlan.map((plan, idx) => (
+                    <div key={idx} className="p-4 md:p-5 space-y-3 text-xs">
+                      <span className="font-bold text-cyan-400 text-sm">{plan.matchup}</span>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <div className="bg-red-950/30 border border-red-900/30 p-3.5 rounded-xl space-y-2">
+                          <span className="text-red-400 font-semibold text-[10px] uppercase tracking-wider block">Cut Candidates (Out)</span>
+                          {plan.outCards.length > 0 ? (
+                            <ul className="space-y-1.5">
+                              {plan.outCards.map((card: any, ci: number) => (
+                                <li key={ci} className="flex items-center justify-between text-red-300">
+                                  <div className="flex items-center gap-2">
+                                    <span className="font-bold">-{card.count || 1}</span>
+                                    <span className="font-medium">{card.name}</span>
+                                    <span className="text-red-400/60 text-[10px]">({card.cost}c {card.type})</span>
+                                  </div>
+                                  {card.imageUrl && (
+                                    <button
+                                      onClick={() => setPreviewCard({ name: card.name, url: card.imageUrl })}
+                                      className="text-red-400 hover:text-red-300 text-[10px] cursor-pointer"
+                                      title="View Card"
+                                    >
+                                      <Eye size={12} />
+                                    </button>
+                                  )}
+                                </li>
+                              ))}
+                            </ul>
+                          ) : (
+                            <p className="text-red-400/60 italic text-[11px]">No specific cuts identified</p>
+                          )}
+                        </div>
+                        <div className="bg-emerald-950/30 border border-emerald-900/30 p-3.5 rounded-xl space-y-2">
+                          <span className="text-emerald-400 font-semibold text-[10px] uppercase tracking-wider block">Add Candidates (In)</span>
+                          {plan.inCards.length > 0 ? (
+                            <ul className="space-y-1.5">
+                              {plan.inCards.map((card: any, ci: number) => (
+                                <li key={ci} className="flex items-center justify-between text-emerald-300">
+                                  <div className="flex items-center gap-2">
+                                    <span className="font-bold">+{card.count || 1}</span>
+                                    <span className="font-medium">{card.name?.split('|')[0]?.trim() || card.name}</span>
+                                    <span className="text-emerald-400/60 text-[10px]">({card.cost}c {card.type})</span>
+                                  </div>
+                                  {card.imageUrl && (
+                                    <button
+                                      onClick={() => setPreviewCard({ name: card.name, url: card.imageUrl })}
+                                      className="text-emerald-400 hover:text-emerald-300 text-[10px] cursor-pointer"
+                                      title="View Card"
+                                    >
+                                      <Eye size={12} />
+                                    </button>
+                                  )}
+                                </li>
+                              ))}
+                            </ul>
+                          ) : (
+                            <p className="text-emerald-400/60 italic text-[11px]">No matching sideboard cards in pool</p>
+                          )}
+                        </div>
                       </div>
                     </div>
                   ))}
@@ -728,9 +1230,19 @@ export default function DeckGrader() {
             {activeTab === 'ai' && (
               <div className="space-y-4">
                 <div className="flex justify-between items-center bg-slate-950/90 p-5 rounded-2xl border border-slate-800/90 shadow-md">
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-3">
                     <Sparkles className="w-4 h-4 text-cyan-400" />
                     <span className="text-xs font-bold text-slate-200 tracking-wide uppercase">AI Strategic Edge Coach</span>
+                    {aiSource === 'gemini' && (
+                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-400 border border-emerald-800 font-semibold">
+                        Powered by Gemini Edge LLM
+                      </span>
+                    )}
+                    {aiSource === 'heuristic' && (
+                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-950 text-amber-300 border border-amber-800 font-semibold" title="Add GEMINI_API_KEY secret to enable live LLM">
+                        Edge Heuristic Engine
+                      </span>
+                    )}
                   </div>
                   <button 
                     onClick={runAiAnalysis} 
@@ -741,6 +1253,16 @@ export default function DeckGrader() {
                     {isAnalyzing ? "Analyzing..." : "Refresh Analysis"}
                   </button>
                 </div>
+
+                {aiError && (
+                  <div className="bg-red-950/60 border border-red-800/80 rounded-xl p-3.5 text-xs text-red-200 flex items-start gap-2.5 shadow-md">
+                    <AlertTriangle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
+                    <div className="space-y-0.5">
+                      <span className="font-bold text-red-300 block">Gemini API Error (fell back to Edge Heuristics):</span>
+                      <p className="text-[11px] text-red-200/90 leading-relaxed font-mono">{aiError}</p>
+                    </div>
+                  </div>
+                )}
                 {isAnalyzing ? (
                   <div className="bg-slate-950/90 p-8 rounded-2xl border border-slate-800/90 text-center space-y-3">
                     <div className="inline-block animate-spin rounded-full h-8 w-8 border-2 border-cyan-400 border-t-transparent" />
@@ -775,6 +1297,23 @@ export default function DeckGrader() {
                         </ul>
                       </div>
                     )}
+
+                    {aiAnalysis.sideboardPlan && aiAnalysis.sideboardPlan.length > 0 && (
+                      <div className="pt-3 border-t border-slate-800/80 space-y-2">
+                        <h4 className="font-bold text-purple-400 uppercase tracking-wider text-[11px]">Sideboard Plan</h4>
+                        <div className="space-y-2">
+                          {aiAnalysis.sideboardPlan.map((p: any, i: number) => (
+                            <div key={i} className="bg-slate-900/60 rounded-lg p-3 space-y-1">
+                              <span className="font-bold text-slate-200">{p.matchup}</span>
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-[11px]">
+                                <span className="text-red-300">{p.out}</span>
+                                <span className="text-emerald-300">{p.in}</span>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
                 ) : (
                   <div className="bg-slate-950/90 p-8 rounded-2xl border border-slate-800/90 text-center space-y-2">
@@ -786,14 +1325,62 @@ export default function DeckGrader() {
           </div>
         </div>
 
-        {/* CLOUDFLARE MODAL */}
+        {/* CARD ART PREVIEW LIGHTBOX */}
+        {previewCard && (
+          <div 
+            onClick={() => setPreviewCard(null)}
+            className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 cursor-pointer"
+          >
+            <div 
+              onClick={(e) => e.stopPropagation()}
+              className="bg-slate-900 border border-slate-800 rounded-2xl p-4 max-w-sm w-full space-y-3 shadow-2xl relative"
+            >
+              <div className="flex justify-between items-center">
+                <h4 className="text-xs font-bold text-slate-200 truncate">{previewCard.name}</h4>
+                <button onClick={() => setPreviewCard(null)} className="text-slate-400 hover:text-white cursor-pointer">
+                  <X size={16} />
+                </button>
+              </div>
+              <div className="w-full aspect-[5/7] rounded-xl overflow-hidden bg-slate-950 border border-slate-800 flex items-center justify-center">
+                <img 
+                  src={previewCard.url} 
+                  alt={previewCard.name}
+                  className="w-full h-full object-contain"
+                />
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* CLOUDFLARE EDGE ARCHITECTURE MODAL */}
         {showKeyModal && (
           <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
             <div className="bg-slate-900 border border-slate-800 rounded-2xl max-w-xl w-full p-6 space-y-4 shadow-2xl transition-all duration-200">
-              <h3 className="text-sm font-bold text-slate-100 tracking-wide">Cloudflare Pages Security Architecture</h3>
-              <p className="text-xs text-slate-300 leading-relaxed">
-                API keys are safely stored as Cloudflare environment secrets (<code className="bg-slate-950 px-1.5 py-0.5 rounded text-cyan-400 font-mono">env.GEMINI_API_KEY</code>) and accessed via serverless edge functions at <code className="bg-slate-950 px-1.5 py-0.5 rounded text-cyan-400 font-mono">/api/grade</code>.
-              </p>
+              <h3 className="text-sm font-bold text-slate-100 tracking-wide flex items-center gap-2">
+                <Key className="w-4 h-4 text-cyan-400" />
+                Cloudflare Workers & LLM Edge Architecture
+              </h3>
+              <div className="text-xs text-slate-300 leading-relaxed space-y-3">
+                <p>
+                  This Deck Grader runs on a unified Cloudflare Worker with Hono routing:
+                </p>
+                <div className="bg-slate-950 p-3 rounded-xl border border-slate-800 space-y-1.5 font-mono text-[11px]">
+                  <div><span className="text-emerald-400">GET</span> /api/swudb/:deckId → CORS-safe deck proxy</div>
+                  <div><span className="text-cyan-400">POST</span> /api/coach → Gemini 2.5 Flash edge inference</div>
+                </div>
+                <div className="space-y-1">
+                  <strong className="text-slate-100 block">Local Testing with Wrangler:</strong>
+                  <p className="text-slate-400">
+                    Create a <code className="text-cyan-300 bg-slate-950 px-1 py-0.5 rounded">.dev.vars</code> file in project root with <code className="text-cyan-300 bg-slate-950 px-1 py-0.5 rounded">GEMINI_API_KEY=your_key</code> and run <code className="text-cyan-300 bg-slate-950 px-1 py-0.5 rounded">npx wrangler dev</code>.
+                  </p>
+                </div>
+                <div className="space-y-1">
+                  <strong className="text-slate-100 block">Cloudflare Production Deployment:</strong>
+                  <p className="text-slate-400">
+                    Store your API secret via <code className="text-cyan-300 bg-slate-950 px-1 py-0.5 rounded">npx wrangler secret put GEMINI_API_KEY</code>.
+                  </p>
+                </div>
+              </div>
               <div className="flex justify-end pt-2">
                 <button onClick={() => setShowKeyModal(false)} className="bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold px-4 py-2 rounded-xl text-xs transition shadow-lg cursor-pointer">Close</button>
               </div>

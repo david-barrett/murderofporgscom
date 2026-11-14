@@ -1,0 +1,3 @@
+# Local development variables for Cloudflare Worker (`npx wrangler dev`)
+# Duplicate this file as `.dev.vars` (which is in .gitignore) and supply your key:
+GEMINI_API_KEY=your_gemini_api_key_here
