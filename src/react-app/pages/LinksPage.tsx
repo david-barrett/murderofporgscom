@@ -45,17 +45,17 @@ export function LinksPage() {
 						Leisure Games
 					</a>
 				</li>
-				<li>
-					<div class="social-content">
-						<span class="handle">@theswunmatchedpainter</span>
-						<a href="https://www.instagram.com/theswunmatchedpainter" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-							<i class="fa-brands fa-instagram"></i>
-						</a>
-						<a href="https://www.tiktok.com/@theswunmatchedpainter" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
-							<i class="fa-brands fa-tiktok"></i>
-						</a>
-					</div>
-				</li>
+			<li>
+				<div className="social-content">
+					<span className="handle">@theswunmatchedpainter</span>
+					<a href="https://www.instagram.com/theswunmatchedpainter" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+						<i className="fa-brands fa-instagram"></i>
+					</a>
+					<a href="https://www.tiktok.com/@theswunmatchedpainter" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+						<i className="fa-brands fa-tiktok"></i>
+					</a>
+				</div>
+			</li>
 			</ul>
 			<PageViewMetrics route="links" />
 			</section>
