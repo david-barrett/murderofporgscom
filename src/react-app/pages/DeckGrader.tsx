@@ -151,7 +151,7 @@ const FALLBACK_CURVES: Record<string, Record<string, number>> = {
   "Space Swarm Tempo": { '1': 6, '2': 15, '3': 14, '4': 8, '5': 4, '6+': 3 },
   "Midrange Tempo": { '1': 4, '2': 12, '3': 12, '4': 8, '5': 6, '6+': 8 },
 };
-/*
+
 const STAR_WARS_LOADING_PHRASES = [
   "Consulting tactical battle droid databanks...",
   "Calibrating deflector shields for opening mulligan...",
@@ -165,7 +165,7 @@ const STAR_WARS_LOADING_PHRASES = [
   "Aligning Kyber crystals with leadership deployment turn...",
   "Calculating hyperdrive jump coordinates for initiative seize..."
 ];
-*/
+
 interface ParsedCard {
   name: string;
   count: number;
@@ -248,15 +248,15 @@ export default function DeckGrader() {
   const [aiSource, setAiSource] = useState<'gemini' | 'heuristic' | null>(null);
   const [aiError, setAiError] = useState<string | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
-  //const [loadingPhraseIdx, setLoadingPhraseIdx] = useState(0);
+  const [loadingPhraseIdx, setLoadingPhraseIdx] = useState(0);
 
   useEffect(() => {
     if (!isAnalyzing) {
-      //setLoadingPhraseIdx(0);
+      setLoadingPhraseIdx(0);
       return;
     }
     const timer = setInterval(() => {
-      //setLoadingPhraseIdx(prev => (prev + 1) % STAR_WARS_LOADING_PHRASES.length);
+      setLoadingPhraseIdx(prev => (prev + 1) % STAR_WARS_LOADING_PHRASES.length);
     }, 1800);
     return () => clearInterval(timer);
   }, [isAnalyzing]);
@@ -1297,7 +1297,7 @@ export default function DeckGrader() {
                 {isAnalyzing ? (
                   <div className="bg-slate-950/90 p-8 rounded-2xl border border-slate-800/90 text-center space-y-3">
                     <div className="inline-block animate-spin rounded-full h-8 w-8 border-2 border-cyan-400 border-t-transparent" />
-                    <p className="text-xs text-slate-400">Evaluating curve, arena pressure, and mulligan priorities...</p>
+                    <p className="text-xs text-slate-400">{STAR_WARS_LOADING_PHRASES[loadingPhraseIdx]}</p>
                   </div>
                 ) : aiAnalysis ? (
                   <div className="bg-slate-950/90 p-6 rounded-2xl border border-slate-800/90 text-xs text-slate-300 space-y-4 leading-relaxed shadow-md">
