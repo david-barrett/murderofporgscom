@@ -1,7 +1,7 @@
 import { useState, useMemo, useEffect } from 'react';
 import { 
   Cpu, Database, TrendingUp, Swords, 
-  CheckCircle2, AlertTriangle, ArrowRightLeft, BarChart3, Sparkles, Key, Crosshair, FileText,
+  CheckCircle2, AlertTriangle, ArrowRightLeft, BarChart3, Sparkles, Crosshair, FileText,
   Crown, Shield, Compass, Download, HelpCircle, Eye, X
 } from 'lucide-react';
 import { 
@@ -339,7 +339,6 @@ export default function DeckGrader() {
   const [customDeckData, setCustomDeckData] = useState<any>(null);
   const [rawDeckInput, setRawDeckInput] = useState<string>(() => getDeckListText(defaultKey));
   const [activeTab, setActiveTab] = useState<string>('overview');
-  const [showKeyModal, setShowKeyModal] = useState(false);
   const [showTargetExplainer, setShowTargetExplainer] = useState(false);
   const [aiAnalysis, setAiAnalysis] = useState<any>(null);
   const [aiSource, setAiSource] = useState<'gemini' | 'heuristic' | null>(null);
@@ -901,13 +900,6 @@ export default function DeckGrader() {
           </div>
           <div className="flex items-center gap-4 text-xs text-gray-300 bg-slate-950/80 px-4 py-2.5 rounded-xl border border-slate-800/80 shadow-inner">
             <span className="flex items-center gap-2"><Database size={15} className="text-emerald-400" /> Cached Cards: <span className="font-bold text-white">{fetchStats.cached}</span></span>
-            <button 
-              onClick={() => setShowKeyModal(true)}
-              className="flex items-center space-x-1.5 text-cyan-400 hover:text-cyan-300 border-l border-slate-800 pl-3 transition font-medium cursor-pointer"
-            >
-              <Key className="w-3.5 h-3.5" />
-              <span>Edge Architecture</span>
-            </button>
           </div>
         </header>
 
@@ -1542,43 +1534,6 @@ export default function DeckGrader() {
             </div>
           </div>
         )}
-
-        {/* CLOUDFLARE EDGE ARCHITECTURE MODAL */}
-        {showKeyModal && (
-          <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
-            <div className="bg-slate-900 border border-slate-800 rounded-2xl max-w-xl w-full p-6 space-y-4 shadow-2xl transition-all duration-200">
-              <h3 className="text-sm font-bold text-slate-100 tracking-wide flex items-center gap-2">
-                <Key className="w-4 h-4 text-cyan-400" />
-                Cloudflare Workers & LLM Edge Architecture
-              </h3>
-              <div className="text-xs text-slate-300 leading-relaxed space-y-3">
-                <p>
-                  This Deck Grader runs on a unified Cloudflare Worker with Hono routing:
-                </p>
-                <div className="bg-slate-950 p-3 rounded-xl border border-slate-800 space-y-1.5 font-mono text-[11px]">
-                  <div><span className="text-emerald-400">GET</span> /api/swudb/:deckId → CORS-safe deck proxy</div>
-                  <div><span className="text-cyan-400">POST</span> /api/coach → Gemini 2.5 Flash edge inference</div>
-                </div>
-                <div className="space-y-1">
-                  <strong className="text-slate-100 block">Local Testing with Wrangler:</strong>
-                  <p className="text-slate-400">
-                    Create a <code className="text-cyan-300 bg-slate-950 px-1 py-0.5 rounded">.dev.vars</code> file in project root with <code className="text-cyan-300 bg-slate-950 px-1 py-0.5 rounded">GEMINI_API_KEY=your_key</code> and run <code className="text-cyan-300 bg-slate-950 px-1 py-0.5 rounded">npx wrangler dev</code>.
-                  </p>
-                </div>
-                <div className="space-y-1">
-                  <strong className="text-slate-100 block">Cloudflare Production Deployment:</strong>
-                  <p className="text-slate-400">
-                    Store your API secret via <code className="text-cyan-300 bg-slate-950 px-1 py-0.5 rounded">npx wrangler secret put GEMINI_API_KEY</code>.
-                  </p>
-                </div>
-              </div>
-              <div className="flex justify-end pt-2">
-                <button onClick={() => setShowKeyModal(false)} className="bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold px-4 py-2 rounded-xl text-xs transition shadow-lg cursor-pointer">Close</button>
-              </div>
-            </div>
-          </div>
-        )}
-
       </div>
     </>
   );
