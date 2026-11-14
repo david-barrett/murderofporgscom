@@ -35,7 +35,10 @@ async function buildCache() {
         hp: card.hp ?? card.HP,
         power: card.power ?? card.Power,
         set: set,
-        number: number
+        number: number,
+        aspects: card.Aspects || [],
+        text: card.FrontText,
+        unique: card.Unique,
       };
     });
 
