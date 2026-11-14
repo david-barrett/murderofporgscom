@@ -45,6 +45,87 @@ const ASPECT_CONFIG: Record<string, { label: string; badge: string; dot: string 
   },
 };
 
+const SET_CONFIG: Record<string, { label: string; dateLegal: string, dateRotatedOut: string, badge: string; dot: string }> = {
+  "SOR": {
+    "label": "Spark of Rebellion",
+    "dateLegal": "2024-03-08",
+    "dateRotatedOut": "2026-03-13",
+    "badge": "bg-orange-950/70 text-orange-300 border-orange-800/80 shadow-orange-950/40",
+    "dot": "bg-orange-500"
+  },
+  "SHD": {
+    "label": "Shadows of the Galaxy",
+    "dateLegal": "2024-07-12",
+    "dateRotatedOut": "2026-03-13",
+    "badge": "bg-purple-950/70 text-purple-300 border-purple-800/80 shadow-purple-950/40",
+    "dot": "bg-purple-500"
+  },
+  "TWI": {
+    "label": "Twilight of the Republic",
+    "dateLegal": "2024-11-08",
+    "dateRotatedOut": "2026-03-13",
+    "badge": "bg-cyan-950/70 text-cyan-300 border-cyan-800/80 shadow-cyan-950/40",
+    "dot": "bg-cyan-500"
+  },
+  "JTL": {
+    "label": "Jump to Lightspeed",
+    "dateLegal": "2025-03-14",
+    "dateRotatedOut": "",
+    "badge": "bg-sky-950/70 text-sky-300 border-sky-800/80 shadow-sky-950/40",
+    "dot": "bg-sky-500"
+  },
+  "LOF": {
+    "label": "Legends of the Force",
+    "dateLegal": "2025-07-11",
+    "dateRotatedOut": "",
+    "badge": "bg-emerald-950/70 text-emerald-300 border-emerald-800/80 shadow-emerald-950/40",
+    "dot": "bg-emerald-500"
+  },
+  "IBH": {
+    "label": "Intro Battle: Hoth",
+    "dateLegal": "2025-10-03",
+    "dateRotatedOut": "",
+    "badge": "bg-slate-900/70 text-slate-300 border-slate-700/80 shadow-slate-950/40",
+    "dot": "bg-slate-400"
+  },
+  "SEC": {
+    "label": "Secrets of Power",
+    "dateLegal": "2025-11-07",
+    "dateRotatedOut": "",
+    "badge": "bg-indigo-950/70 text-indigo-300 border-indigo-800/80 shadow-indigo-950/40",
+    "dot": "bg-indigo-500"
+  },
+  "LAW": {
+    "label": "A Lawless Time",
+    "dateLegal": "2026-03-13",
+    "dateRotatedOut": "",
+    "badge": "bg-red-950/70 text-red-300 border-red-800/80 shadow-red-950/40",
+    "dot": "bg-red-500"
+  },
+  "ASH": {
+    "label": "Ashes of the Empire",
+    "dateLegal": "2026-07-17",
+    "dateRotatedOut": "",
+    "badge": "bg-amber-950/70 text-amber-300 border-amber-800/80 shadow-amber-950/40",
+    "dot": "bg-amber-500"
+  },
+  "HMW": {
+    "label": "Homeworlds",
+    "dateLegal": "2026-10-09",
+    "dateRotatedOut": "",
+    "badge": "bg-teal-950/70 text-teal-300 border-teal-800/80 shadow-teal-950/40",
+    "dot": "bg-teal-500"
+  },
+  "IC27": {
+    "label": "Icons 2027 Edition",
+    "dateLegal": "2026-11-20",
+    "dateRotatedOut": "",
+    "badge": "bg-yellow-950/70 text-yellow-300 border-yellow-800/80 shadow-yellow-950/40",
+    "dot": "bg-yellow-500"
+  }
+};
+
+
 function getAspectConfig(name: string) {
   const clean = name.trim();
   const matchedKey = Object.keys(ASPECT_CONFIG).find(
@@ -52,6 +133,20 @@ function getAspectConfig(name: string) {
   );
   return matchedKey
     ? ASPECT_CONFIG[matchedKey]
+    : {
+        label: clean,
+        badge: "bg-slate-900 text-slate-300 border-slate-700 shadow-slate-950/40",
+        dot: "bg-cyan-400",
+      };
+}
+
+function getSetConfig(name: string) {
+  const clean = name.trim();
+  const matchedKey = Object.keys(SET_CONFIG).find(
+    k => k.toLowerCase() === clean.toLowerCase()
+  );
+  return matchedKey
+    ? SET_CONFIG[matchedKey]
     : {
         label: clean,
         badge: "bg-slate-900 text-slate-300 border-slate-700 shadow-slate-950/40",
@@ -176,6 +271,8 @@ interface ParsedCard {
   set: string;
   number: string;
   imageUrl: string | null;
+  aspects: string[];
+  unique: boolean;
 }
 
 export default function DeckGrader() {
@@ -231,7 +328,7 @@ export default function DeckGrader() {
           const count = item.count || item.quantity || 1;
           const cardInfo = findCardData(rawId);
           const displayName = cardInfo?.name || rawId || "Unknown Card";
-          return `${count}x ${displayName}`;
+          return `${count}x ${displayName} (${rawId})`;
         })
         .join('\n');
     }
@@ -320,7 +417,7 @@ export default function DeckGrader() {
         const count = card.count || card.quantity || 1;
         const resolved = findCardData(cardId) || findCardData(cardName);
         const displayName = resolved?.name || cardName || cardId || 'Unknown Card';
-        deckLines.push(`${count}x ${displayName}`);
+        deckLines.push(`${count}x ${displayName} (${cardId})`);
       }
 
       if (deckLines.length === 0) {
@@ -423,15 +520,19 @@ export default function DeckGrader() {
     let spaceUnits = 0;
     let events = 0;
     let upgrades = 0;
+    let sets: Set<string> = new Set();
+    let outOfAspect = 0;
     const traitCounts: Record<string, number> = {};
     const parsedCards: ParsedCard[] = [];
 
+    const allAspectsSet = new Set(allAspects);
     const lines = rawDeckInput.split('\n');
     lines.forEach(line => {
-      const match = line.match(/^(\d+)x?\s+(.+)$/);
+      const regex = /^(\d+)x?\s+(.+?)(?:\s+\(([^)]+)\))?$/;
+      const match = line.match(regex);
       if (match) {
         const qty = parseInt(match[1], 10) || 1;
-        const queryTerm = match[2].trim();
+        const queryTerm = match[3].trim();
         const cardData: any = findCardData(queryTerm);
         const metaDeckCard = findMetaDeckCard(queryTerm, selectedPreset);
 
@@ -460,6 +561,13 @@ export default function DeckGrader() {
             });
           }
 
+          if (cardData.set) {
+            sets.add(cardData.set)
+          }
+          if (cardData.aspects.some((t: string) => !allAspectsSet.has(t))) {
+            outOfAspect = outOfAspect + qty;
+          }
+
           parsedCards.push({
             name: cardData.name || queryTerm,
             count: qty,
@@ -470,6 +578,8 @@ export default function DeckGrader() {
             set: cardData.set || '',
             number: cardData.number || '',
             imageUrl: getCardImageUrl(cardData, metaDeckCard),
+            aspects: cardData.aspects || [],
+            unique: cardData.unique || false,
           });
         } else {
           c['2'] = (c['2'] || 0) + qty;
@@ -487,6 +597,8 @@ export default function DeckGrader() {
             set: '',
             number: '',
             imageUrl: null,
+            aspects: [],
+            unique: false,
           });
         }
       }
@@ -582,6 +694,8 @@ export default function DeckGrader() {
       bonuses,
       parsedCards,
       traitCounts,
+      outOfAspect,
+      sets,
     };
   }, [rawDeckInput, resolvedCards, metaTargetData, selectedPreset]);
 
@@ -958,6 +1072,30 @@ export default function DeckGrader() {
                     )}
                   </div>
 
+                  {/* SETS LIST */}
+                  <div className="flex flex-wrap items-center gap-2 pt-0.5">
+                    <span className="inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider text-slate-400">
+                      <Compass className="w-3 h-3 text-slate-400 shrink-0" />
+                      Sets:
+                    </span>
+                    {analysis.sets.size > 0 ? (
+                      [...analysis.sets].map(set => {
+                        const cfg = getSetConfig(set);
+                        return (
+                          <span
+                            key={set}
+                            className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold border ${cfg.badge} shadow-sm`}
+                          >
+                            <span className={`w-1.5 h-1.5 rounded-full ${cfg.dot}`} />
+                            {cfg.label}
+                          </span>
+                        );
+                      })
+                    ) : (
+                      <span className="text-xs text-slate-500 italic">Unspecified</span>
+                    )}
+                  </div>
+
                   {/* STATS ROW */}
                   <div className="flex items-center space-x-5 pt-2 border-t border-slate-800/60">
                     <div className="text-xs text-slate-300">
@@ -968,6 +1106,9 @@ export default function DeckGrader() {
                     </div>
                     <div className="text-xs text-slate-300">
                       Units: <span className="font-bold text-emerald-400 text-sm">{analysis.totalUnits}</span>
+                    </div>
+                    <div className="text-xs text-slate-300">
+                      Out of Aspect: <span className="font-bold text-emerald-400 text-sm">{analysis.outOfAspect}</span>
                     </div>
                   </div>
                 </div>
