@@ -13,14 +13,17 @@
   },
   "dependencies": {
     "hono": "4.11.1",
+    "lucide-react": "^1.69.0",
     "react": "19.2.1",
     "react-dom": "19.2.1",
     "react-helmet-async": "^3.0.0",
-    "react-router-dom": "^7.15.0"
+    "react-router-dom": "^7.15.0",
+    "recharts": "^3.10.1"
   },
   "devDependencies": {
     "@cloudflare/vite-plugin": "1.15.3",
     "@eslint/js": "9.39.1",
+    "@tailwindcss/vite": "^4.3.4",
     "@types/node": "^24.10.1",
     "@types/react": "19.2.7",
     "@types/react-dom": "19.2.3",
@@ -29,6 +32,7 @@
     "eslint-plugin-react-hooks": "7.0.1",
     "eslint-plugin-react-refresh": "0.4.24",
     "globals": "16.5.0",
+    "tailwindcss": "^4.3.4",
     "typescript": "5.8.3",
     "typescript-eslint": "8.48.0",
     "velite": "^0.3.1",
@@ -37,6 +41,9 @@
   },
   "private": true,
   "scripts": {
+    "regen-cards": "node scripts/build-card-cache.cjs",
+    "regen-meta": "node scripts/fetch-meta-decks.cjs",
+    "regen": "node scripts/build-card-cache.cjs && node scripts/fetch-meta-decks.cjs",
     "build": "velite build --strict && node scripts/generate-sitemap.mjs && tsc -b && vite build",
     "cf-typegen": "wrangler types",
     "check": "velite build --strict && node scripts/generate-sitemap.mjs && tsc && vite build && wrangler deploy --dry-run",

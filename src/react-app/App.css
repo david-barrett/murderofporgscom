@@ -184,6 +184,7 @@
 .links-card ul {
 	margin: 0;
 	padding-left: 1.25rem;
+	list-style: disc;
 }
 
 .links-card li + li {
@@ -419,6 +420,34 @@ a.tag-pill--all-posts:hover {
 
 .blog-post__body :where(p:last-child) {
 	margin-bottom: 0;
+}
+
+.blog-post__body :where(ul) {
+	list-style: disc;
+	margin: 0 0 1em 1.25rem;
+}
+
+.blog-post__body :where(ol) {
+	list-style: decimal;
+	margin: 0 0 1em 1.25rem;
+}
+
+.blog-post__body :where(li) {
+	margin-bottom: 0.35em;
+}
+
+.blog-post__body :where(h1, h2, h3, h4) {
+	font-weight: 700;
+	margin: 1.5rem 0 0.5rem;
+	color: #fff;
+}
+
+.blog-post__body :where(h2) {
+	font-size: 1.5rem;
+}
+
+.blog-post__body :where(h3) {
+	font-size: 1.25rem;
 }
 
 .blog-post__body :where(a) {
