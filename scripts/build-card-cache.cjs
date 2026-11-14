@@ -30,7 +30,7 @@ async function buildCache() {
         subtitle: card.subtitle || card.Subtitle,
         cost: card.cost ?? card.Cost ?? 0,
         type: card.type || card.Type,
-        arena: card.arenas?.[0] || card.arena || card.Arena || 'None',
+        arena: card.arenas?.[0] || card.Arenas?.[0] || card.arena || card.Arena || 'None',
         traits: card.traits || card.Traits || [],
         hp: card.hp ?? card.HP,
         power: card.power ?? card.Power,
