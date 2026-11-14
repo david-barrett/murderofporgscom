@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { 
   Cpu, Database, TrendingUp, Swords, 
   CheckCircle2, AlertTriangle, ArrowRightLeft, BarChart3, Sparkles, Key, Crosshair, FileText,
@@ -152,6 +152,20 @@ const FALLBACK_CURVES: Record<string, Record<string, number>> = {
   "Midrange Tempo": { '1': 4, '2': 12, '3': 12, '4': 8, '5': 6, '6+': 8 },
 };
 
+const STAR_WARS_LOADING_PHRASES = [
+  "Consulting tactical battle droid databanks...",
+  "Calibrating deflector shields for opening mulligan...",
+  "Scanning Death Star thermal exhaust ports for curve weaknesses...",
+  "Triangulating ground vs. space lane pressure...",
+  "Translating Bothan reconnaissance telemetry...",
+  "Negotiating with Porgs in the Millennium Falcon engine room...",
+  "Rerouting auxiliary power to edge inference array...",
+  "Simulating 14,000,605 tactical combat outcomes...",
+  "Locking S-foils into attack position...",
+  "Aligning Kyber crystals with leadership deployment turn...",
+  "Calculating hyperdrive jump coordinates for initiative seize..."
+];
+
 interface ParsedCard {
   name: string;
   count: number;
@@ -234,6 +248,18 @@ export default function DeckGrader() {
   const [aiSource, setAiSource] = useState<'gemini' | 'heuristic' | null>(null);
   const [aiError, setAiError] = useState<string | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [loadingPhraseIdx, setLoadingPhraseIdx] = useState(0);
+
+  useEffect(() => {
+    if (!isAnalyzing) {
+      setLoadingPhraseIdx(0);
+      return;
+    }
+    const timer = setInterval(() => {
+      setLoadingPhraseIdx(prev => (prev + 1) % STAR_WARS_LOADING_PHRASES.length);
+    }, 1800);
+    return () => clearInterval(timer);
+  }, [isAnalyzing]);
 
   // SWUDB Import state
   const [importUrl, setImportUrl] = useState('');
@@ -654,6 +680,7 @@ export default function DeckGrader() {
       const res = await fetch('/api/coach', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        signal: AbortSignal.timeout(15000),
         body: JSON.stringify(payload),
       });
 
@@ -670,7 +697,11 @@ export default function DeckGrader() {
         setAiError(null);
       }
     } catch (err: any) {
-      setAiError(err?.message || "Could not reach edge /api/coach endpoint");
+      if (err?.name === 'TimeoutError') {
+        setAiError("AI inference timed out after 15s — fell back to Edge Heuristic Engine");
+      } else {
+        setAiError(err?.message || "Could not reach edge /api/coach endpoint");
+      }
     }
 
     // Heuristic Edge fallback when GEMINI_API_KEY is not configured

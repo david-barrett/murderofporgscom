@@ -180,36 +180,87 @@ Provide strategic guidance. Return ONLY a single JSON object (no markdown, no ba
   ]
 }`;
 
-		const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
-		const res = await fetch(geminiUrl, {
-			method: "POST",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify({
-				contents: [{ role: "user", parts: [{ text: prompt }] }],
-				generationConfig: {
-					temperature: 0.3,
-					responseMimeType: "application/json",
-				},
-			}),
-		});
+		// 1. Try Google's modern Interactions API (recommended by Google for AQ. keys & Gemini 3.8)
+		let rawContent = "";
+		let lastErrorText = "";
 
-		if (!res.ok) {
-			const errText = await res.text();
-			return c.json(
-				{ success: false, configured: true, error: `Gemini API returned ${res.status}: ${errText}` },
-				502,
-			);
+		try {
+			const interactRes = await fetch("https://generativelanguage.googleapis.com/v1beta/interactions", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+					"x-goog-api-key": apiKey,
+				},
+				signal: AbortSignal.timeout(10000),
+				body: JSON.stringify({
+					model: "gemini-3.8-flash",
+					input: prompt,
+				}),
+			});
+
+			if (interactRes.ok) {
+				const interactData = (await interactRes.json()) as any;
+				const step = interactData.steps?.find((s: any) => s.type === "model_output");
+				const textPart = step?.content?.find((c: any) => c.type === "text" || typeof c.text === "string");
+				if (textPart?.text) {
+					rawContent = textPart.text;
+				}
+			} else {
+				lastErrorText = await interactRes.text();
+			}
+		} catch (err: any) {
+			lastErrorText = err?.message || "Interactions API timeout";
 		}
 
-		const data = (await res.json()) as {
-			candidates?: Array<{
-				content?: { parts?: Array<{ text?: string }> };
-			}>;
-		};
-
-		const rawContent = data.candidates?.[0]?.content?.parts?.[0]?.text;
+		// 2. If Interactions API didn't return content, fallback to generateContent endpoint
 		if (!rawContent) {
-			return c.json({ success: false, configured: true, error: "Empty response from Gemini." }, 502);
+			const candidateModels = ["gemini-3.8-flash", "gemini-1.5-flash"];
+			for (const model of candidateModels) {
+				const geminiUrl = apiKey.startsWith("AQ.")
+					? `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`
+					: `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+
+				try {
+					const res = await fetch(geminiUrl, {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json",
+							"x-goog-api-key": apiKey,
+						},
+						signal: AbortSignal.timeout(8000),
+						body: JSON.stringify({
+							contents: [{ role: "user", parts: [{ text: prompt }] }],
+							generationConfig: {
+								temperature: 0.3,
+								responseMimeType: "application/json",
+							},
+						}),
+					});
+
+					if (res.ok) {
+						const data = (await res.json()) as any;
+						const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+						if (text) {
+							rawContent = text;
+							break;
+						}
+					} else {
+						lastErrorText = await res.text();
+						if (res.status !== 503 && res.status !== 429) {
+							break;
+						}
+					}
+				} catch (fetchErr: any) {
+					lastErrorText = fetchErr?.message || "Timeout connecting to Gemini generateContent";
+				}
+			}
+		}
+
+		if (!rawContent) {
+			return c.json(
+				{ success: false, configured: true, error: `Gemini API error: ${lastErrorText}` },
+				502,
+			);
 		}
 
 		let parsed: any;
