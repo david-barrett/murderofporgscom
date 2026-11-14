@@ -702,7 +702,15 @@ export default function DeckGrader() {
   // Compute specific sideboard recommendations naming actual cards to add/remove
   const sideboardPlan = useMemo(() => {
     const { parsedCards } = analysis;
-    const metaSideboard: any[] = currentDeckData.sideboard || [];
+    let metaSideboard: any[] = currentDeckData.sideboard || [];
+    if (metaSideboard.length > 0) {
+      if (!metaSideboard[0].name) {
+        metaSideboard = metaSideboard.map(sb=>{
+          const cardData = findCardData(sb.id);
+          return { ...sb, ...cardData };
+        });
+      }
+    }
 
     const sortedByCostDesc = [...parsedCards].sort((a, b) => b.cost - a.cost);
     const sortedByCostAsc = [...parsedCards].sort((a, b) => a.cost - b.cost);
