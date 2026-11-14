@@ -734,6 +734,7 @@ a.tag-pill--all-posts:hover {
 	cursor: not-allowed;
 }
 
+/*
 @media (prefers-color-scheme: light) {
 	.content-card {
 		border-color: rgba(0, 0, 0, 0.12);
@@ -883,3 +884,4 @@ a.tag-pill--all-posts:hover {
 		background: rgba(100, 108, 255, 0.28);
 	}
 }
+*/
