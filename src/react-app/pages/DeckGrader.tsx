@@ -1045,6 +1045,17 @@ export default function DeckGrader() {
                           {baseHp} HP
                         </span>
                       )}
+                      {baseCardFromCache && (
+                        <button
+                          onClick={() => setPreviewCard({
+                            name: baseName,
+                            url: getCardImageUrl(baseCardFromCache) || ''
+                          })}
+                          className="text-[10px] text-cyan-400 hover:text-cyan-300 ml-1 inline-flex items-center gap-1 opacity-80 hover:opacity-100 cursor-pointer"
+                        >
+                          <Eye size={12} /> View Art
+                        </button>
+                      )}
                     </div>
                   </div>
 
