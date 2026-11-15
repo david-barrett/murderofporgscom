@@ -8,123 +8,10 @@ import {
   BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Legend 
 } from 'recharts';
 import { Seo } from '../components/Seo';
+import { ASPECT_CONFIG, SET_CONFIG, PREMIER_BAN_LIST, ETERNAL_BAN_LIST } from '../lib/consts'
 
 import cardCache from '../../data/card-cache.json';
 import metaDecksCache from '../../data/meta-decks.json';
-
-const ASPECT_CONFIG: Record<string, { label: string; badge: string; dot: string }> = {
-  Aggression: {
-    label: "Aggression",
-    badge: "bg-red-950/70 text-red-300 border-red-800/80 shadow-red-950/40",
-    dot: "bg-red-500",
-  },
-  Command: {
-    label: "Command",
-    badge: "bg-emerald-950/70 text-emerald-300 border-emerald-800/80 shadow-emerald-950/40",
-    dot: "bg-emerald-500",
-  },
-  Cunning: {
-    label: "Cunning",
-    badge: "bg-amber-950/70 text-amber-300 border-amber-800/80 shadow-amber-950/40",
-    dot: "bg-amber-400",
-  },
-  Vigilance: {
-    label: "Vigilance",
-    badge: "bg-blue-950/70 text-blue-300 border-blue-800/80 shadow-blue-950/40",
-    dot: "bg-blue-400",
-  },
-  Heroism: {
-    label: "Heroism",
-    badge: "bg-slate-800/90 text-slate-100 border-slate-600 shadow-slate-900/50",
-    dot: "bg-slate-200",
-  },
-  Villainy: {
-    label: "Villainy",
-    badge: "bg-purple-950/70 text-purple-200 border-purple-800/80 shadow-purple-950/40",
-    dot: "bg-purple-400",
-  },
-};
-
-const SET_CONFIG: Record<string, { label: string; dateLegal: string, dateRotatedOut: string, badge: string; dot: string }> = {
-  "SOR": {
-    "label": "Spark of Rebellion",
-    "dateLegal": "2024-03-08",
-    "dateRotatedOut": "2026-03-13",
-    "badge": "bg-orange-950/70 text-orange-300 border-orange-800/80 shadow-orange-950/40",
-    "dot": "bg-orange-500"
-  },
-  "SHD": {
-    "label": "Shadows of the Galaxy",
-    "dateLegal": "2024-07-12",
-    "dateRotatedOut": "2026-03-13",
-    "badge": "bg-purple-950/70 text-purple-300 border-purple-800/80 shadow-purple-950/40",
-    "dot": "bg-purple-500"
-  },
-  "TWI": {
-    "label": "Twilight of the Republic",
-    "dateLegal": "2024-11-08",
-    "dateRotatedOut": "2026-03-13",
-    "badge": "bg-cyan-950/70 text-cyan-300 border-cyan-800/80 shadow-cyan-950/40",
-    "dot": "bg-cyan-500"
-  },
-  "JTL": {
-    "label": "Jump to Lightspeed",
-    "dateLegal": "2025-03-14",
-    "dateRotatedOut": "",
-    "badge": "bg-sky-950/70 text-sky-300 border-sky-800/80 shadow-sky-950/40",
-    "dot": "bg-sky-500"
-  },
-  "LOF": {
-    "label": "Legends of the Force",
-    "dateLegal": "2025-07-11",
-    "dateRotatedOut": "",
-    "badge": "bg-emerald-950/70 text-emerald-300 border-emerald-800/80 shadow-emerald-950/40",
-    "dot": "bg-emerald-500"
-  },
-  "IBH": {
-    "label": "Intro Battle: Hoth",
-    "dateLegal": "2025-10-03",
-    "dateRotatedOut": "",
-    "badge": "bg-slate-900/70 text-slate-300 border-slate-700/80 shadow-slate-950/40",
-    "dot": "bg-slate-400"
-  },
-  "SEC": {
-    "label": "Secrets of Power",
-    "dateLegal": "2025-11-07",
-    "dateRotatedOut": "",
-    "badge": "bg-indigo-950/70 text-indigo-300 border-indigo-800/80 shadow-indigo-950/40",
-    "dot": "bg-indigo-500"
-  },
-  "LAW": {
-    "label": "A Lawless Time",
-    "dateLegal": "2026-03-13",
-    "dateRotatedOut": "",
-    "badge": "bg-red-950/70 text-red-300 border-red-800/80 shadow-red-950/40",
-    "dot": "bg-red-500"
-  },
-  "ASH": {
-    "label": "Ashes of the Empire",
-    "dateLegal": "2026-07-17",
-    "dateRotatedOut": "",
-    "badge": "bg-amber-950/70 text-amber-300 border-amber-800/80 shadow-amber-950/40",
-    "dot": "bg-amber-500"
-  },
-  "HMW": {
-    "label": "Homeworlds",
-    "dateLegal": "2026-10-09",
-    "dateRotatedOut": "",
-    "badge": "bg-teal-950/70 text-teal-300 border-teal-800/80 shadow-teal-950/40",
-    "dot": "bg-teal-500"
-  },
-  "IC27": {
-    "label": "Icons 2027 Edition",
-    "dateLegal": "2026-11-20",
-    "dateRotatedOut": "",
-    "badge": "bg-yellow-950/70 text-yellow-300 border-yellow-800/80 shadow-yellow-950/40",
-    "dot": "bg-yellow-500"
-  }
-};
-
 
 function getAspectConfig(name: string) {
   const clean = name.trim();
@@ -523,6 +410,14 @@ export default function DeckGrader() {
     let outOfAspect = 0;
     const traitCounts: Record<string, number> = {};
     const parsedCards: ParsedCard[] = [];
+    let validForPremier = true;
+    let validForEternal = true;
+
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    const todayStr = `${year}_${month}_${day}`; // e.g., "2026_11_15"
 
     const allAspectsSet = new Set(allAspects);
     const lines = rawDeckInput.split('\n');
@@ -534,6 +429,11 @@ export default function DeckGrader() {
         const queryTerm = match[3].trim();
         const cardData: any = findCardData(queryTerm);
         const metaDeckCard = findMetaDeckCard(queryTerm, selectedPreset);
+
+        if (qty > 3) {
+          validForEternal = false;
+          validForPremier = false;
+        }
 
         if (cardData) {
           const cost = typeof cardData.cost === 'number' ? cardData.cost : parseInt(cardData.cost || '2', 10);
@@ -565,6 +465,27 @@ export default function DeckGrader() {
           }
           if (cardData.aspects.some((t: string) => !allAspectsSet.has(t))) {
             outOfAspect = outOfAspect + qty;
+          }
+
+          if (!validForEternal) {
+            const bannedCard = ETERNAL_BAN_LIST[queryTerm];
+            if (bannedCard) {
+              if (bannedCard.ban_date < todayStr) {
+                if (!bannedCard.unban_date || bannedCard.unban_date > todayStr) {
+                  validForEternal = false;
+                }
+              }
+            }
+          }
+          if (!validForPremier) {
+            const bannedCard = PREMIER_BAN_LIST[queryTerm];
+            if (bannedCard) {
+              if (bannedCard.ban_date < todayStr) {
+                if (!bannedCard.unban_date || bannedCard.unban_date > todayStr) {
+                  validForPremier = false;
+                }
+              }
+            }
           }
 
           parsedCards.push({
@@ -627,6 +548,8 @@ export default function DeckGrader() {
 
     if (countTotal < 50) {
       score -= (50 - countTotal) * 2;
+      validForEternal = false;
+      validForPremier = false;
       warnings.push(`Deck contains only ${countTotal} cards (Standard minimum is 50).`);
     } else if (countTotal > 54) {
       score -= (countTotal - 50) * 1.5;
@@ -786,8 +709,8 @@ export default function DeckGrader() {
 
     const payload = {
       archetype: analysis.inferredArchetype,
-      leader: leaderName,
-      base: baseName,
+      leader: leaderName + ' - ' + leaderSubtitle + " (" + leaderRawId + ")",
+      base: baseName + ' - ' + baseSubtitle + " (" + baseRawId + ")",
       aspects: allAspects,
       totalCards: analysis.totalCards,
       avgUnitCost: analysis.avgUnitCost,
@@ -801,7 +724,7 @@ export default function DeckGrader() {
       const res = await fetch('/api/coach', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        signal: AbortSignal.timeout(15000),
+        signal: AbortSignal.timeout(150000),
         body: JSON.stringify(payload),
       });
 
