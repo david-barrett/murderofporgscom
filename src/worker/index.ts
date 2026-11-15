@@ -119,6 +119,9 @@ app.get("/api/swudb/:deckId", async (c) => {
 	}
 });
 
+import cardCache from '../data/card-cache.json';
+import metaDecksCache from '../data/meta-decks.json';
+
 // ── AI Coach Endpoint ───────────────────────────────────────────────
 app.post("/api/coach", async (c) => {
 	const apiKey = c.env.GEMINI_API_KEY;
