@@ -12,6 +12,9 @@
     "publish": true
   },
   "dependencies": {
+    "@langfuse/otel": "^6.1.1",
+    "@langfuse/tracing": "^6.1.1",
+    "@opentelemetry/sdk-node": "^0.223.2",
     "hono": "4.11.1",
     "lucide-react": "^1.69.0",
     "react": "19.2.1",

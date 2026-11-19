@@ -1,4 +1,5 @@
 import { Hono } from "hono";
+import { callGeminiWithTrace, generateHexId } from "../gemini"
 
 const SLUG_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
@@ -196,79 +197,45 @@ ${body.deckList ? body.deckList.slice(0, 1500) : "N/A"}
 `
 ;
 
-		// 1. Try Google's modern Interactions API (recommended by Google for AQ. keys & Gemini 3.8)
+		const traceId = generateHexId(16);
 		let rawContent = "";
 		let lastErrorText = "";
 
-		try {
-			const interactRes = await fetch("https://generativelanguage.googleapis.com/v1beta/interactions", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-					"x-goog-api-key": apiKey,
-				},
-				signal: AbortSignal.timeout(100000),
-				body: JSON.stringify({
-					model: "gemini-3.8-flash",
-					input: prompt,
-				}),
-			});
+		// 1. Primary call: Interactions API
+		const primary = await callGeminiWithTrace({
+			c,
+			traceId,
+			name: "coach-interactions",
+			model: "gemini-3.8-flash",
+			prompt,
+			apiKey,
+			mode: "interactions",
+			timeoutMs: 10000,
+		});
 
-			if (interactRes.ok) {
-				const interactData = (await interactRes.json()) as any;
-				const step = interactData.steps?.find((s: any) => s.type === "model_output");
-				const textPart = step?.content?.find((c: any) => c.type === "text" || typeof c.text === "string");
-				if (textPart?.text) {
-					rawContent = textPart.text;
-				}
-			} else {
-				lastErrorText = await interactRes.text();
-			}
-		} catch (err: any) {
-			lastErrorText = err?.message || "Interactions API timeout";
-		}
+		rawContent = primary.text;
+		lastErrorText = primary.errorText;
 
-		// 2. If Interactions API didn't return content, fallback to generateContent endpoint
+		// 2. Fallback calls: generateContent across candidate models
 		if (!rawContent) {
 			const candidateModels = ["gemini-3.8-flash", "gemini-3.6-flash", "gemini-3.5-flash", "gemini-3.1-flash-lite"];
 			for (const model of candidateModels) {
-				const geminiUrl = apiKey.startsWith("AQ.")
-					? `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`
-					: `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+				const fallback = await callGeminiWithTrace({
+					c,
+					traceId,
+					name: `coach-generate-${model}`,
+					model,
+					prompt,
+					apiKey,
+					mode: "generateContent",
+					timeoutMs: 8000,
+				});
 
-				try {
-					const res = await fetch(geminiUrl, {
-						method: "POST",
-						headers: {
-							"Content-Type": "application/json",
-							"x-goog-api-key": apiKey,
-						},
-						signal: AbortSignal.timeout(80000),
-						body: JSON.stringify({
-							contents: [{ role: "user", parts: [{ text: prompt }] }],
-							generationConfig: {
-								temperature: 0.3,
-								responseMimeType: "application/json",
-							},
-						}),
-					});
-
-					if (res.ok) {
-						const data = (await res.json()) as any;
-						const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
-						if (text) {
-							rawContent = text;
-							break;
-						}
-					} else {
-						lastErrorText = await res.text();
-						if (res.status !== 503 && res.status !== 429) {
-							break;
-						}
-					}
-				} catch (fetchErr: any) {
-					lastErrorText = fetchErr?.message || "Timeout connecting to Gemini generateContent";
+				if (fallback.text) {
+					rawContent = fallback.text;
+					break;
 				}
+				lastErrorText = fallback.errorText;
 			}
 		}
 
