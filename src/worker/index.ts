@@ -1,5 +1,6 @@
 import { Hono } from "hono";
 import { callGeminiWithTrace, generateHexId } from "../gemini"
+import { Deck } from "../react-app/components/Decks"
 
 const SLUG_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
@@ -123,6 +124,120 @@ app.get("/api/swudb/:deckId", async (c) => {
 import cardCache from '../data/card-cache.json';
 import metaDecksCache from '../data/meta-decks.json';
 
+// Helper to format Deck into readable lines for the LLM prompt
+function formatDeckSummary(deck?: Deck): string {
+	if (!deck) return "N/A";
+	const lines: string[] = [];
+
+	if (deck.leader?.name || deck.leader?.id) {
+		lines.push(`Leader: ${deck.leader.name || "Unknown"} (${deck.leader.id || "N/A"})`);
+	}
+	if (deck.base?.name || deck.base?.id) {
+		lines.push(`Base: ${deck.base.name || "Unknown"} (${deck.base.id || "N/A"})`);
+	}
+	if (Array.isArray(deck.main) && deck.main.length > 0) {
+		lines.push("Main Deck:");
+		for (const card of deck.main) {
+			const qty = card.count ?? card.quantity ?? 1;
+			lines.push(`- ${qty}x ${card.name || card.id || "Unknown"} (${card.id || "N/A"})`);
+		}
+	}
+	if (Array.isArray(deck.side) && deck.side.length > 0) {
+		lines.push("Sideboard:");
+		for (const card of deck.side) {
+			const qty = card.count ?? card.quantity ?? 1;
+			lines.push(`- ${qty}x ${card.name || card.id || "Unknown"} (${card.id || "N/A"})`);
+		}
+	}
+
+	return lines.length > 0 ? lines.join("\n") : "N/A";
+}
+
+function extractRelevantCardPool(
+	cache: Record<string, any> | undefined,
+	deck: Deck | undefined,
+	metaDecks: Record<string, any> | undefined,
+): Record<string, any> {
+	if (!cache || typeof cache !== "object") return {};
+
+	const ids = new Set<string>();
+	const addId = (rawId?: string) => {
+		if (!rawId) return;
+		const clean = String(rawId).trim().toUpperCase();
+		ids.add(clean);
+		const m = clean.match(/^([A-Z0-9]+)_0*(\d+)$/);
+		if (m) {
+			ids.add(`${m[1]}_${m[2].padStart(3, "0")}`);
+			ids.add(`${m[1]}_${m[2]}`);
+		}
+	};
+
+	if (deck) {
+		addId(deck.leader?.id);
+		addId(deck.base?.id);
+		for (const card of deck.main || []) addId(card.id);
+		for (const card of deck.side || []) addId(card.id);
+	}
+
+	if (metaDecks && typeof metaDecks === "object") {
+		for (const metaKey of Object.keys(metaDecks)) {
+			const md = metaDecks[metaKey];
+			addId(md?.leader?.id);
+			addId(md?.base?.id);
+			for (const item of md?.deck || []) addId(item.id);
+			for (const item of md?.sideboard || []) addId(item.id);
+		}
+	}
+
+	const pool: Record<string, any> = {};
+	for (const [key, value] of Object.entries(cache)) {
+		if (ids.has(key.toUpperCase())) {
+			pool[key] = value;
+		}
+	}
+	return Object.keys(pool).length > 0 ? pool : cache;
+}
+
+function sanitizeCardForPrompt(card: any): Record<string, any> {
+	if (!card || typeof card !== "object") return {};
+
+	const {
+		imageUrl: _imageUrl,
+		quantity: _quantity,
+		set: _set,
+		number: _number,
+		...rest
+	} = card;
+
+	const cleaned: Record<string, any> = {};
+	for (const [key, value] of Object.entries(rest)) {
+		if (value === undefined || value === null) continue;
+		if (Array.isArray(value) && value.length === 0) continue;
+		cleaned[key] = value;
+	}
+
+	if (cleaned.count === undefined && card.quantity !== undefined) {
+		cleaned.count = card.quantity;
+	}
+
+	return cleaned;
+}
+
+function sanitizeDeckForPrompt(deck?: Deck): Record<string, any> | null {
+	if (!deck) return null;
+
+	return {
+		...(deck.leader ? { leader: sanitizeCardForPrompt(deck.leader) } : {}),
+		...(deck.base ? { base: sanitizeCardForPrompt(deck.base) } : {}),
+		...(Array.isArray(deck.main)
+			? { main: deck.main.map(sanitizeCardForPrompt) }
+			: {}),
+		...(Array.isArray(deck.side)
+			? { side: deck.side.map(sanitizeCardForPrompt) }
+			: {}),
+	};
+}
+
 // ── AI Coach Endpoint ───────────────────────────────────────────────
 app.post("/api/coach", async (c) => {
 	const apiKey = c.env.GEMINI_API_KEY;
@@ -147,17 +262,29 @@ app.post("/api/coach", async (c) => {
 			avgUnitCost?: string;
 			groundRatio?: number;
 			spaceRatio?: number;
-			deckList?: string;
+			deck: Deck;
 			curve?: Record<string, number>;
 		}>();
 
+		const compactMetaDecks = JSON.stringify(metaDecksCache ?? {}, null, 2).slice(0, 8000);
+		const compactCardCache = JSON.stringify(cardCache ?? {}).slice(0, 12000);
+
+		const sanitizedDeck = sanitizeDeckForPrompt(body.deck);
+		const relevantCardPool = extractRelevantCardPool(
+			cardCache as Record<string, any>,
+			body.deck,
+			metaDecksCache as Record<string, any>,
+		);
+
+		// - Card Pool Reference (JSON)
+// ${JSON.stringify(relevantCardPool, null, 2)}
+
+// Current Meta Decks (JSON)
+// ${JSON.stringify(metaDecksCache ?? {}, null, 2)}
+
 		const prompt = `You are an elite competitive Star Wars: Unlimited TCG strategic coach.
 Analyze this deck setup:
-- Card Pool Reference
-${cardCache}
 
-Current Meta Decks
-${metaDecksCache}
 
 Provide strategic guidance. Return ONLY a single JSON object (no markdown, no backticks) with this structure:
 {
@@ -192,10 +319,9 @@ Deck to Analyse
 - Average Unit Cost: ${body.avgUnitCost || "N/A"}
 - Arena Breakdown: ${body.groundRatio || 0}% Ground vs ${body.spaceRatio || 0}% Space
 - Resource Curve: ${JSON.stringify(body.curve || {})}
-- Deck Sample:
-${body.deckList ? body.deckList.slice(0, 1500) : "N/A"}
-`
-;
+- Full Deck JSON:
+${sanitizedDeck ? JSON.stringify(sanitizedDeck, null, 2) : "N/A"}
+`;
 
 		const traceId = generateHexId(16);
 		let rawContent = "";

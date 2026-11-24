@@ -793,7 +793,7 @@ export default function DeckGrader() {
       groundRatio: analysis.groundRatio,
       spaceRatio: analysis.spaceRatio,
       curve: analysis.curve,
-      deckList: rawDeckInput,
+      deck: resolvedDeck,
     };
 
     try {
