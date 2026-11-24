@@ -1,0 +1,3557 @@
+{
+  "metaDeck_1": {
+    "metadata": {
+      "name": "Wicket (Meta)",
+      "author": "AleSpo",
+      "winRate": "58%"
+    },
+    "leader": {
+      "id": "HMW_014",
+      "name": "Wicket | Few Greater Battles to Fight",
+      "subtitle": "Few Greater Battles to Fight",
+      "count": 1,
+      "cost": 4,
+      "type": 0,
+      "arena": "Ground",
+      "traits": [
+        "EWOK"
+      ],
+      "hp": 5,
+      "power": 2,
+      "set": "hmw",
+      "number": "014",
+      "imageUrl": null,
+      "aspects": [
+        "Aggression",
+        "Heroism"
+      ],
+      "text": "When a friendly unit attacks a unit that costs more than it: You may exhaust this leader. If you do, draw a card.",
+      "unique": true,
+      "back_text": "On Attack: If you control a unit that costs 3 or less, draw a card."
+    },
+    "base": {
+      "id": "JTL_024",
+      "name": "Data Vault",
+      "subtitle": "Scarif",
+      "count": 1,
+      "cost": 0,
+      "type": 1,
+      "arena": "None",
+      "traits": [],
+      "hp": 33,
+      "set": "jtl",
+      "number": "024",
+      "imageUrl": null,
+      "aspects": [
+        "Command"
+      ],
+      "text": "Your minimum deck size is increased by 10 cards.",
+      "unique": false
+    },
+    "deck": [
+      {
+        "id": "ASH_116",
+        "name": "Ant Droid",
+        "count": 3,
+        "cost": 1,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "DROID"
+        ],
+        "hp": 2,
+        "power": 1,
+        "set": "ASH",
+        "number": "116",
+        "imageUrl": "https://cdn.starwarsunlimited.com//08010116_EN_Ant_Droid_4d5013bf68.png",
+        "aspects": [
+          "Command"
+        ],
+        "text": "When Defeated: Draw a card.",
+        "unique": false,
+        "quantity": 3
+      },
+      {
+        "id": "LAW_191",
+        "name": "Arvel Skeen | Win and Walk Away",
+        "subtitle": "Win and Walk Away",
+        "count": 2,
+        "cost": 3,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "REBEL"
+        ],
+        "hp": 3,
+        "power": 4,
+        "set": "LAW",
+        "number": "191",
+        "imageUrl": "https://cdn.starwarsunlimited.com//07010191_EN_Arvel_Skeen_0f1c746410.png",
+        "aspects": [
+          "Aggression"
+        ],
+        "text": "When Played/On Attack: You may defeat a Credit token (belonging to any player). If you do, deal 1 damage to a unit or base.",
+        "unique": true,
+        "quantity": 2
+      },
+      {
+        "id": "JTL_096",
+        "name": "Blue Leader | Scarif Air Support",
+        "subtitle": "Scarif Air Support",
+        "count": 3,
+        "cost": 3,
+        "type": 2,
+        "arena": "Space",
+        "traits": [
+          "REBEL",
+          "VEHICLE",
+          "FIGHTER"
+        ],
+        "hp": 3,
+        "power": 3,
+        "set": "JTL",
+        "number": "096",
+        "imageUrl": "https://cdn.starwarsunlimited.com//04010096_EN_Blue_Leader_5117b9c7ad.png",
+        "aspects": [
+          "Command",
+          "Heroism"
+        ],
+        "text": "Ambush (When you play this unit, it may attack an enemy unit.)\nWhen Played: You may pay 2. If you do, move this unit to the ground arena and give 2 Experience tokens to it. (It's a ground unit.)",
+        "unique": true,
+        "quantity": 3
+      },
+      {
+        "id": "HMW_254",
+        "name": "Captain Tarpals | Grand Army Captain",
+        "subtitle": "Grand Army Captain",
+        "count": 3,
+        "cost": 1,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "GUNGAN",
+          "TROOPER"
+        ],
+        "hp": 2,
+        "power": 0,
+        "set": "HMW",
+        "number": "254",
+        "imageUrl": "https://cdn.starwarsunlimited.com//09010254_EN_Captain_Tarpals_78096e7e9a.png",
+        "aspects": [
+          "Heroism"
+        ],
+        "text": "Shielded (When you play this unit, give a Shield token to him.) \nRaid 2 (This unit gets +2/+0 while attacking.)",
+        "unique": true,
+        "quantity": 3
+      },
+      {
+        "id": "SEC_098",
+        "name": "Captain Typho | All Necessary Precautions",
+        "subtitle": "All Necessary Precautions",
+        "count": 3,
+        "cost": 4,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "NABOO",
+          "REPUBLIC",
+          "TROOPER"
+        ],
+        "hp": 5,
+        "power": 4,
+        "set": "SEC",
+        "number": "098",
+        "imageUrl": "https://cdn.starwarsunlimited.com//06010098_EN_Captain_Typho_fc1f0d15ea.png",
+        "aspects": [
+          "Command",
+          "Heroism"
+        ],
+        "text": "Sentinel\nWhen this unit is attacked: You may disclose Command Heroism. If you do, heal 1 damage from your base.",
+        "unique": true,
+        "quantity": 3
+      },
+      {
+        "id": "HMW_175",
+        "name": "Fennec Shand | A Ship for a Life",
+        "subtitle": "A Ship for a Life",
+        "count": 3,
+        "cost": 1,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "UNDERWORLD"
+        ],
+        "hp": 4,
+        "power": 0,
+        "set": "HMW",
+        "number": "175",
+        "imageUrl": "https://cdn.starwarsunlimited.com//09010175_EN_Fennec_Shand_3ed9db663e.png",
+        "aspects": [
+          "Aggression"
+        ],
+        "text": "Raid 2 (This unit gets +2/+0 while attacking.)",
+        "unique": true,
+        "quantity": 3
+      },
+      {
+        "id": "SEC_104",
+        "name": "Figure of Unity",
+        "count": 3,
+        "cost": 3,
+        "type": 3,
+        "arena": "None",
+        "traits": [
+          "INNATE"
+        ],
+        "hp": 0,
+        "power": 0,
+        "set": "SEC",
+        "number": "104",
+        "imageUrl": "https://cdn.starwarsunlimited.com//06010104_EN_Figure_of_Unity_60c34df264.png",
+        "aspects": [
+          "Command",
+          "Heroism"
+        ],
+        "text": "Attach to a Unique unit.\nAttached unit gains: “While this unit is ready, each other friendly unit gains Overwhelm, Raid 1, and Restore 1.”",
+        "unique": true,
+        "quantity": 3
+      },
+      {
+        "id": "SEC_148",
+        "name": "Karis Nemik | Freedom Is a Pure Idea",
+        "subtitle": "Freedom is a Pure Idea",
+        "count": 3,
+        "cost": 2,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "REBEL"
+        ],
+        "hp": 2,
+        "power": 3,
+        "set": "SEC",
+        "number": "148",
+        "imageUrl": "https://cdn.starwarsunlimited.com//06010148_EN_Karis_Nemik_9559a05022.png",
+        "aspects": [
+          "Aggression",
+          "Heroism"
+        ],
+        "text": "Hidden\nWhen Defeated: You may disclose Aggression Heroism (reveal cards from your hand with these aspect icons among them). If you do, create a Spy token and ready it.",
+        "unique": true,
+        "quantity": 3
+      },
+      {
+        "id": "LOF_147",
+        "name": "Kit Fisto's Aethersprite | Good Hunting",
+        "subtitle": "Good Hunting",
+        "count": 2,
+        "cost": 5,
+        "type": 2,
+        "arena": "Space",
+        "traits": [
+          "JEDI",
+          "REPUBLIC",
+          "VEHICLE",
+          "FIGHTER"
+        ],
+        "hp": 5,
+        "power": 4,
+        "set": "LOF",
+        "number": "147",
+        "imageUrl": "https://cdn.starwarsunlimited.com//05010147_EN_Kit_Fisto_s_Aethersprite_e2e9218c41.png",
+        "aspects": [
+          "Aggression",
+          "Heroism"
+        ],
+        "text": "Saboteur\nWhen Played: You may defeat any number of upgrades on a unit.",
+        "unique": true,
+        "quantity": 2
+      },
+      {
+        "id": "HMW_115",
+        "name": "Leia Organa | These Are My Friends",
+        "subtitle": "These are My Friends",
+        "count": 3,
+        "cost": 1,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "REBEL",
+          "OFFICIAL"
+        ],
+        "hp": 3,
+        "power": 2,
+        "set": "HMW",
+        "number": "115",
+        "imageUrl": "https://cdn.starwarsunlimited.com//09010115_EN_Leia_Organa_932588b02e.png",
+        "aspects": [
+          "Command",
+          "Heroism"
+        ],
+        "text": "When you play another unit that costs 3 or less: Heal 1 damage from your base.",
+        "unique": true,
+        "quantity": 3
+      },
+      {
+        "id": "HMW_045",
+        "name": "Logray | Bright Tree Shaman",
+        "subtitle": "Bright Tree Shaman",
+        "count": 3,
+        "cost": 2,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "EWOK"
+        ],
+        "hp": 5,
+        "power": 1,
+        "set": "HMW",
+        "number": "045",
+        "imageUrl": "https://cdn.starwarsunlimited.com//09010045_EN_Logray_16a5665662.png",
+        "aspects": [
+          "Command",
+          "Aggression"
+        ],
+        "text": "When another friendly unit that costs 3 or less is dealt damage: You may deal 1 damage to an enemy unit.",
+        "unique": true,
+        "quantity": 3
+      },
+      {
+        "id": "ASH_112",
+        "name": "Luke Skywalker | Answering the Call",
+        "subtitle": "Answering the Call",
+        "count": 2,
+        "cost": 6,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "FORCE",
+          "JEDI"
+        ],
+        "hp": 5,
+        "power": 5,
+        "set": "ASH",
+        "number": "112",
+        "imageUrl": "https://cdn.starwarsunlimited.com//08010112_EN_Luke_Skywalker_547807ff50.png",
+        "aspects": [
+          "Command",
+          "Heroism"
+        ],
+        "text": "Restore 1\nWhen Played: If you control at least 4 units, deal 3 damage to each enemy unit.",
+        "unique": true,
+        "quantity": 2
+      },
+      {
+        "id": "HMW_124",
+        "name": "Luminara Unduli | Besieged General",
+        "subtitle": "Besieged General",
+        "count": 3,
+        "cost": 7,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "FORCE",
+          "JEDI",
+          "REPUBLIC"
+        ],
+        "hp": 7,
+        "power": 7,
+        "set": "HMW",
+        "number": "124",
+        "imageUrl": "https://cdn.starwarsunlimited.com//09010124_EN_Luminara_Unduli_885b73a878.png",
+        "aspects": [
+          "Command",
+          "Heroism"
+        ],
+        "text": "When you play a unit (including this one): You may attack with a unit. It gets +2/+0 for this attack.",
+        "unique": true,
+        "quantity": 3
+      },
+      {
+        "id": "ASH_168",
+        "name": "Migs Mayfeld | How About a Toast?",
+        "subtitle": "How About a Toast?",
+        "count": 3,
+        "cost": 2,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "FRINGE"
+        ],
+        "hp": 3,
+        "power": 2,
+        "set": "ASH",
+        "number": "168",
+        "imageUrl": "https://cdn.starwarsunlimited.com//08010168_EN_Migs_Mayfeld_376ebf5cab.png",
+        "aspects": [
+          "Aggression"
+        ],
+        "text": "Support\nOn Attack: Deal 1 damage to the defending unit. If this unit is upgraded, deal 2 damage to the defending unit instead.",
+        "unique": true,
+        "quantity": 3
+      },
+      {
+        "id": "LOF_096",
+        "name": "Obi-Wan Kenobi | Protective Padawan",
+        "subtitle": "Protective Padawan",
+        "count": 2,
+        "cost": 3,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "FORCE",
+          "JEDI",
+          "REPUBLIC"
+        ],
+        "hp": 5,
+        "power": 3,
+        "set": "LOF",
+        "number": "096",
+        "imageUrl": "https://cdn.starwarsunlimited.com//05010096_EN_Obi_Wan_Kenobi_de3fe0ebd4.png",
+        "aspects": [
+          "Command",
+          "Heroism"
+        ],
+        "text": "When you play a Force unit (including this one): This unit gains Sentinel for this phase.",
+        "unique": true,
+        "quantity": 2
+      },
+      {
+        "id": "SEC_101",
+        "name": "Queen Amidala | Championing Her People",
+        "subtitle": "Championing Her People",
+        "count": 2,
+        "cost": 5,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "NABOO",
+          "OFFICIAL"
+        ],
+        "hp": 3,
+        "power": 5,
+        "set": "SEC",
+        "number": "101",
+        "imageUrl": "https://cdn.starwarsunlimited.com//06010101_EN_Queen_Amidala_2750936c4b.png",
+        "aspects": [
+          "Command",
+          "Heroism"
+        ],
+        "text": "When Played: Create 2 Spy tokens.\nIf damage would be dealt to this unit, you may defeat another friendly unit that shares a trait with this unit. If you do, prevent that damage.",
+        "unique": true,
+        "quantity": 2
+      },
+      {
+        "id": "JTL_153",
+        "name": "Rebellious Hammerhead",
+        "count": 3,
+        "cost": 6,
+        "type": 2,
+        "arena": "Space",
+        "traits": [
+          "REBEL",
+          "VEHICLE",
+          "CAPITAL SHIP"
+        ],
+        "hp": 7,
+        "power": 5,
+        "set": "JTL",
+        "number": "153",
+        "imageUrl": "https://cdn.starwarsunlimited.com//04010153_EN_Rebellious_Hammerhead_f8d7072fa8.png",
+        "aspects": [
+          "Aggression",
+          "Heroism"
+        ],
+        "text": "When Played: You may deal damage to a unit equal to the number of cards in your hand.",
+        "unique": false,
+        "quantity": 3
+      },
+      {
+        "id": "JTL_151",
+        "name": "Red Five | Running the Trench",
+        "subtitle": "Running the Trench",
+        "count": 3,
+        "cost": 3,
+        "type": 2,
+        "arena": "Space",
+        "traits": [
+          "REBEL",
+          "VEHICLE",
+          "FIGHTER"
+        ],
+        "hp": 4,
+        "power": 3,
+        "set": "JTL",
+        "number": "151",
+        "imageUrl": "https://cdn.starwarsunlimited.com//04010151_EN_Red_Five_d9c7f19c54.png",
+        "aspects": [
+          "Aggression",
+          "Heroism"
+        ],
+        "text": "On Attack: You may deal 2 damage to a damaged unit.",
+        "unique": true,
+        "quantity": 3
+      },
+      {
+        "id": "JTL_250",
+        "name": "Sabine's Masterpiece | Crazy Colorful",
+        "subtitle": "Crazy Colorful",
+        "count": 2,
+        "cost": 3,
+        "type": 2,
+        "arena": "Space",
+        "traits": [
+          "REBEL",
+          "VEHICLE",
+          "FIGHTER",
+          "SPECTRE"
+        ],
+        "hp": 3,
+        "power": 3,
+        "set": "JTL",
+        "number": "250",
+        "imageUrl": "https://cdn.starwarsunlimited.com//04010250_EN_Sabine_s_Masterpiece_f357f17e79.png",
+        "aspects": [
+          "Heroism"
+        ],
+        "text": "On Attack: If you control a: \nVigilance unit, heal 2 damage from a base. \nCommand unit, give an Experience token to a unit. \nAggression unit, deal 1 damage to a unit or a base. \nCunning unit, exhaust or ready a resource.",
+        "unique": true,
+        "quantity": 2
+      },
+      {
+        "id": "ASH_109",
+        "name": "T-6 Shuttle 1974 | With a Mentor's Dedication",
+        "subtitle": "With a Mentor's Dedication",
+        "count": 2,
+        "cost": 4,
+        "type": 2,
+        "arena": "Space",
+        "traits": [
+          "JEDI",
+          "VEHICLE",
+          "TRANSPORT"
+        ],
+        "hp": 6,
+        "power": 2,
+        "set": "ASH",
+        "number": "109",
+        "imageUrl": "https://cdn.starwarsunlimited.com//08010109_EN_T_6_Shuttle_1974_bded78a073.png",
+        "aspects": [
+          "Command",
+          "Heroism"
+        ],
+        "text": "Sentinel (Enemy units in this arena must attack a Sentinel when they attack you.)\nAction [Exhaust]: Give another unit +2/+2 for this phase. You may attack with that unit.",
+        "unique": true,
+        "quantity": 2
+      },
+      {
+        "id": "HMW_126",
+        "name": "Verdant Fortress",
+        "count": 3,
+        "cost": 2,
+        "type": 3,
+        "arena": "None",
+        "traits": [
+          "FORTIFICATION"
+        ],
+        "hp": 0,
+        "power": 0,
+        "set": "HMW",
+        "number": "126",
+        "imageUrl": "https://cdn.starwarsunlimited.com//09010126_EN_Verdant_Fortress_0562e3d095.png",
+        "aspects": [
+          "Command",
+          "Heroism"
+        ],
+        "text": "Fortify (Attach this to your base, not a unit.)\nAttached base gains: \"Friendly units gain Raid 1. (They get +1/+0 while attacking.)\"",
+        "unique": false,
+        "quantity": 3
+      },
+      {
+        "id": "ASH_183",
+        "name": "Whistling Birds",
+        "count": 1,
+        "cost": 3,
+        "type": 3,
+        "arena": "None",
+        "traits": [
+          "ITEM",
+          "WEAPON"
+        ],
+        "hp": 0,
+        "power": 0,
+        "set": "ASH",
+        "number": "183",
+        "imageUrl": "https://cdn.starwarsunlimited.com//08010183_EN_Whistling_Birds_36ae4e3a50.png",
+        "aspects": [
+          "Aggression"
+        ],
+        "text": "Attach to a non-Vehicle unit.\nAttached unit gains: “When Attack Ends: If this unit dealt combat damage to an opponent's base, deal 2 damage to each unit that opponent controls in this unit's arena.”",
+        "unique": false,
+        "quantity": 1
+      },
+      {
+        "id": "ASH_034",
+        "name": "Wicket | Yub Nub!",
+        "subtitle": "Yub Nub!",
+        "count": 3,
+        "cost": 1,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "EWOK"
+        ],
+        "hp": 3,
+        "power": 3,
+        "set": "ASH",
+        "number": "034",
+        "imageUrl": "https://cdn.starwarsunlimited.com//08010034_EN_Wicket_a7a74d7ab3.png",
+        "aspects": [
+          "Command",
+          "Aggression",
+          "Heroism"
+        ],
+        "text": "Saboteur\nThis unit can't attack bases.",
+        "unique": true,
+        "quantity": 3
+      }
+    ],
+    "sideboard": [
+      {
+        "id": "LAW_191",
+        "name": "Arvel Skeen | Win and Walk Away",
+        "subtitle": "Win and Walk Away",
+        "count": 1,
+        "cost": 3,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "REBEL"
+        ],
+        "hp": 3,
+        "power": 4,
+        "set": "LAW",
+        "number": "191",
+        "imageUrl": "https://cdn.starwarsunlimited.com//07010191_EN_Arvel_Skeen_0f1c746410.png",
+        "aspects": [
+          "Aggression"
+        ],
+        "text": "When Played/On Attack: You may defeat a Credit token (belonging to any player). If you do, deal 1 damage to a unit or base.",
+        "unique": true,
+        "quantity": 1
+      },
+      {
+        "id": "JTL_103",
+        "name": "Chewbacca | Faithful First Mate",
+        "subtitle": "Faithful First Mate",
+        "count": 2,
+        "cost": 5,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "REBEL",
+          "WOOKIEE",
+          "PILOT"
+        ],
+        "hp": 6,
+        "power": 5,
+        "set": "JTL",
+        "number": "103",
+        "imageUrl": "https://cdn.starwarsunlimited.com//04010103_EN_Chewbacca_913d687e41.png",
+        "aspects": [
+          "Command",
+          "Heroism"
+        ],
+        "text": "This unit can't be defeated or returned to hand by enemy card abilities.\nPiloting [C=3 Command Heroism] (You may play this as an upgrade on a friendly Vehicle without a Pilot.)\nAttached unit gains: \"This unit can't be defeated or returned to hand by enemy card abilities.\"",
+        "unique": true,
+        "quantity": 2
+      },
+      {
+        "id": "LAW_202",
+        "name": "Commence the Festivities",
+        "count": 2,
+        "cost": 1,
+        "type": 4,
+        "arena": "None",
+        "traits": [
+          "PLAN"
+        ],
+        "hp": 0,
+        "power": 0,
+        "set": "LAW",
+        "number": "202",
+        "imageUrl": "https://cdn.starwarsunlimited.com//07010202_EN_Commence_the_Festivities_b408d99bb8.png",
+        "aspects": [
+          "Aggression"
+        ],
+        "text": "Attack with a unit. It gains Saboteur for this attack. If you control fewer resources than an opponent, it gets +2/+0 for this attack.",
+        "unique": false,
+        "quantity": 2
+      },
+      {
+        "id": "SEC_163",
+        "name": "Outer Rim Constable",
+        "count": 2,
+        "cost": 2,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "FRINGE",
+          "OFFICIAL"
+        ],
+        "hp": 1,
+        "power": 3,
+        "set": "SEC",
+        "number": "163",
+        "imageUrl": "https://cdn.starwarsunlimited.com//06010163_EN_Outer_Rim_Constable_4658bee68c.png",
+        "aspects": [
+          "Aggression"
+        ],
+        "text": "When Played: You may defeat an upgrade.",
+        "unique": false,
+        "quantity": 2
+      },
+      {
+        "id": "LAW_149",
+        "name": "Rey | Skywalker",
+        "subtitle": "Skywalker",
+        "count": 2,
+        "cost": 8,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "FORCE",
+          "JEDI",
+          "RESISTANCE"
+        ],
+        "hp": 9,
+        "power": 9,
+        "set": "LAW",
+        "number": "149",
+        "imageUrl": "https://cdn.starwarsunlimited.com//07010149_EN_Rey_e17dd083c3.png",
+        "aspects": [
+          "Command",
+          "Heroism"
+        ],
+        "text": "Opponents can't take control of this unit. \nThis unit can't be defeated by enemy card abilities.",
+        "unique": true,
+        "quantity": 2
+      },
+      {
+        "id": "ASH_109",
+        "name": "T-6 Shuttle 1974 | With a Mentor's Dedication",
+        "subtitle": "With a Mentor's Dedication",
+        "count": 1,
+        "cost": 4,
+        "type": 2,
+        "arena": "Space",
+        "traits": [
+          "JEDI",
+          "VEHICLE",
+          "TRANSPORT"
+        ],
+        "hp": 6,
+        "power": 2,
+        "set": "ASH",
+        "number": "109",
+        "imageUrl": "https://cdn.starwarsunlimited.com//08010109_EN_T_6_Shuttle_1974_bded78a073.png",
+        "aspects": [
+          "Command",
+          "Heroism"
+        ],
+        "text": "Sentinel (Enemy units in this arena must attack a Sentinel when they attack you.)\nAction [Exhaust]: Give another unit +2/+2 for this phase. You may attack with that unit.",
+        "unique": true,
+        "quantity": 1
+      }
+    ]
+  },
+  "metaDeck_2": {
+    "metadata": {
+      "name": "Wicket (Meta)",
+      "author": "AlessandroMalvasi",
+      "winRate": "58%"
+    },
+    "leader": {
+      "id": "HMW_014",
+      "name": "Wicket | Few Greater Battles to Fight",
+      "subtitle": "Few Greater Battles to Fight",
+      "count": 1,
+      "cost": 4,
+      "type": 0,
+      "arena": "Ground",
+      "traits": [
+        "EWOK"
+      ],
+      "hp": 5,
+      "power": 2,
+      "set": "hmw",
+      "number": "014",
+      "imageUrl": null,
+      "aspects": [
+        "Aggression",
+        "Heroism"
+      ],
+      "text": "When a friendly unit attacks a unit that costs more than it: You may exhaust this leader. If you do, draw a card.",
+      "unique": true,
+      "back_text": "On Attack: If you control a unit that costs 3 or less, draw a card."
+    },
+    "base": {
+      "id": "LAW_022",
+      "name": "Aldhani Garrison",
+      "subtitle": "Aldhani",
+      "count": 1,
+      "cost": 0,
+      "type": 1,
+      "arena": "None",
+      "traits": [],
+      "hp": 27,
+      "set": "law",
+      "number": "022",
+      "imageUrl": null,
+      "aspects": [
+        "Command"
+      ],
+      "text": "Epic Action: Play a card from your hand, ignoring 1 of its Vigilance, Command, Aggression, or Cunning aspect penalties.",
+      "unique": false
+    },
+    "deck": [
+      {
+        "id": "ASH_116",
+        "name": "Ant Droid",
+        "count": 3,
+        "cost": 1,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "DROID"
+        ],
+        "hp": 2,
+        "power": 1,
+        "set": "ASH",
+        "number": "116",
+        "imageUrl": "https://cdn.starwarsunlimited.com//08010116_EN_Ant_Droid_4d5013bf68.png",
+        "aspects": [
+          "Command"
+        ],
+        "text": "When Defeated: Draw a card.",
+        "unique": false,
+        "quantity": 3
+      },
+      {
+        "id": "JTL_096",
+        "name": "Blue Leader | Scarif Air Support",
+        "subtitle": "Scarif Air Support",
+        "count": 3,
+        "cost": 3,
+        "type": 2,
+        "arena": "Space",
+        "traits": [
+          "REBEL",
+          "VEHICLE",
+          "FIGHTER"
+        ],
+        "hp": 3,
+        "power": 3,
+        "set": "JTL",
+        "number": "096",
+        "imageUrl": "https://cdn.starwarsunlimited.com//04010096_EN_Blue_Leader_5117b9c7ad.png",
+        "aspects": [
+          "Command",
+          "Heroism"
+        ],
+        "text": "Ambush (When you play this unit, it may attack an enemy unit.)\nWhen Played: You may pay 2. If you do, move this unit to the ground arena and give 2 Experience tokens to it. (It's a ground unit.)",
+        "unique": true,
+        "quantity": 3
+      },
+      {
+        "id": "HMW_254",
+        "name": "Captain Tarpals | Grand Army Captain",
+        "subtitle": "Grand Army Captain",
+        "count": 3,
+        "cost": 1,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "GUNGAN",
+          "TROOPER"
+        ],
+        "hp": 2,
+        "power": 0,
+        "set": "HMW",
+        "number": "254",
+        "imageUrl": "https://cdn.starwarsunlimited.com//09010254_EN_Captain_Tarpals_78096e7e9a.png",
+        "aspects": [
+          "Heroism"
+        ],
+        "text": "Shielded (When you play this unit, give a Shield token to him.) \nRaid 2 (This unit gets +2/+0 while attacking.)",
+        "unique": true,
+        "quantity": 3
+      },
+      {
+        "id": "HMW_130",
+        "name": "Emerie Karr | For Your Own Good",
+        "subtitle": "For Your Own Good",
+        "count": 2,
+        "cost": 1,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "IMPERIAL",
+          "CLONE"
+        ],
+        "hp": 1,
+        "power": 2,
+        "set": "HMW",
+        "number": "130",
+        "imageUrl": "https://cdn.starwarsunlimited.com//09010130_EN_Emerie_Karr_37134ba7fd.png",
+        "aspects": [
+          "Command"
+        ],
+        "text": "When Played: You may deal 1 damage to another ground unit. If you control that unit, the next unit you play this phase costs 1 less.",
+        "unique": true,
+        "quantity": 2
+      },
+      {
+        "id": "HMW_175",
+        "name": "Fennec Shand | A Ship for a Life",
+        "subtitle": "A Ship for a Life",
+        "count": 3,
+        "cost": 1,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "UNDERWORLD"
+        ],
+        "hp": 4,
+        "power": 0,
+        "set": "HMW",
+        "number": "175",
+        "imageUrl": "https://cdn.starwarsunlimited.com//09010175_EN_Fennec_Shand_3ed9db663e.png",
+        "aspects": [
+          "Aggression"
+        ],
+        "text": "Raid 2 (This unit gets +2/+0 while attacking.)",
+        "unique": true,
+        "quantity": 3
+      },
+      {
+        "id": "SEC_104",
+        "name": "Figure of Unity",
+        "count": 2,
+        "cost": 3,
+        "type": 3,
+        "arena": "None",
+        "traits": [
+          "INNATE"
+        ],
+        "hp": 0,
+        "power": 0,
+        "set": "SEC",
+        "number": "104",
+        "imageUrl": "https://cdn.starwarsunlimited.com//06010104_EN_Figure_of_Unity_60c34df264.png",
+        "aspects": [
+          "Command",
+          "Heroism"
+        ],
+        "text": "Attach to a Unique unit.\nAttached unit gains: “While this unit is ready, each other friendly unit gains Overwhelm, Raid 1, and Restore 1.”",
+        "unique": true,
+        "quantity": 2
+      },
+      {
+        "id": "SEC_148",
+        "name": "Karis Nemik | Freedom Is a Pure Idea",
+        "subtitle": "Freedom is a Pure Idea",
+        "count": 3,
+        "cost": 2,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "REBEL"
+        ],
+        "hp": 2,
+        "power": 3,
+        "set": "SEC",
+        "number": "148",
+        "imageUrl": "https://cdn.starwarsunlimited.com//06010148_EN_Karis_Nemik_9559a05022.png",
+        "aspects": [
+          "Aggression",
+          "Heroism"
+        ],
+        "text": "Hidden\nWhen Defeated: You may disclose Aggression Heroism (reveal cards from your hand with these aspect icons among them). If you do, create a Spy token and ready it.",
+        "unique": true,
+        "quantity": 3
+      },
+      {
+        "id": "HMW_115",
+        "name": "Leia Organa | These Are My Friends",
+        "subtitle": "These are My Friends",
+        "count": 3,
+        "cost": 1,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "REBEL",
+          "OFFICIAL"
+        ],
+        "hp": 3,
+        "power": 2,
+        "set": "HMW",
+        "number": "115",
+        "imageUrl": "https://cdn.starwarsunlimited.com//09010115_EN_Leia_Organa_932588b02e.png",
+        "aspects": [
+          "Command",
+          "Heroism"
+        ],
+        "text": "When you play another unit that costs 3 or less: Heal 1 damage from your base.",
+        "unique": true,
+        "quantity": 3
+      },
+      {
+        "id": "HMW_045",
+        "name": "Logray | Bright Tree Shaman",
+        "subtitle": "Bright Tree Shaman",
+        "count": 3,
+        "cost": 2,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "EWOK"
+        ],
+        "hp": 5,
+        "power": 1,
+        "set": "HMW",
+        "number": "045",
+        "imageUrl": "https://cdn.starwarsunlimited.com//09010045_EN_Logray_16a5665662.png",
+        "aspects": [
+          "Command",
+          "Aggression"
+        ],
+        "text": "When another friendly unit that costs 3 or less is dealt damage: You may deal 1 damage to an enemy unit.",
+        "unique": true,
+        "quantity": 3
+      },
+      {
+        "id": "ASH_112",
+        "name": "Luke Skywalker | Answering the Call",
+        "subtitle": "Answering the Call",
+        "count": 1,
+        "cost": 6,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "FORCE",
+          "JEDI"
+        ],
+        "hp": 5,
+        "power": 5,
+        "set": "ASH",
+        "number": "112",
+        "imageUrl": "https://cdn.starwarsunlimited.com//08010112_EN_Luke_Skywalker_547807ff50.png",
+        "aspects": [
+          "Command",
+          "Heroism"
+        ],
+        "text": "Restore 1\nWhen Played: If you control at least 4 units, deal 3 damage to each enemy unit.",
+        "unique": true,
+        "quantity": 1
+      },
+      {
+        "id": "ASH_168",
+        "name": "Migs Mayfeld | How About a Toast?",
+        "subtitle": "How About a Toast?",
+        "count": 2,
+        "cost": 2,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "FRINGE"
+        ],
+        "hp": 3,
+        "power": 2,
+        "set": "ASH",
+        "number": "168",
+        "imageUrl": "https://cdn.starwarsunlimited.com//08010168_EN_Migs_Mayfeld_376ebf5cab.png",
+        "aspects": [
+          "Aggression"
+        ],
+        "text": "Support\nOn Attack: Deal 1 damage to the defending unit. If this unit is upgraded, deal 2 damage to the defending unit instead.",
+        "unique": true,
+        "quantity": 2
+      },
+      {
+        "id": "SEC_256",
+        "name": "Moral Authority",
+        "count": 1,
+        "cost": 3,
+        "type": 3,
+        "arena": "None",
+        "traits": [
+          "INNATE"
+        ],
+        "hp": 0,
+        "power": 0,
+        "set": "SEC",
+        "number": "256",
+        "imageUrl": "https://cdn.starwarsunlimited.com//06010256_EN_Moral_Authority_764b5965f8.png",
+        "aspects": [
+          "Heroism"
+        ],
+        "text": "Attach to a friendly Unique unit.\nWhen Played: Attached unit captures an enemy non-leader unit with less remaining HP than it.",
+        "unique": false,
+        "quantity": 1
+      },
+      {
+        "id": "SEC_101",
+        "name": "Queen Amidala | Championing Her People",
+        "subtitle": "Championing Her People",
+        "count": 3,
+        "cost": 5,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "NABOO",
+          "OFFICIAL"
+        ],
+        "hp": 3,
+        "power": 5,
+        "set": "SEC",
+        "number": "101",
+        "imageUrl": "https://cdn.starwarsunlimited.com//06010101_EN_Queen_Amidala_2750936c4b.png",
+        "aspects": [
+          "Command",
+          "Heroism"
+        ],
+        "text": "When Played: Create 2 Spy tokens.\nIf damage would be dealt to this unit, you may defeat another friendly unit that shares a trait with this unit. If you do, prevent that damage.",
+        "unique": true,
+        "quantity": 3
+      },
+      {
+        "id": "JTL_151",
+        "name": "Red Five | Running the Trench",
+        "subtitle": "Running the Trench",
+        "count": 2,
+        "cost": 3,
+        "type": 2,
+        "arena": "Space",
+        "traits": [
+          "REBEL",
+          "VEHICLE",
+          "FIGHTER"
+        ],
+        "hp": 4,
+        "power": 3,
+        "set": "JTL",
+        "number": "151",
+        "imageUrl": "https://cdn.starwarsunlimited.com//04010151_EN_Red_Five_d9c7f19c54.png",
+        "aspects": [
+          "Aggression",
+          "Heroism"
+        ],
+        "text": "On Attack: You may deal 2 damage to a damaged unit.",
+        "unique": true,
+        "quantity": 2
+      },
+      {
+        "id": "HMW_118",
+        "name": "Ryyk Blademaster",
+        "count": 1,
+        "cost": 4,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "WOOKIEE"
+        ],
+        "hp": 4,
+        "power": 5,
+        "set": "HMW",
+        "number": "118",
+        "imageUrl": "https://cdn.starwarsunlimited.com//09010118_EN_Ryyk_Blademaster_e8c2c04d0b.png",
+        "aspects": [
+          "Command",
+          "Heroism"
+        ],
+        "text": "While you control 6 or more resources, this unit gains Ambush and Overwhelm.",
+        "unique": false,
+        "quantity": 1
+      },
+      {
+        "id": "JTL_250",
+        "name": "Sabine's Masterpiece | Crazy Colorful",
+        "subtitle": "Crazy Colorful",
+        "count": 2,
+        "cost": 3,
+        "type": 2,
+        "arena": "Space",
+        "traits": [
+          "REBEL",
+          "VEHICLE",
+          "FIGHTER",
+          "SPECTRE"
+        ],
+        "hp": 3,
+        "power": 3,
+        "set": "JTL",
+        "number": "250",
+        "imageUrl": "https://cdn.starwarsunlimited.com//04010250_EN_Sabine_s_Masterpiece_f357f17e79.png",
+        "aspects": [
+          "Heroism"
+        ],
+        "text": "On Attack: If you control a: \nVigilance unit, heal 2 damage from a base. \nCommand unit, give an Experience token to a unit. \nAggression unit, deal 1 damage to a unit or a base. \nCunning unit, exhaust or ready a resource.",
+        "unique": true,
+        "quantity": 2
+      },
+      {
+        "id": "LAW_078",
+        "name": "Sabine Wren | Spectre Five",
+        "subtitle": "Spectre Five",
+        "count": 2,
+        "cost": 3,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "MANDALORIAN",
+          "REBEL",
+          "SPECTRE"
+        ],
+        "hp": 3,
+        "power": 3,
+        "set": "LAW",
+        "number": "078",
+        "imageUrl": "https://cdn.starwarsunlimited.com//07010078_EN_Sabine_Wren_5353d45268.png",
+        "aspects": [
+          "Aggression",
+          "Cunning",
+          "Heroism"
+        ],
+        "text": "Ambush (When you play this unit, she may attack an enemy unit.)\nWhen Played: You may defeat a non-unique upgrade. If you control a Vigilance or Command unit, you may defeat an upgrade instead.",
+        "unique": true,
+        "quantity": 2
+      },
+      {
+        "id": "JTL_106",
+        "name": "Unity of Purpose",
+        "count": 3,
+        "cost": 6,
+        "type": 4,
+        "arena": "None",
+        "traits": [
+          "PLAN"
+        ],
+        "hp": 0,
+        "power": 0,
+        "set": "JTL",
+        "number": "106",
+        "imageUrl": "https://cdn.starwarsunlimited.com//04010106_EN_Unity_of_Purpose_1c20098139.png",
+        "aspects": [
+          "Command",
+          "Command"
+        ],
+        "text": "For each friendly unit with a different name, give each unit you control +1/+1 for this phase.",
+        "unique": false,
+        "quantity": 3
+      },
+      {
+        "id": "HMW_126",
+        "name": "Verdant Fortress",
+        "count": 3,
+        "cost": 2,
+        "type": 3,
+        "arena": "None",
+        "traits": [
+          "FORTIFICATION"
+        ],
+        "hp": 0,
+        "power": 0,
+        "set": "HMW",
+        "number": "126",
+        "imageUrl": "https://cdn.starwarsunlimited.com//09010126_EN_Verdant_Fortress_0562e3d095.png",
+        "aspects": [
+          "Command",
+          "Heroism"
+        ],
+        "text": "Fortify (Attach this to your base, not a unit.)\nAttached base gains: \"Friendly units gain Raid 1. (They get +1/+0 while attacking.)\"",
+        "unique": false,
+        "quantity": 3
+      },
+      {
+        "id": "ASH_183",
+        "name": "Whistling Birds",
+        "count": 2,
+        "cost": 3,
+        "type": 3,
+        "arena": "None",
+        "traits": [
+          "ITEM",
+          "WEAPON"
+        ],
+        "hp": 0,
+        "power": 0,
+        "set": "ASH",
+        "number": "183",
+        "imageUrl": "https://cdn.starwarsunlimited.com//08010183_EN_Whistling_Birds_36ae4e3a50.png",
+        "aspects": [
+          "Aggression"
+        ],
+        "text": "Attach to a non-Vehicle unit.\nAttached unit gains: “When Attack Ends: If this unit dealt combat damage to an opponent's base, deal 2 damage to each unit that opponent controls in this unit's arena.”",
+        "unique": false,
+        "quantity": 2
+      },
+      {
+        "id": "ASH_034",
+        "name": "Wicket | Yub Nub!",
+        "subtitle": "Yub Nub!",
+        "count": 3,
+        "cost": 1,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "EWOK"
+        ],
+        "hp": 3,
+        "power": 3,
+        "set": "ASH",
+        "number": "034",
+        "imageUrl": "https://cdn.starwarsunlimited.com//08010034_EN_Wicket_a7a74d7ab3.png",
+        "aspects": [
+          "Command",
+          "Aggression",
+          "Heroism"
+        ],
+        "text": "Saboteur\nThis unit can't attack bases.",
+        "unique": true,
+        "quantity": 3
+      }
+    ],
+    "sideboard": [
+      {
+        "id": "LAW_191",
+        "name": "Arvel Skeen | Win and Walk Away",
+        "subtitle": "Win and Walk Away",
+        "count": 3,
+        "cost": 3,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "REBEL"
+        ],
+        "hp": 3,
+        "power": 4,
+        "set": "LAW",
+        "number": "191",
+        "imageUrl": "https://cdn.starwarsunlimited.com//07010191_EN_Arvel_Skeen_0f1c746410.png",
+        "aspects": [
+          "Aggression"
+        ],
+        "text": "When Played/On Attack: You may defeat a Credit token (belonging to any player). If you do, deal 1 damage to a unit or base.",
+        "unique": true,
+        "quantity": 3
+      },
+      {
+        "id": "LOF_144",
+        "name": "Jedi Starfighter",
+        "count": 3,
+        "cost": 2,
+        "type": 2,
+        "arena": "Space",
+        "traits": [
+          "JEDI",
+          "REPUBLIC",
+          "VEHICLE",
+          "FIGHTER"
+        ],
+        "hp": 4,
+        "power": 1,
+        "set": "LOF",
+        "number": "144",
+        "imageUrl": "https://cdn.starwarsunlimited.com//05010144_EN_Jedi_Starfighter_67aa4c8564.png",
+        "aspects": [
+          "Aggression",
+          "Heroism"
+        ],
+        "text": "On Attack: You may deal 1 damage to a space unit.",
+        "unique": false,
+        "quantity": 3
+      },
+      {
+        "id": "ASH_112",
+        "name": "Luke Skywalker | Answering the Call",
+        "subtitle": "Answering the Call",
+        "count": 1,
+        "cost": 6,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "FORCE",
+          "JEDI"
+        ],
+        "hp": 5,
+        "power": 5,
+        "set": "ASH",
+        "number": "112",
+        "imageUrl": "https://cdn.starwarsunlimited.com//08010112_EN_Luke_Skywalker_547807ff50.png",
+        "aspects": [
+          "Command",
+          "Heroism"
+        ],
+        "text": "Restore 1\nWhen Played: If you control at least 4 units, deal 3 damage to each enemy unit.",
+        "unique": true,
+        "quantity": 1
+      },
+      {
+        "id": "SEC_256",
+        "name": "Moral Authority",
+        "count": 1,
+        "cost": 3,
+        "type": 3,
+        "arena": "None",
+        "traits": [
+          "INNATE"
+        ],
+        "hp": 0,
+        "power": 0,
+        "set": "SEC",
+        "number": "256",
+        "imageUrl": "https://cdn.starwarsunlimited.com//06010256_EN_Moral_Authority_764b5965f8.png",
+        "aspects": [
+          "Heroism"
+        ],
+        "text": "Attach to a friendly Unique unit.\nWhen Played: Attached unit captures an enemy non-leader unit with less remaining HP than it.",
+        "unique": false,
+        "quantity": 1
+      },
+      {
+        "id": "HMW_118",
+        "name": "Ryyk Blademaster",
+        "count": 1,
+        "cost": 4,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "WOOKIEE"
+        ],
+        "hp": 4,
+        "power": 5,
+        "set": "HMW",
+        "number": "118",
+        "imageUrl": "https://cdn.starwarsunlimited.com//09010118_EN_Ryyk_Blademaster_e8c2c04d0b.png",
+        "aspects": [
+          "Command",
+          "Heroism"
+        ],
+        "text": "While you control 6 or more resources, this unit gains Ambush and Overwhelm.",
+        "unique": false,
+        "quantity": 1
+      },
+      {
+        "id": "LAW_078",
+        "name": "Sabine Wren | Spectre Five",
+        "subtitle": "Spectre Five",
+        "count": 1,
+        "cost": 3,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "MANDALORIAN",
+          "REBEL",
+          "SPECTRE"
+        ],
+        "hp": 3,
+        "power": 3,
+        "set": "LAW",
+        "number": "078",
+        "imageUrl": "https://cdn.starwarsunlimited.com//07010078_EN_Sabine_Wren_5353d45268.png",
+        "aspects": [
+          "Aggression",
+          "Cunning",
+          "Heroism"
+        ],
+        "text": "Ambush (When you play this unit, she may attack an enemy unit.)\nWhen Played: You may defeat a non-unique upgrade. If you control a Vigilance or Command unit, you may defeat an upgrade instead.",
+        "unique": true,
+        "quantity": 1
+      }
+    ]
+  },
+  "metaDeck_3": {
+    "metadata": {
+      "name": "Mother Talzin (Meta)",
+      "author": "Dipa02",
+      "winRate": "58%"
+    },
+    "leader": {
+      "id": "LOF_002",
+      "name": "Mother Talzin | Power Through Magick",
+      "subtitle": "Power Through Magick",
+      "count": 1,
+      "cost": 5,
+      "type": 0,
+      "arena": "Ground",
+      "traits": [
+        "FORCE",
+        "NIGHT"
+      ],
+      "hp": 7,
+      "power": 3,
+      "set": "lof",
+      "number": "002",
+      "imageUrl": null,
+      "aspects": [
+        "Vigilance",
+        "Villainy"
+      ],
+      "text": "Action [Exhaust, use the Force (lose your Force token)]: Give a unit -1/-1 for this phase.",
+      "unique": true,
+      "back_text": "On Attack: You may give a unit -1/-1 for this phase."
+    },
+    "base": {
+      "id": "LOF_029",
+      "name": "Crystal Caves",
+      "subtitle": "Ilum",
+      "count": 1,
+      "cost": 0,
+      "type": 1,
+      "arena": "None",
+      "traits": [],
+      "hp": 28,
+      "set": "lof",
+      "number": "029",
+      "imageUrl": null,
+      "aspects": [
+        "Cunning"
+      ],
+      "text": "When a friendly Force unit attacks: The Force is with you (create your Force token).",
+      "unique": false
+    },
+    "deck": [
+      {
+        "id": "LOF_215",
+        "name": "Ascension Cable",
+        "count": 2,
+        "cost": 2,
+        "type": 3,
+        "arena": "None",
+        "traits": [
+          "ITEM"
+        ],
+        "hp": 0,
+        "power": 0,
+        "set": "LOF",
+        "number": "215",
+        "imageUrl": "https://cdn.starwarsunlimited.com//05010215_EN_Ascension_Cable_c6728e4e52.png",
+        "aspects": [
+          "Cunning"
+        ],
+        "text": "Attach to a non-Vehicle unit.\nAttached unit gains Saboteur. (When this unit attacks, ignore Sentinel and defeat the defender's Shields.)",
+        "unique": false,
+        "quantity": 2
+      },
+      {
+        "id": "SEC_038",
+        "name": "Condemn",
+        "count": 2,
+        "cost": 3,
+        "type": 3,
+        "arena": "None",
+        "traits": [
+          "CONDITION"
+        ],
+        "hp": 0,
+        "power": 0,
+        "set": "SEC",
+        "number": "038",
+        "imageUrl": "https://cdn.starwarsunlimited.com//06010038_EN_Condemn_3fcd162061.png",
+        "aspects": [
+          "Vigilance",
+          "Villainy"
+        ],
+        "text": "While attached unit is attacking, it gains: “On Attack: The defending player may disclose Vigilance Villainy. If they do, this unit gets -6/-0 for this attack” and loses all other abilities.",
+        "unique": false,
+        "quantity": 2
+      },
+      {
+        "id": "LOF_261",
+        "name": "Constructed Lightsaber",
+        "count": 3,
+        "cost": 3,
+        "type": 3,
+        "arena": "None",
+        "traits": [
+          "ITEM",
+          "WEAPON",
+          "LIGHTSABER"
+        ],
+        "hp": 0,
+        "power": 0,
+        "set": "LOF",
+        "number": "261",
+        "imageUrl": "https://cdn.starwarsunlimited.com//05010261_EN_Constructed_Lightsaber_5ecf1c91b7.png",
+        "aspects": [],
+        "text": "Attach to a Force unit. \nIf attached unit is a Heroism unit, it gains Restore 2. \nIf attached unit is a Villainy unit, it gains Raid 2. \nIf attached unit is a non-Heroism, non-Villainy unit, it gains Sentinel.",
+        "unique": false,
+        "quantity": 3
+      },
+      {
+        "id": "LOF_231",
+        "name": "Darth Tyranus | Servant of Sidious",
+        "subtitle": "Servant of Sidious",
+        "count": 3,
+        "cost": 4,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "FORCE",
+          "SEPARATIST",
+          "SITH"
+        ],
+        "hp": 3,
+        "power": 4,
+        "set": "LOF",
+        "number": "231",
+        "imageUrl": "https://cdn.starwarsunlimited.com//05010231_EN_Darth_Tyranus_92d493741d.png",
+        "aspects": [
+          "Villainy"
+        ],
+        "text": "Shielded (When you play this unit, give a Shield token to him.)\nWhile the Force is with you, this unit gains Ambush. (When you play this unit, he may attack an enemy unit.)",
+        "unique": true,
+        "quantity": 3
+      },
+      {
+        "id": "ASH_224",
+        "name": "Elzar Mann | Haunted By a Vision",
+        "subtitle": "Haunted by a Vision",
+        "count": 1,
+        "cost": 6,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "FORCE",
+          "JEDI"
+        ],
+        "hp": 7,
+        "power": 3,
+        "set": "ASH",
+        "number": "224",
+        "imageUrl": "https://cdn.starwarsunlimited.com//08010224_EN_Elzar_Mann_030a2dc389.png",
+        "aspects": [
+          "Cunning"
+        ],
+        "text": "While you control a Force leader, this unit enters play ready. \nWhen Played: Distribute up to 5 Advantage tokens among other friendly units. Then, an opponent searches twice that many cards from the top of their deck for an event, reveals it, and draws it.",
+        "unique": true,
+        "quantity": 1
+      },
+      {
+        "id": "SEC_186",
+        "name": "Garindan | Information Broker",
+        "subtitle": "Information Broker",
+        "count": 3,
+        "cost": 2,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "UNDERWORLD"
+        ],
+        "hp": 3,
+        "power": 1,
+        "set": "SEC",
+        "number": "186",
+        "imageUrl": "https://cdn.starwarsunlimited.com//06010186_EN_Garindan_edda853da6.png",
+        "aspects": [
+          "Cunning",
+          "Villainy"
+        ],
+        "text": "When Played: Name a card. Look at an opponent's hand and discard a card with that name from it.\nPlot (When you deploy a leader, you may play this card from your resources, paying its cost. Replace it with the top card of your deck.)",
+        "unique": true,
+        "quantity": 3
+      },
+      {
+        "id": "LAW_217",
+        "name": "Hold for Questioning",
+        "count": 2,
+        "cost": 3,
+        "type": 4,
+        "arena": "None",
+        "traits": [
+          "LAW"
+        ],
+        "hp": 0,
+        "power": 0,
+        "set": "LAW",
+        "number": "217",
+        "imageUrl": "https://cdn.starwarsunlimited.com//07010217_EN_Hold_For_Questioning_447649d25b.png",
+        "aspects": [
+          "Cunning",
+          "Villainy"
+        ],
+        "text": "Exhaust an enemy unit. If you do, look at its controller's hand and discard a card from it that shares an aspect with that unit.",
+        "unique": false,
+        "quantity": 2
+      },
+      {
+        "id": "ASH_219",
+        "name": "Jod Na Nawood | Keeping Secrets",
+        "subtitle": "We Don't Want War",
+        "count": 2,
+        "cost": 3,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "FORCE",
+          "UNDERWORLD"
+        ],
+        "hp": 3,
+        "power": 4,
+        "set": "ASH",
+        "number": "219",
+        "imageUrl": "https://cdn.starwarsunlimited.com//08010219_EN_Jod_Na_Nawood_85312b3a98.png",
+        "aspects": [
+          "Cunning"
+        ],
+        "text": "Sentinel\nWhen Played: You may pay 4. If you do, choose an arena. Exhaust each unit in that arena.",
+        "unique": true,
+        "quantity": 2
+      },
+      {
+        "id": "LOF_031",
+        "name": "Karis | We Don't Like Strangers",
+        "subtitle": "We Don't Like Strangers",
+        "count": 3,
+        "cost": 2,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "FORCE",
+          "NIGHT"
+        ],
+        "hp": 4,
+        "power": 2,
+        "set": "LOF",
+        "number": "031",
+        "imageUrl": "https://cdn.starwarsunlimited.com//05010031_EN_Karis_3146cb30ef.png",
+        "aspects": [
+          "Vigilance",
+          "Villainy"
+        ],
+        "text": "When Defeated: You may use the Force (lose your Force token). If you do, give a unit -2/-2 for this phase.",
+        "unique": true,
+        "quantity": 3
+      },
+      {
+        "id": "HMW_055",
+        "name": "Mae | Kill the Dream",
+        "subtitle": "Kill the Dream",
+        "count": 3,
+        "cost": 3,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "FORCE",
+          "SITH"
+        ],
+        "hp": 4,
+        "power": 2,
+        "set": "HMW",
+        "number": "055",
+        "imageUrl": "https://cdn.starwarsunlimited.com//09010055_EN_Mae_2f936deb14.png",
+        "aspects": [
+          "Cunning",
+          "Vigilance",
+          "Villainy"
+        ],
+        "text": "Ambush\nShielded\nGrit",
+        "unique": true,
+        "quantity": 3
+      },
+      {
+        "id": "HMW_204",
+        "name": "Nightbrother | Maul's Gauntlet",
+        "subtitle": "Maul's Gauntlet",
+        "count": 2,
+        "cost": 7,
+        "type": 2,
+        "arena": "Space",
+        "traits": [
+          "VEHICLE",
+          "TRANSPORT"
+        ],
+        "hp": 7,
+        "power": 6,
+        "set": "HMW",
+        "number": "204",
+        "imageUrl": "https://cdn.starwarsunlimited.com//09010204_EN_Nightbrother_9544c8aaf2.png",
+        "aspects": [
+          "Cunning",
+          "Villainy"
+        ],
+        "text": "When Played: You may play a unit from your discard pile. It costs 3 less and enters play ready. At the start of the next regroup phase, defeat it.",
+        "unique": true,
+        "quantity": 2
+      },
+      {
+        "id": "LOF_059",
+        "name": "Nightsister Warrior",
+        "count": 2,
+        "cost": 2,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "FORCE",
+          "NIGHT"
+        ],
+        "hp": 2,
+        "power": 2,
+        "set": "LOF",
+        "number": "059",
+        "imageUrl": "https://cdn.starwarsunlimited.com//05010059_EN_Nightsister_Warrior_c64371ad0c.png",
+        "aspects": [
+          "Vigilance"
+        ],
+        "text": "When Defeated: Draw a card.",
+        "unique": false,
+        "quantity": 2
+      },
+      {
+        "id": "JTL_043",
+        "name": "No Glory, Only Results",
+        "count": 2,
+        "cost": 5,
+        "type": 4,
+        "arena": "None",
+        "traits": [
+          "TACTIC"
+        ],
+        "hp": 0,
+        "power": 0,
+        "set": "JTL",
+        "number": "043",
+        "imageUrl": "https://cdn.starwarsunlimited.com//04010043_EN_No_Glory_Only_Results_17c5c85fea.png",
+        "aspects": [
+          "Vigilance",
+          "Villainy"
+        ],
+        "text": "Take control of a non-leader unit, then defeat it.",
+        "unique": false,
+        "quantity": 2
+      },
+      {
+        "id": "ASH_053",
+        "name": "Pre Vizsla | Strong-Willed Ruler",
+        "subtitle": "Strong-Willed Ruler",
+        "count": 2,
+        "cost": 8,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "MANDALORIAN",
+          "OFFICIAL"
+        ],
+        "hp": 6,
+        "power": 6,
+        "set": "ASH",
+        "number": "053",
+        "imageUrl": "https://cdn.starwarsunlimited.com//08010053_EN_Pre_Vizsla_04e122a1d3.png",
+        "aspects": [
+          "Vigilance",
+          "Villainy"
+        ],
+        "text": "When Played: Defeat any number of non-leader units with a total of 6 or less remaining HP. Create a Mandalorian token for each unit defeated this way.",
+        "unique": true,
+        "quantity": 2
+      },
+      {
+        "id": "LOF_061",
+        "name": "Secretive Sage",
+        "count": 3,
+        "cost": 2,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "FORCE",
+          "FRINGE"
+        ],
+        "hp": 2,
+        "power": 2,
+        "set": "LOF",
+        "number": "061",
+        "imageUrl": "https://cdn.starwarsunlimited.com//05010061_EN_Secretive_Sage_90ed7a322e.png",
+        "aspects": [
+          "Vigilance"
+        ],
+        "text": "Shielded (When you play this unit, give a Shield token to it.)",
+        "unique": false,
+        "quantity": 3
+      },
+      {
+        "id": "LOF_183",
+        "name": "Shin Hati | Overeager Apprentice",
+        "subtitle": "Overeager Apprentice",
+        "count": 3,
+        "cost": 3,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "FORCE",
+          "FRINGE"
+        ],
+        "hp": 2,
+        "power": 4,
+        "set": "LOF",
+        "number": "183",
+        "imageUrl": "https://cdn.starwarsunlimited.com//05010183_EN_Shin_Hati_0af13a7b2e.png",
+        "aspects": [
+          "Cunning",
+          "Villainy"
+        ],
+        "text": "Hidden (This unit can't be attacked if it was played this phase.)\nShielded (When you play this unit, give a Shield token to her.)",
+        "unique": true,
+        "quantity": 3
+      },
+      {
+        "id": "ASH_194",
+        "name": "Snub Fighter Squadron",
+        "count": 2,
+        "cost": 4,
+        "type": 2,
+        "arena": "Space",
+        "traits": [
+          "UNDERWORLD",
+          "VEHICLE",
+          "FIGHTER"
+        ],
+        "hp": 3,
+        "power": 4,
+        "set": "ASH",
+        "number": "194",
+        "imageUrl": "https://cdn.starwarsunlimited.com//08010194_EN_Snub_Fighter_Squadron_2cf5818328.png",
+        "aspects": [
+          "Cunning",
+          "Villainy"
+        ],
+        "text": "Ambush (When you play this unit, it may attack an enemy unit.)\nWhen Played: Deal 1 damage to a space unit.",
+        "unique": false,
+        "quantity": 2
+      },
+      {
+        "id": "LOF_035",
+        "name": "Talzin's Assassin",
+        "count": 3,
+        "cost": 4,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "FORCE",
+          "NIGHT"
+        ],
+        "hp": 4,
+        "power": 4,
+        "set": "LOF",
+        "number": "035",
+        "imageUrl": "https://cdn.starwarsunlimited.com//05010035_EN_Talzin_s_Assassin_82a65780a2.png",
+        "aspects": [
+          "Vigilance",
+          "Villainy"
+        ],
+        "text": "When Played: You may use the Force (lose your Force token). If you do, give a unit -3/-3 for this phase.",
+        "unique": false,
+        "quantity": 3
+      },
+      {
+        "id": "LAW_086",
+        "name": "The Stranger | No Survivors",
+        "subtitle": "No Survivors",
+        "count": 2,
+        "cost": 5,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "FORCE",
+          "SITH"
+        ],
+        "hp": 7,
+        "power": 1,
+        "set": "LAW",
+        "number": "086",
+        "imageUrl": "https://cdn.starwarsunlimited.com//07010086_EN_The_Stranger_f8fc9e47f4.png",
+        "aspects": [
+          "Cunning",
+          "Vigilance",
+          "Villainy"
+        ],
+        "text": "Ambush\nGrit\nWhile attacking, you may have the defending unit deal combat damage before this unit.",
+        "unique": true,
+        "quantity": 2
+      },
+      {
+        "id": "SEC_028",
+        "name": "Trayus Acolyte",
+        "count": 3,
+        "cost": 2,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "FORCE",
+          "SITH"
+        ],
+        "hp": 4,
+        "power": 2,
+        "set": "SEC",
+        "number": "028",
+        "imageUrl": "https://cdn.starwarsunlimited.com//06010028_EN_Trayus_Acolyte_bbbcbfddc0.png",
+        "aspects": [
+          "Vigilance",
+          "Villainy"
+        ],
+        "text": "",
+        "unique": false,
+        "quantity": 3
+      },
+      {
+        "id": "HMW_203",
+        "name": "Victor Squadron | In Attack Formation",
+        "subtitle": "In Attack Formation",
+        "count": 3,
+        "cost": 6,
+        "type": 2,
+        "arena": "Space",
+        "traits": [
+          "IMPERIAL",
+          "VEHICLE",
+          "FIGHTER"
+        ],
+        "hp": 5,
+        "power": 5,
+        "set": "HMW",
+        "number": "203",
+        "imageUrl": "https://cdn.starwarsunlimited.com//09010203_EN_Victor_Squadron_fe9b42e62c.png",
+        "aspects": [
+          "Cunning",
+          "Villainy"
+        ],
+        "text": "This unit enters play ready.",
+        "unique": true,
+        "quantity": 3
+      }
+    ],
+    "sideboard": [
+      {
+        "id": "ASH_078",
+        "name": "B-Wing Rearguard",
+        "count": 2,
+        "cost": 4,
+        "type": 2,
+        "arena": "Space",
+        "traits": [
+          "REBEL",
+          "VEHICLE",
+          "FIGHTER"
+        ],
+        "hp": 5,
+        "power": 3,
+        "set": "ASH",
+        "number": "078",
+        "imageUrl": "https://cdn.starwarsunlimited.com//08010078_EN_B_Wing_Rearguard_b7e04f9aa0.png",
+        "aspects": [
+          "Vigilance"
+        ],
+        "text": "While you control a ground unit, this unit gains Sentinel. (Enemy units in this arena must attack a Sentinel when they attack you.)",
+        "unique": false,
+        "quantity": 2
+      },
+      {
+        "id": "JTL_235",
+        "name": "Commandeer",
+        "count": 3,
+        "cost": 5,
+        "type": 4,
+        "arena": "None",
+        "traits": [
+          "TRICK"
+        ],
+        "hp": 0,
+        "power": 0,
+        "set": "JTL",
+        "number": "235",
+        "imageUrl": "https://cdn.starwarsunlimited.com//04010235_EN_Commandeer_cf84ba5761.png",
+        "aspects": [
+          "Cunning"
+        ],
+        "text": "Take control of a non-leader Vehicle unit that costs 6 or less without a Pilot on it. If you do, ready it. At the start of the next regroup phase, return that unit to its owner's hand.",
+        "unique": false,
+        "quantity": 3
+      },
+      {
+        "id": "SEC_078",
+        "name": "Hyperspace Disaster",
+        "count": 2,
+        "cost": 7,
+        "type": 4,
+        "arena": "None",
+        "traits": [
+          "DISASTER"
+        ],
+        "hp": 0,
+        "power": 0,
+        "set": "SEC",
+        "number": "078",
+        "imageUrl": "https://cdn.starwarsunlimited.com//06010078_EN_Hyperspace_Disaster_dfd5df1749.png",
+        "aspects": [
+          "Vigilance"
+        ],
+        "text": "Defeat all space units.",
+        "unique": false,
+        "quantity": 2
+      },
+      {
+        "id": "ASH_090",
+        "name": "Reforge",
+        "count": 2,
+        "cost": 2,
+        "type": 4,
+        "arena": "None",
+        "traits": [
+          "SUPPLY"
+        ],
+        "hp": 0,
+        "power": 0,
+        "set": "ASH",
+        "number": "090",
+        "imageUrl": "https://cdn.starwarsunlimited.com//08010090_EN_Reforge_749ccfad88.png",
+        "aspects": [
+          "Vigilance"
+        ],
+        "text": "Defeat an upgrade on a friendly unit. If you do, search the top 8 cards of your deck for an upgrade that can attach to that unit, reveal it, and play it on that unit. It costs 4 less.",
+        "unique": false,
+        "quantity": 2
+      },
+      {
+        "id": "ASH_194",
+        "name": "Snub Fighter Squadron",
+        "count": 1,
+        "cost": 4,
+        "type": 2,
+        "arena": "Space",
+        "traits": [
+          "UNDERWORLD",
+          "VEHICLE",
+          "FIGHTER"
+        ],
+        "hp": 3,
+        "power": 4,
+        "set": "ASH",
+        "number": "194",
+        "imageUrl": "https://cdn.starwarsunlimited.com//08010194_EN_Snub_Fighter_Squadron_2cf5818328.png",
+        "aspects": [
+          "Cunning",
+          "Villainy"
+        ],
+        "text": "Ambush (When you play this unit, it may attack an enemy unit.)\nWhen Played: Deal 1 damage to a space unit.",
+        "unique": false,
+        "quantity": 1
+      }
+    ]
+  },
+  "metaDeck_4": {
+    "metadata": {
+      "name": "Lando Calrissian (Meta)",
+      "author": "TAYX",
+      "winRate": "58%"
+    },
+    "leader": {
+      "id": "LAW_018",
+      "name": "Lando Calrissian | Full Sabacc",
+      "subtitle": "Full Sabacc",
+      "count": 1,
+      "cost": 6,
+      "type": 0,
+      "arena": "Ground",
+      "traits": [
+        "UNDERWORLD"
+      ],
+      "hp": 7,
+      "power": 4,
+      "set": "law",
+      "number": "018",
+      "imageUrl": null,
+      "aspects": [
+        "Cunning",
+        "Heroism"
+      ],
+      "text": "Action [C=1, Exhaust]: Choose an aspect, then discard a card from a deck. If it has the chosen aspect, create a Credit token.",
+      "unique": true,
+      "back_text": "When Deployed: You may defeat a friendly Credit token. If you do, create 3 Credit tokens."
+    },
+    "base": {
+      "id": "HMW_020",
+      "name": "Great Grass Plains",
+      "subtitle": "Naboo",
+      "count": 1,
+      "cost": 0,
+      "type": 1,
+      "arena": "None",
+      "traits": [
+        "NABOO"
+      ],
+      "hp": 30,
+      "set": "hmw",
+      "number": "020",
+      "imageUrl": null,
+      "aspects": [
+        "Vigilance"
+      ],
+      "text": "",
+      "unique": false
+    },
+    "deck": [
+      {
+        "id": "HMW_081",
+        "name": "Alliance Shield Generator",
+        "count": 3,
+        "cost": 2,
+        "type": 3,
+        "arena": "None",
+        "traits": [
+          "FORTIFICATION"
+        ],
+        "hp": 0,
+        "power": 0,
+        "set": "HMW",
+        "number": "081",
+        "imageUrl": "https://cdn.starwarsunlimited.com//09010081_EN_Alliance_Shield_Generator_844f0ca9ed.png",
+        "aspects": [
+          "Vigilance",
+          "Heroism"
+        ],
+        "text": "Fortify (Attach this to your base, not a unit.)\nIf attached base would be dealt 5 or more damage, prevent that damage. If you do, defeat this upgrade and draw a card.",
+        "unique": false,
+        "quantity": 3
+      },
+      {
+        "id": "LOF_070",
+        "name": "Anakin Skywalker | Champion of Mortis",
+        "subtitle": "Champion of Mortis",
+        "count": 3,
+        "cost": 6,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "FORCE",
+          "JEDI",
+          "REPUBLIC"
+        ],
+        "hp": 7,
+        "power": 5,
+        "set": "LOF",
+        "number": "070",
+        "imageUrl": "https://cdn.starwarsunlimited.com//05010070_EN_Anakin_Skywalker_e6a948d85c.png",
+        "aspects": [
+          "Vigilance"
+        ],
+        "text": "When Played: If there is a Heroism card in your discard pile, you may give a unit -3/-3 for this phase. \nWhen Played: If there is a Villainy card in your discard pile, you may give a unit -3/-3 for this phase.",
+        "unique": true,
+        "quantity": 3
+      },
+      {
+        "id": "SEC_051",
+        "name": "Bo-Katan Kryze | Alone",
+        "subtitle": "Alone",
+        "count": 3,
+        "cost": 9,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "MANDALORIAN"
+        ],
+        "hp": 8,
+        "power": 8,
+        "set": "SEC",
+        "number": "051",
+        "imageUrl": "https://cdn.starwarsunlimited.com//06010051_EN_Bo_Katan_Kryze_f1a5544d8b.png",
+        "aspects": [
+          "Vigilance",
+          "Heroism"
+        ],
+        "text": "When Played: Give each enemy unit -3/-3 for this phase.\nWhen an enemy unit is defeated: Give an Experience token to a friendly unit.",
+        "unique": true,
+        "quantity": 3
+      },
+      {
+        "id": "JTL_078",
+        "name": "Direct Hit",
+        "count": 2,
+        "cost": 4,
+        "type": 4,
+        "arena": "None",
+        "traits": [
+          "TACTIC"
+        ],
+        "hp": 0,
+        "power": 0,
+        "set": "JTL",
+        "number": "078",
+        "imageUrl": "https://cdn.starwarsunlimited.com//04010078_EN_Direct_Hit_3dbf53eb0f.png",
+        "aspects": [
+          "Vigilance"
+        ],
+        "text": "Defeat a non-leader Vehicle unit.",
+        "unique": false,
+        "quantity": 2
+      },
+      {
+        "id": "SEC_046",
+        "name": "Galen Erso | You'll Never Win",
+        "subtitle": "You'll Never Win",
+        "count": 3,
+        "cost": 4,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "IMPERIAL"
+        ],
+        "hp": 5,
+        "power": 3,
+        "set": "SEC",
+        "number": "046",
+        "imageUrl": "https://cdn.starwarsunlimited.com//06010046_EN_Galen_Erso_fa3b063d30.png",
+        "aspects": [
+          "Vigilance",
+          "Heroism"
+        ],
+        "text": "When Played: Name a card. While this unit is in play, each non-leader card an opponent owns with that name, including those not in play, loses all abilities (and can't gain abilities).\nPlot",
+        "unique": true,
+        "quantity": 3
+      },
+      {
+        "id": "ASH_065",
+        "name": "Home One | Heart of the Fleet",
+        "subtitle": "Heart of the Fleet",
+        "count": 2,
+        "cost": 8,
+        "type": 2,
+        "arena": "Space",
+        "traits": [
+          "REBEL",
+          "VEHICLE",
+          "CAPITAL SHIP"
+        ],
+        "hp": 10,
+        "power": 7,
+        "set": "ASH",
+        "number": "065",
+        "imageUrl": "https://cdn.starwarsunlimited.com//08010065_EN_Home_One_57f0da7a51.png",
+        "aspects": [
+          "Vigilance",
+          "Heroism"
+        ],
+        "text": "Sentinel (Enemy units in this arena must attack a Sentinel when they attack you.)\nWhen Played: Heal all damage from each friendly unit.",
+        "unique": true,
+        "quantity": 2
+      },
+      {
+        "id": "ASH_056",
+        "name": "Huyang | Your Aptitude Falls Short",
+        "subtitle": "Your Aptitude Falls Short",
+        "count": 2,
+        "cost": 2,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "JEDI",
+          "DROID"
+        ],
+        "hp": 4,
+        "power": 2,
+        "set": "ASH",
+        "number": "056",
+        "imageUrl": "https://cdn.starwarsunlimited.com//08010056_EN_Huyang_edbfc19172.png",
+        "aspects": [
+          "Vigilance",
+          "Heroism"
+        ],
+        "text": "On Attack: You may give an upgraded unit -4/-0 for this phase.",
+        "unique": true,
+        "quantity": 2
+      },
+      {
+        "id": "SEC_078",
+        "name": "Hyperspace Disaster",
+        "count": 3,
+        "cost": 7,
+        "type": 4,
+        "arena": "None",
+        "traits": [
+          "DISASTER"
+        ],
+        "hp": 0,
+        "power": 0,
+        "set": "SEC",
+        "number": "078",
+        "imageUrl": "https://cdn.starwarsunlimited.com//06010078_EN_Hyperspace_Disaster_dfd5df1749.png",
+        "aspects": [
+          "Vigilance"
+        ],
+        "text": "Defeat all space units.",
+        "unique": false,
+        "quantity": 3
+      },
+      {
+        "id": "LAW_089",
+        "name": "Kanan Jarrus | Spectre One",
+        "subtitle": "Spectre One",
+        "count": 3,
+        "cost": 4,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "FORCE",
+          "JEDI",
+          "REBEL",
+          "SPECTRE"
+        ],
+        "hp": 4,
+        "power": 3,
+        "set": "LAW",
+        "number": "089",
+        "imageUrl": "https://cdn.starwarsunlimited.com//07010089_EN_Kanan_Jarrus_8f419460a1.png",
+        "aspects": [
+          "Cunning",
+          "Vigilance",
+          "Heroism"
+        ],
+        "text": "Restore 1\nWhen Played: You may return a non-leader unit that costs 2 or less to its owner's hand. If you control a Command or Aggression unit, you may return a non-leader unit that costs 4 or less instead.",
+        "unique": true,
+        "quantity": 3
+      },
+      {
+        "id": "LAW_133",
+        "name": "Lost and Forgotten",
+        "count": 3,
+        "cost": 6,
+        "type": 4,
+        "arena": "None",
+        "traits": [
+          "INNATE"
+        ],
+        "hp": 0,
+        "power": 0,
+        "set": "LAW",
+        "number": "133",
+        "imageUrl": "https://cdn.starwarsunlimited.com//07010133_EN_Lost_and_Forgotten_56c69cc986.png",
+        "aspects": [
+          "Vigilance"
+        ],
+        "text": "Defeat a non-leader unit. If you do, heal 3 damage from your base.",
+        "unique": false,
+        "quantity": 3
+      },
+      {
+        "id": "JTL_043",
+        "name": "No Glory, Only Results",
+        "count": 2,
+        "cost": 5,
+        "type": 4,
+        "arena": "None",
+        "traits": [
+          "TACTIC"
+        ],
+        "hp": 0,
+        "power": 0,
+        "set": "JTL",
+        "number": "043",
+        "imageUrl": "https://cdn.starwarsunlimited.com//04010043_EN_No_Glory_Only_Results_17c5c85fea.png",
+        "aspects": [
+          "Vigilance",
+          "Villainy"
+        ],
+        "text": "Take control of a non-leader unit, then defeat it.",
+        "unique": false,
+        "quantity": 2
+      },
+      {
+        "id": "LOF_057",
+        "name": "Owen Lars | Devoted Uncle",
+        "subtitle": "Devoted Uncle",
+        "count": 3,
+        "cost": 1,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "FRINGE"
+        ],
+        "hp": 3,
+        "power": 0,
+        "set": "LOF",
+        "number": "057",
+        "imageUrl": "https://cdn.starwarsunlimited.com//05010057_EN_Owen_Lars_14810f3031.png",
+        "aspects": [
+          "Vigilance"
+        ],
+        "text": "Restore 2 \nWhen Defeated: Search the top 5 cards of your deck for a Force unit, reveal it, and draw it. (Put the other cards on the bottom of your deck in a random order.)",
+        "unique": true,
+        "quantity": 3
+      },
+      {
+        "id": "ASH_053",
+        "name": "Pre Vizsla | Strong-Willed Ruler",
+        "subtitle": "Strong-Willed Ruler",
+        "count": 3,
+        "cost": 8,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "MANDALORIAN",
+          "OFFICIAL"
+        ],
+        "hp": 6,
+        "power": 6,
+        "set": "ASH",
+        "number": "053",
+        "imageUrl": "https://cdn.starwarsunlimited.com//08010053_EN_Pre_Vizsla_04e122a1d3.png",
+        "aspects": [
+          "Vigilance",
+          "Villainy"
+        ],
+        "text": "When Played: Defeat any number of non-leader units with a total of 6 or less remaining HP. Create a Mandalorian token for each unit defeated this way.",
+        "unique": true,
+        "quantity": 3
+      },
+      {
+        "id": "HMW_078",
+        "name": "Qui-Gon Jinn | We'll Handle This",
+        "subtitle": "We'll Handle This",
+        "count": 2,
+        "cost": 5,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "FORCE",
+          "JEDI",
+          "REPUBLIC"
+        ],
+        "hp": 5,
+        "power": 2,
+        "set": "HMW",
+        "number": "078",
+        "imageUrl": "https://cdn.starwarsunlimited.com//09010078_EN_Qui_Gon_Jinn_290bee97ca.png",
+        "aspects": [
+          "Vigilance",
+          "Heroism"
+        ],
+        "text": "Grit \nWhen Played: You may defeat a unit that attacked your base this phase. If it's a leader unit, defeat this unit.",
+        "unique": true,
+        "quantity": 2
+      },
+      {
+        "id": "ASH_077",
+        "name": "Ryder Azadi | Restored Governor",
+        "subtitle": "Restored Governor",
+        "count": 1,
+        "cost": 3,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "NEW REPUBLIC",
+          "OFFICIAL"
+        ],
+        "hp": 5,
+        "power": 2,
+        "set": "ASH",
+        "number": "077",
+        "imageUrl": "https://cdn.starwarsunlimited.com//08010077_EN_Ryder_Azadi_e2c33fd5b1.png",
+        "aspects": [
+          "Vigilance"
+        ],
+        "text": "Restore 1\nWhen Played: Name a card. While this unit is in play, opponents can't play cards with that name.",
+        "unique": true,
+        "quantity": 1
+      },
+      {
+        "id": "HMW_094",
+        "name": "Sando Aqua Monster",
+        "count": 3,
+        "cost": 8,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "CREATURE"
+        ],
+        "hp": 9,
+        "power": 5,
+        "set": "HMW",
+        "number": "094",
+        "imageUrl": "https://cdn.starwarsunlimited.com//09010094_EN_Sando_Aqua_Monster_a2d9e73c85.png",
+        "aspects": [
+          "Vigilance"
+        ],
+        "text": "Grit\nWhen Played: If you control a Naboo base, you may defeat any number of ground units with combined power equal to or less than this unit's power. Deal damage to this unit equal to the combined power of the defeated units.",
+        "unique": false,
+        "quantity": 3
+      },
+      {
+        "id": "ASH_062",
+        "name": "The Mandalorian | Devoted Rescuer",
+        "subtitle": "Devoted Rescuer",
+        "count": 3,
+        "cost": 4,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "MANDALORIAN"
+        ],
+        "hp": 4,
+        "power": 5,
+        "set": "ASH",
+        "number": "062",
+        "imageUrl": "https://cdn.starwarsunlimited.com//08010062_EN_The_Mandalorian_e5e7dfa30f.png",
+        "aspects": [
+          "Vigilance",
+          "Heroism"
+        ],
+        "text": "Shielded\nIf damage would be dealt to another friendly unit, you may defeat a Shield token on this unit. If you do, prevent that damage.",
+        "unique": true,
+        "quantity": 3
+      },
+      {
+        "id": "HMW_100",
+        "name": "Torrent",
+        "count": 2,
+        "cost": 2,
+        "type": 4,
+        "arena": "None",
+        "traits": [
+          "DISASTER"
+        ],
+        "hp": 0,
+        "power": 0,
+        "set": "HMW",
+        "number": "100",
+        "imageUrl": "https://cdn.starwarsunlimited.com//09010100_EN_Torrent_50eebea3f8.png",
+        "aspects": [
+          "Vigilance"
+        ],
+        "text": "Give a Weakness token to a unit. If you control a Naboo base, give 2 Weakness tokens to that unit instead.",
+        "unique": false,
+        "quantity": 2
+      },
+      {
+        "id": "HMW_075",
+        "name": "Wookiee Protector",
+        "count": 3,
+        "cost": 3,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "WOOKIEE"
+        ],
+        "hp": 4,
+        "power": 3,
+        "set": "HMW",
+        "number": "075",
+        "imageUrl": "https://cdn.starwarsunlimited.com//09010075_EN_Wookiee_Protector_b4a47c641e.png",
+        "aspects": [
+          "Vigilance",
+          "Heroism"
+        ],
+        "text": "Sentinel (Enemy units in this arena must attack a Sentinel when they attack you.)",
+        "unique": false,
+        "quantity": 3
+      },
+      {
+        "id": "HMW_056",
+        "name": "Yoda | Trickster in Exile",
+        "subtitle": "Trickster in Exile",
+        "count": 2,
+        "cost": 3,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "FORCE",
+          "FRINGE",
+          "JEDI"
+        ],
+        "hp": 4,
+        "power": 4,
+        "set": "HMW",
+        "number": "056",
+        "imageUrl": "https://cdn.starwarsunlimited.com//09010056_EN_Yoda_b0f7494bf5.png",
+        "aspects": [
+          "Cunning",
+          "Vigilance",
+          "Heroism"
+        ],
+        "text": "Hidden \nWhen Defeated: You may put this card from your discard pile on top of your deck. If you do, heal 2 damage from a base.",
+        "unique": true,
+        "quantity": 2
+      }
+    ],
+    "sideboard": [
+      {
+        "id": "ASH_043",
+        "name": "Corona Four | Justice for Alderaan",
+        "subtitle": "Justice for Alderaan",
+        "count": 2,
+        "cost": 2,
+        "type": 2,
+        "arena": "Space",
+        "traits": [
+          "REBEL",
+          "VEHICLE",
+          "FIGHTER"
+        ],
+        "hp": 3,
+        "power": 2,
+        "set": "ASH",
+        "number": "043",
+        "imageUrl": "https://cdn.starwarsunlimited.com//08010043_EN_Corona_Four_bfdbd0d021.png",
+        "aspects": [
+          "Cunning",
+          "Vigilance",
+          "Heroism"
+        ],
+        "text": "On Attack: You may give a unit -2/-0 for this phase.\nWhen Defeated: You may defeat a non‑leader unit with 0 power.",
+        "unique": true,
+        "quantity": 2
+      },
+      {
+        "id": "ASH_056",
+        "name": "Huyang | Your Aptitude Falls Short",
+        "subtitle": "Your Aptitude Falls Short",
+        "count": 1,
+        "cost": 2,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "JEDI",
+          "DROID"
+        ],
+        "hp": 4,
+        "power": 2,
+        "set": "ASH",
+        "number": "056",
+        "imageUrl": "https://cdn.starwarsunlimited.com//08010056_EN_Huyang_edbfc19172.png",
+        "aspects": [
+          "Vigilance",
+          "Heroism"
+        ],
+        "text": "On Attack: You may give an upgraded unit -4/-0 for this phase.",
+        "unique": true,
+        "quantity": 1
+      },
+      {
+        "id": "LAW_221",
+        "name": "Lieutenant Gorn | I Deserve Worse",
+        "subtitle": "I Deserve Worse",
+        "count": 2,
+        "cost": 3,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "IMPERIAL",
+          "REBEL"
+        ],
+        "hp": 4,
+        "power": 4,
+        "set": "LAW",
+        "number": "221",
+        "imageUrl": "https://cdn.starwarsunlimited.com//07010221_EN_Lieutenant_Gorn_b48afb7753.png",
+        "aspects": [
+          "Cunning",
+          "Heroism"
+        ],
+        "text": "On Attack: Take control of an enemy Credit token.",
+        "unique": true,
+        "quantity": 2
+      },
+      {
+        "id": "JTL_079",
+        "name": "Out the Airlock",
+        "count": 2,
+        "cost": 5,
+        "type": 4,
+        "arena": "None",
+        "traits": [
+          "TACTIC"
+        ],
+        "hp": 0,
+        "power": 0,
+        "set": "JTL",
+        "number": "079",
+        "imageUrl": "https://cdn.starwarsunlimited.com//04010079_EN_Out_the_Airlock_9b0da9079f.png",
+        "aspects": [
+          "Vigilance"
+        ],
+        "text": "Give a unit -5/-5 for this phase.",
+        "unique": false,
+        "quantity": 2
+      },
+      {
+        "id": "ASH_077",
+        "name": "Ryder Azadi | Restored Governor",
+        "subtitle": "Restored Governor",
+        "count": 1,
+        "cost": 3,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "NEW REPUBLIC",
+          "OFFICIAL"
+        ],
+        "hp": 5,
+        "power": 2,
+        "set": "ASH",
+        "number": "077",
+        "imageUrl": "https://cdn.starwarsunlimited.com//08010077_EN_Ryder_Azadi_e2c33fd5b1.png",
+        "aspects": [
+          "Vigilance"
+        ],
+        "text": "Restore 1\nWhen Played: Name a card. While this unit is in play, opponents can't play cards with that name.",
+        "unique": true,
+        "quantity": 1
+      },
+      {
+        "id": "LAW_132",
+        "name": "The Tree Remembers",
+        "count": 2,
+        "cost": 4,
+        "type": 4,
+        "arena": "None",
+        "traits": [
+          "TACTIC"
+        ],
+        "hp": 0,
+        "power": 0,
+        "set": "LAW",
+        "number": "132",
+        "imageUrl": "https://cdn.starwarsunlimited.com//07010132_EN_The_Tree_Remembers_aa6c9f0afd.png",
+        "aspects": [
+          "Vigilance"
+        ],
+        "text": "An enemy unit loses all abilities for this phase. If it costs 3 or less, defeat it.",
+        "unique": false,
+        "quantity": 2
+      }
+    ]
+  },
+  "metaDeck_5": {
+    "metadata": {
+      "name": "Mother Talzin (Meta)",
+      "author": "vasco",
+      "winRate": "58%"
+    },
+    "leader": {
+      "id": "LOF_002",
+      "name": "Mother Talzin | Power Through Magick",
+      "subtitle": "Power Through Magick",
+      "count": 1,
+      "cost": 5,
+      "type": 0,
+      "arena": "Ground",
+      "traits": [
+        "FORCE",
+        "NIGHT"
+      ],
+      "hp": 7,
+      "power": 3,
+      "set": "lof",
+      "number": "002",
+      "imageUrl": null,
+      "aspects": [
+        "Vigilance",
+        "Villainy"
+      ],
+      "text": "Action [Exhaust, use the Force (lose your Force token)]: Give a unit -1/-1 for this phase.",
+      "unique": true,
+      "back_text": "On Attack: You may give a unit -1/-1 for this phase."
+    },
+    "base": {
+      "id": "LOF_022",
+      "name": "Mystic Monastery",
+      "subtitle": "Mortis",
+      "count": 1,
+      "cost": 0,
+      "type": 1,
+      "arena": "None",
+      "traits": [],
+      "hp": 25,
+      "set": "lof",
+      "number": "022",
+      "imageUrl": null,
+      "aspects": [
+        "Command"
+      ],
+      "text": "Action: The Force is with you (create your Force token). Use this ability no more than 3 times each game.",
+      "unique": false
+    },
+    "deck": [
+      {
+        "id": "HMW_038",
+        "name": "Bestial Bond",
+        "count": 3,
+        "cost": 3,
+        "type": 3,
+        "arena": "None",
+        "traits": [
+          "INNATE"
+        ],
+        "hp": 0,
+        "power": 0,
+        "set": "HMW",
+        "number": "038",
+        "imageUrl": "https://cdn.starwarsunlimited.com//09010038_EN_Bestial_Bond_d569e9c2d1.png",
+        "aspects": [
+          "Vigilance",
+          "Command"
+        ],
+        "text": "When Played: If attached unit is a Creature or a Force unit, create a Beast token.",
+        "unique": false,
+        "quantity": 3
+      },
+      {
+        "id": "SEC_082",
+        "name": "Chancellor Palpatine | I Am the Senate",
+        "subtitle": "I Am the Senate",
+        "count": 2,
+        "cost": 3,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "REPUBLIC",
+          "OFFICIAL"
+        ],
+        "hp": 2,
+        "power": 2,
+        "set": "SEC",
+        "number": "082",
+        "imageUrl": "https://cdn.starwarsunlimited.com//06010082_EN_Chancellor_Palpatine_78bb91b75c.png",
+        "aspects": [
+          "Command",
+          "Villainy"
+        ],
+        "text": "When Played: If you control a leader unit, create 2 Spy tokens and give those tokens Sentinel for this phase.\nPlot",
+        "unique": true,
+        "quantity": 2
+      },
+      {
+        "id": "LOF_091",
+        "name": "Craving Power",
+        "count": 3,
+        "cost": 5,
+        "type": 3,
+        "arena": "None",
+        "traits": [
+          "INNATE"
+        ],
+        "hp": 0,
+        "power": 0,
+        "set": "LOF",
+        "number": "091",
+        "imageUrl": "https://cdn.starwarsunlimited.com//05010091_EN_Craving_Power_9cf3efe98b.png",
+        "aspects": [
+          "Command",
+          "Villainy"
+        ],
+        "text": "Attach to a friendly unit.\nWhen Played: Deal damage to an enemy unit equal to attached unit's power.",
+        "unique": false,
+        "quantity": 3
+      },
+      {
+        "id": "LOF_231",
+        "name": "Darth Tyranus | Servant of Sidious",
+        "subtitle": "Servant of Sidious",
+        "count": 3,
+        "cost": 4,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "FORCE",
+          "SEPARATIST",
+          "SITH"
+        ],
+        "hp": 3,
+        "power": 4,
+        "set": "LOF",
+        "number": "231",
+        "imageUrl": "https://cdn.starwarsunlimited.com//05010231_EN_Darth_Tyranus_92d493741d.png",
+        "aspects": [
+          "Villainy"
+        ],
+        "text": "Shielded (When you play this unit, give a Shield token to him.)\nWhile the Force is with you, this unit gains Ambush. (When you play this unit, he may attack an enemy unit.)",
+        "unique": true,
+        "quantity": 3
+      },
+      {
+        "id": "HMW_103",
+        "name": "Disposable B1",
+        "count": 3,
+        "cost": 1,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "SEPARATIST",
+          "DROID",
+          "TROOPER"
+        ],
+        "hp": 1,
+        "power": 2,
+        "set": "HMW",
+        "number": "103",
+        "imageUrl": "https://cdn.starwarsunlimited.com//09010103_EN_Disposable_B1_99e1760727.png",
+        "aspects": [
+          "Command",
+          "Villainy"
+        ],
+        "text": "When Played: If another friendly unit entered play this phase (including leader and token units), draw a card.",
+        "unique": false,
+        "quantity": 3
+      },
+      {
+        "id": "HMW_130",
+        "name": "Emerie Karr | For Your Own Good",
+        "subtitle": "For Your Own Good",
+        "count": 2,
+        "cost": 1,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "IMPERIAL",
+          "CLONE"
+        ],
+        "hp": 1,
+        "power": 2,
+        "set": "HMW",
+        "number": "130",
+        "imageUrl": "https://cdn.starwarsunlimited.com//09010130_EN_Emerie_Karr_37134ba7fd.png",
+        "aspects": [
+          "Command"
+        ],
+        "text": "When Played: You may deal 1 damage to another ground unit. If you control that unit, the next unit you play this phase costs 1 less.",
+        "unique": true,
+        "quantity": 2
+      },
+      {
+        "id": "HMW_104",
+        "name": "Garnac | Let the Hunt Begin!",
+        "subtitle": "Let the Hunt Begin!",
+        "count": 3,
+        "cost": 1,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "UNDERWORLD"
+        ],
+        "hp": 1,
+        "power": 3,
+        "set": "HMW",
+        "number": "104",
+        "imageUrl": "https://cdn.starwarsunlimited.com//09010104_EN_Garnac_b400d2396a.png",
+        "aspects": [
+          "Command",
+          "Villainy"
+        ],
+        "text": "While an opponent controls a Unique unit, this unit gains Hidden. \nWhen Attack Ends: You may attack with another unit.",
+        "unique": true,
+        "quantity": 3
+      },
+      {
+        "id": "LAW_037",
+        "name": "Han Solo | Hibernation Sick",
+        "subtitle": "Hibernation Sick",
+        "count": 3,
+        "cost": 1,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "REBEL"
+        ],
+        "hp": 1,
+        "power": 1,
+        "set": "LAW",
+        "number": "037",
+        "imageUrl": "https://cdn.starwarsunlimited.com//07010037_EN_Han_Solo_48b1d62cb6.png",
+        "aspects": [
+          "Vigilance",
+          "Command"
+        ],
+        "text": "Shielded (When you play this unit, give a Shield token to him.)\nOn Attack: Give an Experience token to this unit.",
+        "unique": true,
+        "quantity": 3
+      },
+      {
+        "id": "HMW_111",
+        "name": "Invasion Lander",
+        "count": 1,
+        "cost": 6,
+        "type": 2,
+        "arena": "Space",
+        "traits": [
+          "SEPARATIST",
+          "VEHICLE",
+          "TRANSPORT"
+        ],
+        "hp": 7,
+        "power": 3,
+        "set": "HMW",
+        "number": "111",
+        "imageUrl": "https://cdn.starwarsunlimited.com//09010111_EN_Invasion_Lander_a89b90432b.png",
+        "aspects": [
+          "Command",
+          "Villainy"
+        ],
+        "text": "When Played: Give each other friendly unit +2/+2 for this phase.",
+        "unique": false,
+        "quantity": 1
+      },
+      {
+        "id": "SEC_111",
+        "name": "Jar Jar Binks | Mesa Propose…",
+        "subtitle": "Mesa Propose",
+        "count": 3,
+        "cost": 2,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "NABOO",
+          "REPUBLIC",
+          "GUNGAN",
+          "OFFICIAL"
+        ],
+        "hp": 1,
+        "power": 2,
+        "set": "SEC",
+        "number": "111",
+        "imageUrl": "https://cdn.starwarsunlimited.com//06010111_EN_Jar_Jar_Binks_1c64d7e9ce.png",
+        "aspects": [
+          "Command"
+        ],
+        "text": "When Played: You may give another friendly unit +2/+2 for this phase.\nPlot (When you deploy a leader, you may play this card from your resources, paying its cost. Replace it with the top card of your deck.)",
+        "unique": true,
+        "quantity": 3
+      },
+      {
+        "id": "LOF_031",
+        "name": "Karis | We Don't Like Strangers",
+        "subtitle": "We Don't Like Strangers",
+        "count": 3,
+        "cost": 2,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "FORCE",
+          "NIGHT"
+        ],
+        "hp": 4,
+        "power": 2,
+        "set": "LOF",
+        "number": "031",
+        "imageUrl": "https://cdn.starwarsunlimited.com//05010031_EN_Karis_3146cb30ef.png",
+        "aspects": [
+          "Vigilance",
+          "Villainy"
+        ],
+        "text": "When Defeated: You may use the Force (lose your Force token). If you do, give a unit -2/-2 for this phase.",
+        "unique": true,
+        "quantity": 3
+      },
+      {
+        "id": "LAW_039",
+        "name": "Latts Razzi | Deadly Whipmaster",
+        "subtitle": "Deadly Whipmaster",
+        "count": 3,
+        "cost": 3,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "UNDERWORLD",
+          "BOUNTY HUNTER"
+        ],
+        "hp": 1,
+        "power": 2,
+        "set": "LAW",
+        "number": "039",
+        "imageUrl": "https://cdn.starwarsunlimited.com//07010039_EN_Latts_Razzi_5c772f4108.png",
+        "aspects": [
+          "Vigilance",
+          "Command"
+        ],
+        "text": "When Played: Give a Shield token or an Experience token to this unit. Then, she deals damage equal to her power to an enemy ground unit.",
+        "unique": true,
+        "quantity": 3
+      },
+      {
+        "id": "LAW_129",
+        "name": "Mastery",
+        "count": 3,
+        "cost": 4,
+        "type": 3,
+        "arena": "None",
+        "traits": [
+          "LEARNED"
+        ],
+        "hp": 0,
+        "power": 0,
+        "set": "LAW",
+        "number": "129",
+        "imageUrl": "https://cdn.starwarsunlimited.com//07010129_EN_Mastery_1bf9c8a9f4.png",
+        "aspects": [
+          "Vigilance"
+        ],
+        "text": "This upgrade costs 1 less to play on a Unique unit.",
+        "unique": false,
+        "quantity": 3
+      },
+      {
+        "id": "LOF_111",
+        "name": "Maz Kanata | The Light Guides",
+        "subtitle": "The Light Guides",
+        "count": 1,
+        "cost": 3,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "UNDERWORLD"
+        ],
+        "hp": 4,
+        "power": 3,
+        "set": "LOF",
+        "number": "111",
+        "imageUrl": "https://cdn.starwarsunlimited.com//05010111_EN_Maz_Kanata_47a5f468b2.png",
+        "aspects": [
+          "Command"
+        ],
+        "text": "When Played: You may attack with a Force unit. It gets +2/+0 for this attack.",
+        "unique": true,
+        "quantity": 1
+      },
+      {
+        "id": "HMW_146",
+        "name": "Outer Rim Garrison",
+        "count": 1,
+        "cost": 7,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "REPUBLIC",
+          "CLONE",
+          "TWI'LEK",
+          "TROOPER"
+        ],
+        "hp": 6,
+        "power": 6,
+        "set": "HMW",
+        "number": "146",
+        "imageUrl": "https://cdn.starwarsunlimited.com//09010146_EN_Outer_Rim_Garrison_bcd16e5a1f.png",
+        "aspects": [
+          "Command"
+        ],
+        "text": "Ambush (When you play this unit, it may attack an enemy unit.)\nOverwhelm (When attacking an enemy unit, deal excess damage to the opponent's base.)",
+        "unique": false,
+        "quantity": 1
+      },
+      {
+        "id": "LAW_135",
+        "name": "Pirate Snub Fighter",
+        "count": 3,
+        "cost": 2,
+        "type": 2,
+        "arena": "Space",
+        "traits": [
+          "UNDERWORLD",
+          "VEHICLE",
+          "FIGHTER"
+        ],
+        "hp": 3,
+        "power": 2,
+        "set": "LAW",
+        "number": "135",
+        "imageUrl": "https://cdn.starwarsunlimited.com//07010135_EN_Pirate_Snub_Fighter_482b57ff3c.png",
+        "aspects": [
+          "Command",
+          "Villainy"
+        ],
+        "text": "Ambush (When you play this unit, it may attack an enemy unit.)",
+        "unique": false,
+        "quantity": 3
+      },
+      {
+        "id": "ASH_077",
+        "name": "Ryder Azadi | Restored Governor",
+        "subtitle": "Restored Governor",
+        "count": 1,
+        "cost": 3,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "NEW REPUBLIC",
+          "OFFICIAL"
+        ],
+        "hp": 5,
+        "power": 2,
+        "set": "ASH",
+        "number": "077",
+        "imageUrl": "https://cdn.starwarsunlimited.com//08010077_EN_Ryder_Azadi_e2c33fd5b1.png",
+        "aspects": [
+          "Vigilance"
+        ],
+        "text": "Restore 1\nWhen Played: Name a card. While this unit is in play, opponents can't play cards with that name.",
+        "unique": true,
+        "quantity": 1
+      },
+      {
+        "id": "LOF_061",
+        "name": "Secretive Sage",
+        "count": 2,
+        "cost": 2,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "FORCE",
+          "FRINGE"
+        ],
+        "hp": 2,
+        "power": 2,
+        "set": "LOF",
+        "number": "061",
+        "imageUrl": "https://cdn.starwarsunlimited.com//05010061_EN_Secretive_Sage_90ed7a322e.png",
+        "aspects": [
+          "Vigilance"
+        ],
+        "text": "Shielded (When you play this unit, give a Shield token to it.)",
+        "unique": false,
+        "quantity": 2
+      },
+      {
+        "id": "LOF_035",
+        "name": "Talzin's Assassin",
+        "count": 3,
+        "cost": 4,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "FORCE",
+          "NIGHT"
+        ],
+        "hp": 4,
+        "power": 4,
+        "set": "LOF",
+        "number": "035",
+        "imageUrl": "https://cdn.starwarsunlimited.com//05010035_EN_Talzin_s_Assassin_82a65780a2.png",
+        "aspects": [
+          "Vigilance",
+          "Villainy"
+        ],
+        "text": "When Played: You may use the Force (lose your Force token). If you do, give a unit -3/-3 for this phase.",
+        "unique": false,
+        "quantity": 3
+      },
+      {
+        "id": "SEC_028",
+        "name": "Trayus Acolyte",
+        "count": 3,
+        "cost": 2,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "FORCE",
+          "SITH"
+        ],
+        "hp": 4,
+        "power": 2,
+        "set": "SEC",
+        "number": "028",
+        "imageUrl": "https://cdn.starwarsunlimited.com//06010028_EN_Trayus_Acolyte_bbbcbfddc0.png",
+        "aspects": [
+          "Vigilance",
+          "Villainy"
+        ],
+        "text": "",
+        "unique": false,
+        "quantity": 3
+      },
+      {
+        "id": "HMW_252",
+        "name": "Villainous Ambition",
+        "count": 2,
+        "cost": 2,
+        "type": 3,
+        "arena": "None",
+        "traits": [
+          "INNATE"
+        ],
+        "hp": 0,
+        "power": 0,
+        "set": "HMW",
+        "number": "252",
+        "imageUrl": "https://cdn.starwarsunlimited.com//09010252_EN_Villainous_Ambition_2b8f7a4fe3.png",
+        "aspects": [
+          "Villainy"
+        ],
+        "text": "When Played: If attached unit is a Villainy unit, you may deal 2 damage to a unit.",
+        "unique": false,
+        "quantity": 2
+      }
+    ],
+    "sideboard": [
+      {
+        "id": "SEC_082",
+        "name": "Chancellor Palpatine | I Am the Senate",
+        "subtitle": "I Am the Senate",
+        "count": 1,
+        "cost": 3,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "REPUBLIC",
+          "OFFICIAL"
+        ],
+        "hp": 2,
+        "power": 2,
+        "set": "SEC",
+        "number": "082",
+        "imageUrl": "https://cdn.starwarsunlimited.com//06010082_EN_Chancellor_Palpatine_78bb91b75c.png",
+        "aspects": [
+          "Command",
+          "Villainy"
+        ],
+        "text": "When Played: If you control a leader unit, create 2 Spy tokens and give those tokens Sentinel for this phase.\nPlot",
+        "unique": true,
+        "quantity": 1
+      },
+      {
+        "id": "SEC_038",
+        "name": "Condemn",
+        "count": 1,
+        "cost": 3,
+        "type": 3,
+        "arena": "None",
+        "traits": [
+          "CONDITION"
+        ],
+        "hp": 0,
+        "power": 0,
+        "set": "SEC",
+        "number": "038",
+        "imageUrl": "https://cdn.starwarsunlimited.com//06010038_EN_Condemn_3fcd162061.png",
+        "aspects": [
+          "Vigilance",
+          "Villainy"
+        ],
+        "text": "While attached unit is attacking, it gains: “On Attack: The defending player may disclose Vigilance Villainy. If they do, this unit gets -6/-0 for this attack” and loses all other abilities.",
+        "unique": false,
+        "quantity": 1
+      },
+      {
+        "id": "HMW_111",
+        "name": "Invasion Lander",
+        "count": 1,
+        "cost": 6,
+        "type": 2,
+        "arena": "Space",
+        "traits": [
+          "SEPARATIST",
+          "VEHICLE",
+          "TRANSPORT"
+        ],
+        "hp": 7,
+        "power": 3,
+        "set": "HMW",
+        "number": "111",
+        "imageUrl": "https://cdn.starwarsunlimited.com//09010111_EN_Invasion_Lander_a89b90432b.png",
+        "aspects": [
+          "Command",
+          "Villainy"
+        ],
+        "text": "When Played: Give each other friendly unit +2/+2 for this phase.",
+        "unique": false,
+        "quantity": 1
+      },
+      {
+        "id": "LAW_127",
+        "name": "Kill Switch",
+        "count": 2,
+        "cost": 2,
+        "type": 3,
+        "arena": "None",
+        "traits": [
+          "CONDITION"
+        ],
+        "hp": 0,
+        "power": 0,
+        "set": "LAW",
+        "number": "127",
+        "imageUrl": "https://cdn.starwarsunlimited.com//07010127_EN_Kill_Switch_ee22d364f5.png",
+        "aspects": [
+          "Vigilance"
+        ],
+        "text": "When Played: Exhaust attached unit.",
+        "unique": false,
+        "quantity": 2
+      },
+      {
+        "id": "LOF_111",
+        "name": "Maz Kanata | The Light Guides",
+        "subtitle": "The Light Guides",
+        "count": 1,
+        "cost": 3,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "UNDERWORLD"
+        ],
+        "hp": 4,
+        "power": 3,
+        "set": "LOF",
+        "number": "111",
+        "imageUrl": "https://cdn.starwarsunlimited.com//05010111_EN_Maz_Kanata_47a5f468b2.png",
+        "aspects": [
+          "Command"
+        ],
+        "text": "When Played: You may attack with a Force unit. It gets +2/+0 for this attack.",
+        "unique": true,
+        "quantity": 1
+      },
+      {
+        "id": "ASH_090",
+        "name": "Reforge",
+        "count": 2,
+        "cost": 2,
+        "type": 4,
+        "arena": "None",
+        "traits": [
+          "SUPPLY"
+        ],
+        "hp": 0,
+        "power": 0,
+        "set": "ASH",
+        "number": "090",
+        "imageUrl": "https://cdn.starwarsunlimited.com//08010090_EN_Reforge_749ccfad88.png",
+        "aspects": [
+          "Vigilance"
+        ],
+        "text": "Defeat an upgrade on a friendly unit. If you do, search the top 8 cards of your deck for an upgrade that can attach to that unit, reveal it, and play it on that unit. It costs 4 less.",
+        "unique": false,
+        "quantity": 2
+      },
+      {
+        "id": "ASH_077",
+        "name": "Ryder Azadi | Restored Governor",
+        "subtitle": "Restored Governor",
+        "count": 2,
+        "cost": 3,
+        "type": 2,
+        "arena": "Ground",
+        "traits": [
+          "NEW REPUBLIC",
+          "OFFICIAL"
+        ],
+        "hp": 5,
+        "power": 2,
+        "set": "ASH",
+        "number": "077",
+        "imageUrl": "https://cdn.starwarsunlimited.com//08010077_EN_Ryder_Azadi_e2c33fd5b1.png",
+        "aspects": [
+          "Vigilance"
+        ],
+        "text": "Restore 1\nWhen Played: Name a card. While this unit is in play, opponents can't play cards with that name.",
+        "unique": true,
+        "quantity": 2
+      }
+    ]
+  }
+}

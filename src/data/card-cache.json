@@ -445,6 +445,26 @@
     "text": "This unit costs 1 less to play for each damaged ground unit.\nOverwhelm (When attacking an enemy unit, deal excess damage to the opponent's base.)",
     "unique": false
   },
+  "IC27_183": {
+    "name": "AT-ST",
+    "cost": "6",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "IMPERIAL",
+      "VEHICLE",
+      "WALKER"
+    ],
+    "hp": "7",
+    "power": "6",
+    "set": "IC27",
+    "number": "183",
+    "aspects": [
+      "Villainy"
+    ],
+    "text": "Overwhelm (When attacking an enemy unit, deal excess damage to the opponent's base.)",
+    "unique": false
+  },
   "SOR_232": {
     "name": "AT-ST",
     "cost": "6",
@@ -697,6 +717,22 @@
     "text": "On Attack/When Defeated: The Force is with you (create your Force token).",
     "unique": false
   },
+  "IC27_127": {
+    "name": "Act of Aggression",
+    "cost": "4",
+    "type": "Event",
+    "arena": "None",
+    "traits": [
+      "INNATE"
+    ],
+    "set": "IC27",
+    "number": "127",
+    "aspects": [
+      "Aggression"
+    ],
+    "text": "Draw a card.\nYou may deal 3 damage to a unit.\nGive a friendly unit +3/+0 and Overwhelm for this phase.",
+    "unique": false
+  },
   "HMW_177": {
     "name": "Adamant Ewoks",
     "cost": "2",
@@ -853,6 +889,7 @@
       "Heroism"
     ],
     "text": "Action [C=1, Exhaust]: Exhaust a non-leader unit. If you do, its controller creates an X-Wing token.",
+    "back_text": "On Attack: You may exhaust a unit. If you do, its controller creates an X-Wing token.",
     "unique": true
   },
   "ASH_110": {
@@ -916,6 +953,28 @@
       "Heroism"
     ],
     "text": "Action [C=1, Exhaust]: Give a Resistance unit or a unit with a Resistance upgrade on it +2/+2 for this phase.",
+    "back_text": "On Attack: You may give another Resistance unit or a unit with a Resistance upgrade on it +2/+2 for this phase.",
+    "unique": true
+  },
+  "IC27_062": {
+    "name": "Admiral Motti",
+    "subtitle": "Conan in Command",
+    "cost": "4",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "IMPERIAL",
+      "OFFICIAL"
+    ],
+    "hp": "6",
+    "power": "2",
+    "set": "IC27",
+    "number": "062",
+    "aspects": [
+      "Command",
+      "Villainy"
+    ],
+    "text": "Hidden (This unit can't be attacked if he was played this phase.)\nOn Attack: Give an Experience token to each other friendly Imperial unit.",
     "unique": true
   },
   "SOR_226": {
@@ -1125,6 +1184,7 @@
       "Villainy"
     ],
     "text": "Action [Exhaust]: Play a Capital Ship unit from your hand. It costs 1 less.",
+    "back_text": "Each Capital Ship unit you play costs 2 less.",
     "unique": true
   },
   "TWI_086": {
@@ -1167,6 +1227,7 @@
       "Villainy"
     ],
     "text": "Action [Exhaust]: Discard a card that costs 3 or more from your hand. If you do, draw a card.",
+    "back_text": "When Deployed: Reveal the top 4 cards of your deck. An opponent discards 2 of them. Draw 1 of the remaining cards and discard the other.",
     "unique": true
   },
   "TWI_092": {
@@ -1210,6 +1271,27 @@
     ],
     "text": "When Played: Choose Grit, Restore 1, Sentinel, or Shielded. While this unit is in play, each friendly Vehicle unit gains the chosen Keyword.",
     "unique": true
+  },
+  "IC27_074": {
+    "name": "Advanced Recon Commando",
+    "cost": "3",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "REPUBLIC",
+      "CLONE",
+      "TROOPER"
+    ],
+    "hp": "3",
+    "power": "4",
+    "set": "IC27",
+    "number": "074",
+    "aspects": [
+      "Command",
+      "Heroism"
+    ],
+    "text": "Overwhelm (When attacking an enemy unit, deal excess damage to the opponent's base.)",
+    "unique": false
   },
   "TWI_093": {
     "name": "Advanced Recon Commando",
@@ -1328,6 +1410,7 @@
       "Villainy"
     ],
     "text": "Action [C=1, Exhaust]: Play a card from your hand, ignoring its aspect penalties.",
+    "back_text": "Action [C=1]: Play a card from your hand, ignoring its aspect penalties.\nWhen you play a Heroism card: Heal 2 damage from your base.",
     "unique": true
   },
   "SOR_155": {
@@ -1417,6 +1500,29 @@
       "Heroism"
     ],
     "text": "Action [Exhaust, use the Force (lose your Force token)]: Give a friendly unit Sentinel for this phase. (Enemy units in its arena must attack a sentinel when they attack you.)",
+    "back_text": "On Attack: You may give a friendly unit Sentinel for this phase.",
+    "unique": true
+  },
+  "IC27_039": {
+    "name": "Ahsoka Tano",
+    "subtitle": "Not on My Death Watch",
+    "cost": "5",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "FORCE",
+      "JEDI",
+      "REPUBLIC"
+    ],
+    "hp": "5",
+    "power": "4",
+    "set": "IC27",
+    "number": "039",
+    "aspects": [
+      "Vigilance",
+      "Heroism"
+    ],
+    "text": "When Played: You may defeat a unit that costs 3 or less.",
     "unique": true
   },
   "TWI_011": {
@@ -1439,6 +1545,7 @@
       "Heroism"
     ],
     "text": "Coordinate — Action [Exhaust]: Attack with a unit. It gets +1/+0 for this attack. (Gain this ability while you control 3 or more units.)",
+    "back_text": "Coordinate — This unit gets +2/+0.",
     "unique": true
   },
   "TWI_194": {
@@ -1503,6 +1610,7 @@
       "Heroism"
     ],
     "text": "When you play an event: You may exhaust this leader. If you do, look at the top card of your deck. You may play it (paying its cost), discard it, or leave it on top of your deck.",
+    "back_text": "Raid 1 (This unit gets +1/+0 while attacking.)\nWhen Attack Ends: Look at the top card of your deck. You may play it, discard it, or leave it on top of your deck. If you play it, it costs 1 less.",
     "unique": true
   },
   "JTL_201": {
@@ -1545,6 +1653,7 @@
       "Heroism"
     ],
     "text": "Action [Exhaust]: Choose a unit with less power than a friendly unit. It gets +2/+0 for this phase.",
+    "back_text": "Support (When you deploy this leader, you may attack with another unit. It gains this unit's other abilities for this attack.)\nOn Attack: You may give a unit with less power than this unit +2/+0 for this phase.",
     "unique": true
   },
   "TS26_35": {
@@ -1731,6 +1840,27 @@
     ],
     "text": "Exhaust up to 2 friendly space units. For each unit exhausted this way, create an X-Wing token.",
     "unique": false
+  },
+  "IC27_056": {
+    "name": "Allegiant General Pryde",
+    "subtitle": "Heartless Efficiency",
+    "cost": "1",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "FIRST ORDER",
+      "OFFICIAL"
+    ],
+    "hp": "2",
+    "power": "2",
+    "set": "IC27",
+    "number": "056",
+    "aspects": [
+      "Command",
+      "Villainy"
+    ],
+    "text": "When Defeated: Give an Experience token to the friendly unit with the most power. (If multiple units are tied, choose one.)",
+    "unique": true
   },
   "JTL_133": {
     "name": "Allegiant General Pryde",
@@ -1986,6 +2116,7 @@
       "Heroism"
     ],
     "text": "Action [Exhaust, use the Force (lose your Force token)]: Play a Villainy non-unit card from your hand, ignoring its aspect penalties.",
+    "back_text": "Action [use the Force]: Play a Villainy non-unit card from your hand, ignoring its aspect penalties.",
     "unique": true
   },
   "LOF_070": {
@@ -2030,6 +2161,28 @@
     "text": "Hidden (This unit can't be attacked if it was played this phase.) \nShielded (When you play this unit, give a Shield token to him.)",
     "unique": true
   },
+  "IC27_078": {
+    "name": "Anakin Skywalker",
+    "subtitle": "Destined for Darkness",
+    "cost": "5",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "FORCE",
+      "JEDI",
+      "REPUBLIC"
+    ],
+    "hp": "4",
+    "power": "7",
+    "set": "IC27",
+    "number": "078",
+    "aspects": [
+      "Command",
+      "Heroism"
+    ],
+    "text": "When Defeated: Search your deck for a card named Darth Vader, reveal it, and draw it.\nWhile this unit is in your discard pile, ignore the aspect penalties on cards you play named Darth Vader.",
+    "unique": true
+  },
   "LAW_088": {
     "name": "Anakin Skywalker",
     "subtitle": "Prescient Podracer",
@@ -2071,6 +2224,7 @@
       "Heroism"
     ],
     "text": "Action [Exhaust, deal 2 damage to your base]: Attack with a unit. If it’s attacking a unit, it gets +2/+0 for this attack.",
+    "back_text": "Overwhelm (When attacking an enemy unit, deal excess damage to the opponent’s base.)\nThis unit gets +1/+0 for every 5 damage on your base.",
     "unique": true
   },
   "TWI_147": {
@@ -2137,6 +2291,7 @@
       "Heroism"
     ],
     "text": "Action [Exhaust]: If 2 or more friendly units entered play this phase (including tokens and leaders), give a Shield token to 1 of them.",
+    "back_text": "Sentinel (Enemy units in this arena must attack a Sentinel when they attack you.)\nOn Attack: Give a Shield token to another friendly unit that entered play this phase.",
     "unique": true
   },
   "JTL_197": {
@@ -2296,6 +2451,23 @@
       "Command"
     ],
     "text": "When Defeated: Draw a card.",
+    "unique": false
+  },
+  "IC27_069": {
+    "name": "Apology Accepted",
+    "cost": "1",
+    "type": "Event",
+    "arena": "None",
+    "traits": [
+      "TACTIC"
+    ],
+    "set": "IC27",
+    "number": "069",
+    "aspects": [
+      "Command",
+      "Villainy"
+    ],
+    "text": "Defeat a friendly unit. You may give 2 Experience tokens to a unit.",
     "unique": false
   },
   "JTL_091": {
@@ -2653,6 +2825,51 @@
     "text": "When Played/On Attack: Give another friendly Force unit +2/+0 for this phase.",
     "unique": true
   },
+  "IC27_007": {
+    "name": "Asajj Ventress",
+    "subtitle": "Bald and Beautiful",
+    "cost": "6",
+    "type": "Leader",
+    "arena": "Ground",
+    "traits": [
+      "FORCE",
+      "SEPARATIST",
+      "SITH"
+    ],
+    "hp": "6",
+    "power": "5",
+    "set": "IC27",
+    "number": "007",
+    "aspects": [
+      "Cunning",
+      "Villainy"
+    ],
+    "text": "Action [Exhaust]: Attack with a unit. After completing this attack, if the attacker survived, you may ready a resource.",
+    "back_text": "Saboteur (When this unit attacks, ignore Sentinel and defeat the defender's Shields.)\nOn Attack: You may ready a resource.",
+    "unique": true
+  },
+  "IC27_147": {
+    "name": "Asajj Ventress",
+    "subtitle": "Death From Above",
+    "cost": "6",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "FORCE",
+      "SEPARATIST",
+      "SITH"
+    ],
+    "hp": "7",
+    "power": "5",
+    "set": "IC27",
+    "number": "147",
+    "aspects": [
+      "Cunning",
+      "Villainy"
+    ],
+    "text": "If a friendly non-leader ground unit would deal combat damage while attacking a base, you may reveal this unit from your hand and pay 5 resourcesCunningVillainy. If you do, return the attacker to its owner's hand and put this unit into play as the attacker. She deals combat damage to that base instead.",
+    "unique": true
+  },
   "LAW_061": {
     "name": "Asajj Ventress",
     "subtitle": "Reluctant Hunter",
@@ -2695,6 +2912,7 @@
       "Villainy"
     ],
     "text": "Action [Exhaust]: Attack with a unit. If you played an event this phase, it gets +1/+0 for this attack.",
+    "back_text": "On Attack: If you played an event this phase, this unit gets +1/+0 for this attack and deals combat damage before the defender. (If the defender is defeated, it deals no combat damage.)",
     "unique": true
   },
   "TWI_134": {
@@ -2739,6 +2957,7 @@
       "Villainy"
     ],
     "text": "Action [Exhaust]: Attack with a token unit. It gets +1/+0 for this attack.",
+    "back_text": "Hidden (This unit can't be attacked if she was deployed this phase.)\nWhile you've attacked with a token unit this phase, this unit gets +2/+0.",
     "unique": true
   },
   "JTL_001": {
@@ -2762,6 +2981,7 @@
       "Villainy"
     ],
     "text": "Action [Exhaust]: Deal 1 damage to a friendly unit. If you do, deal 1 damage to an enemy unit in the same arena.",
+    "back_text": "Grit\nAttached unit is a leader unit. It gains Grit and: \"On Attack: You may deal 1 damage to a friendly unit. If you do, deal 1 damage to an enemy unit in the same arena.\"",
     "unique": true
   },
   "HMW_001": {
@@ -2783,6 +3003,7 @@
       "Aggression"
     ],
     "text": "Action [Exhaust]: Attack with a unit. For this attack, replace any Raid it has or gains with Restore, or vice versa.",
+    "back_text": "Restore 2\nAction: Attack with a unit. For this attack, replace any Raid it has or gains with Restore, or vice versa.",
     "unique": true
   },
   "LOF_215": {
@@ -3036,6 +3257,27 @@
     "text": "Hidden (This unit can't be attacked if it was played this phase.)\nRaid 2 (This unit gets +2/+0 while attacking.)",
     "unique": true
   },
+  "IC27_107": {
+    "name": "Aurra Sing",
+    "subtitle": "Getting Even",
+    "cost": "6",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "UNDERWORLD",
+      "BOUNTY HUNTER"
+    ],
+    "hp": "7",
+    "power": "1",
+    "set": "IC27",
+    "number": "107",
+    "aspects": [
+      "Aggression",
+      "Villainy"
+    ],
+    "text": "Hidden (This unit can't be attacked if she was played this phase.)\nAction [Exhaust]: Deal 4 damage to a unit.",
+    "unique": true
+  },
   "LAW_004": {
     "name": "Aurra Sing",
     "subtitle": "Assassin",
@@ -3055,6 +3297,7 @@
       "Villainy"
     ],
     "text": "Action [Exhaust]: Defeat a non-leader unit with 1 or less remaining HP.",
+    "back_text": "When Deployed: You may defeat a non-leader unit with 5 or less remaining HP.",
     "unique": true
   },
   "TWI_166": {
@@ -3137,6 +3380,7 @@
       "Heroism"
     ],
     "text": "Action [Exhaust]: The Force is with you (create your Force token).",
+    "back_text": "While the Force is with you, this unit gets +4/+0 and gains Overwhelm.",
     "unique": true
   },
   "IC27_071": {
@@ -3365,6 +3609,26 @@
     "text": "",
     "unique": false
   },
+  "IC27_170": {
+    "name": "B1 Security Team",
+    "cost": "2",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "SEPARATIST",
+      "DROID",
+      "TROOPER"
+    ],
+    "hp": "1",
+    "power": "3",
+    "set": "IC27",
+    "number": "170",
+    "aspects": [
+      "Cunning"
+    ],
+    "text": "Sentinel (Enemy units in this arena must attack a Sentinel when they attack you.)",
+    "unique": false
+  },
   "TWI_207": {
     "name": "B1 Security Team",
     "cost": "2",
@@ -3423,6 +3687,27 @@
       "Heroism"
     ],
     "text": "Restore 1\nOn Attack: You may disclose Heroism Heroism (reveal cards from your hand with these aspect icons among them). If you do, give a unit Sentinel for this phase.",
+    "unique": true
+  },
+  "IC27_031": {
+    "name": "BB-8",
+    "subtitle": "Frazzled Friend",
+    "cost": "1",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "RESISTANCE",
+      "DROID"
+    ],
+    "hp": "4",
+    "power": "0",
+    "set": "IC27",
+    "number": "031",
+    "aspects": [
+      "Vigilance",
+      "Heroism"
+    ],
+    "text": "On Attack: Heal 1 damage from a friendly unit. If you do, deal 1 damage to an enemy unit.",
     "unique": true
   },
   "JTL_145": {
@@ -3633,6 +3918,7 @@
       "Heroism"
     ],
     "text": "Action [C=1, Exhaust]: If a friendly unit was defeated this phase, return a friendly resource to its owner's hand. If you do, put the top card of your deck into play as a resource.",
+    "back_text": "When you play a card from your resources: Heal 1 damage from your base.",
     "unique": true
   },
   "SEC_198": {
@@ -3730,6 +4016,27 @@
     "text": "Hidden (This unit can't be attacked if it was played this phase.)",
     "unique": false
   },
+  "IC27_141": {
+    "name": "Banking Clan Shuttle",
+    "cost": "3",
+    "type": "Unit",
+    "arena": "Space",
+    "traits": [
+      "SEPARATIST",
+      "VEHICLE",
+      "TRANSPORT"
+    ],
+    "hp": "3",
+    "power": "3",
+    "set": "IC27",
+    "number": "141",
+    "aspects": [
+      "Cunning",
+      "Villainy"
+    ],
+    "text": "Hidden (This unit can't be attacked if it was played this phase.)",
+    "unique": false
+  },
   "HMW_143": {
     "name": "Banking Clan Warship",
     "cost": "6",
@@ -3749,6 +4056,28 @@
     ],
     "text": "Ambush (When you play this unit, it may attack an enemy unit.)",
     "unique": false
+  },
+  "IC27_138": {
+    "name": "Banshee",
+    "subtitle": "Scream Machine",
+    "cost": "2",
+    "type": "Unit",
+    "arena": "Space",
+    "traits": [
+      "SEPARATIST",
+      "VEHICLE",
+      "TRANSPORT"
+    ],
+    "hp": "3",
+    "power": "2",
+    "set": "IC27",
+    "number": "138",
+    "aspects": [
+      "Cunning",
+      "Villainy"
+    ],
+    "text": "On Attack: You may search the top 5 cards of your deck for a non-unit card, reveal it, and put it on top of your deck. (Put the other cards on the bottom of your deck in a random order.)",
+    "unique": true
   },
   "JTL_037": {
     "name": "Banshee",
@@ -3828,6 +4157,7 @@
       "Villainy"
     ],
     "text": "Action [Exhaust, use the Force (lose your Force token)]: Play an event from your hand. It costs 1 less.",
+    "back_text": "Action [use the Force]: Play an event from your hand. It costs 1 less.",
     "unique": true
   },
   "TWI_042": {
@@ -4052,6 +4382,25 @@
     "text": "Attached unit gains: “On Attack: Discard a card from your hand.”",
     "unique": false
   },
+  "IC27_111": {
+    "name": "Battle Fury",
+    "cost": "2",
+    "type": "Upgrade",
+    "arena": "None",
+    "traits": [
+      "INNATE"
+    ],
+    "hp": "3",
+    "power": "3",
+    "set": "IC27",
+    "number": "111",
+    "aspects": [
+      "Aggression",
+      "Villainy"
+    ],
+    "text": "Attached unit gains: “On Attack: Discard a card from your hand.”",
+    "unique": false
+  },
   "HMW_158": {
     "name": "Battle-Scarred Destroyer",
     "cost": "6",
@@ -4131,6 +4480,7 @@
       "Villainy"
     ],
     "text": "Action [C=1, Exhaust]: Give a friendly unit +2/+2 for this phase if it's the only unit you control in its arena.",
+    "back_text": "On Attack: You may give a friendly unit +2/+2 and Sentinel for this phase if it's the only non-leader unit you control in its arena. (Enemy units in its arena must attack a Sentinel when they attack you.)",
     "unique": true
   },
   "ASH_039": {
@@ -4494,6 +4844,22 @@
     "text": "When Played: If attached unit is a Creature or a Force unit, create a Beast token.",
     "unique": false
   },
+  "IC27_055": {
+    "name": "Betrayed Trust",
+    "cost": "2",
+    "type": "Event",
+    "arena": "None",
+    "traits": [
+      "TRICK"
+    ],
+    "set": "IC27",
+    "number": "055",
+    "aspects": [
+      "Vigilance"
+    ],
+    "text": "Choose an enemy unit. For this phase, that unit can't deal combat damage.",
+    "unique": false
+  },
   "LAW_130": {
     "name": "Betrayed Trust",
     "cost": "2",
@@ -4509,6 +4875,27 @@
     ],
     "text": "Choose an enemy unit. For this phase, that unit can't deal combat damage.",
     "unique": false
+  },
+  "IC27_139": {
+    "name": "Bib Fortuna",
+    "subtitle": "Jabba's Majordomo",
+    "cost": "2",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "UNDERWORLD",
+      "TWI'LEK"
+    ],
+    "hp": "3",
+    "power": "1",
+    "set": "IC27",
+    "number": "139",
+    "aspects": [
+      "Cunning",
+      "Villainy"
+    ],
+    "text": "Shielded (When you play this unit, give a Shield token to him.)\nAction [Exhaust]: Play an event from your hand. It costs 1 resource less.",
+    "unique": true
   },
   "SOR_177": {
     "name": "Bib Fortuna",
@@ -4627,6 +5014,28 @@
       "Cunning"
     ],
     "text": "When Played/On Attack: You may discard a card from your hand. If you do, create a Credit token.\n\n",
+    "unique": true
+  },
+  "IC27_116": {
+    "name": "Black One",
+    "subtitle": "Draw Fire, Twice",
+    "cost": "3",
+    "type": "Unit",
+    "arena": "Space",
+    "traits": [
+      "RESISTANCE",
+      "VEHICLE",
+      "FIGHTER"
+    ],
+    "hp": "2",
+    "power": "2",
+    "set": "IC27",
+    "number": "116",
+    "aspects": [
+      "Aggression",
+      "Heroism"
+    ],
+    "text": "When Played/When Defeated: Draw a card.",
     "unique": true
   },
   "SOR_147": {
@@ -5084,6 +5493,26 @@
     "text": "Support (When you play this unit, you may attack with another unit. It gains this unit's other abilities for this attack.)\nOverwhelm (When attacking an enemy unit, deal excess damage to the opponent's base.)",
     "unique": false
   },
+  "IC27_163": {
+    "name": "Bo-Katan Kryze",
+    "subtitle": "Right Place, Right Time",
+    "cost": "7",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "MANDALORIAN"
+    ],
+    "hp": "6",
+    "power": "7",
+    "set": "IC27",
+    "number": "163",
+    "aspects": [
+      "Cunning",
+      "Heroism"
+    ],
+    "text": "Shielded (When you play this unit, give a Shield token to her.)\nWhen Played: Give each enemy unit -7/-0 for this phase.",
+    "unique": true
+  },
   "TWI_130": {
     "name": "Bo-Katan Kryze",
     "subtitle": "Death Watch Lieutenant",
@@ -5143,6 +5572,7 @@
       "Heroism"
     ],
     "text": "Action [{{Exhaust}}]: If you attacked with a Mandalorian unit this phase, deal 1 damage to a unit.",
+    "back_text": "On Attack: You may deal 1 damage to a unit. If you attacked with another Mandalorian unit this phase, you may deal 1 damage to a unit. (The same unit or a different unit.)",
     "unique": true
   },
   "SHD_157": {
@@ -5204,6 +5634,7 @@
       "Heroism"
     ],
     "text": "Action [C=2, Exhaust]: If you control a unit in each arena, create a Mandalorian token.",
+    "back_text": "Other friendly Mandalorian units get +1/+0.\nOn Attack: If you control a unit in each arena, create a Mandalorian token.",
     "unique": true
   },
   "ASH_105": {
@@ -5308,6 +5739,7 @@
       "Villainy"
     ],
     "text": "When an enemy unit leaves play: You may exhaust this leader. If you do, ready a resource.",
+    "back_text": "When this unit completes an attack: If an enemy unit left play this phase, ready up to 2 resources.",
     "unique": true
   },
   "SOR_179": {
@@ -5350,6 +5782,7 @@
       "Villainy"
     ],
     "text": "When a friendly Bounty Hunter unit's attack ends: If the defending unit was defeated, you may exhaust this leader. If you do, create a Credit token.",
+    "back_text": "Raid 1 (This unit gets +1/+0 while attacking.)\nWhen a friendly Bounty Hunter unit's attack ends: If the defending unit was defeated, create a Credit token.",
     "unique": true
   },
   "LAW_214": {
@@ -5391,6 +5824,7 @@
       "Heroism"
     ],
     "text": "When you play a unit that has 1 or more KEYWORDS: You may exhaust this leader. If you do, give a friendly unit +1/+0 for this phase.",
+    "back_text": "Each other friendly unit that has 1 or more KEYWORDS gets +1/+0.",
     "unique": true
   },
   "JTL_009": {
@@ -5413,6 +5847,7 @@
       "Villainy"
     ],
     "text": "When you deal non-combat damage: You may exhaust this leader. If you do, deal 1 indirect damage to a player. (That player assigns 1 unpreventable damage among their bases and units.)",
+    "back_text": "Attached unit is a leader unit. \nWhen deployed as an upgrade: Deal up to 4 damage divided as you choose among any number of units.",
     "unique": true
   },
   "JTL_189": {
@@ -5611,6 +6046,23 @@
     "text": "Saboteur (When this unit attacks, ignore Sentinel and defeat the defender's Shields.)",
     "unique": false
   },
+  "IC27_125": {
+    "name": "Bold Resistance",
+    "cost": "3",
+    "type": "Event",
+    "arena": "None",
+    "traits": [
+      "TACTIC"
+    ],
+    "set": "IC27",
+    "number": "125",
+    "aspects": [
+      "Aggression",
+      "Heroism"
+    ],
+    "text": "Choose up to 3 units that share the same Trait. Each of those units gets +2/+0 for this phase.",
+    "unique": false
+  },
   "TWI_153": {
     "name": "Bold Resistance",
     "cost": "3",
@@ -5803,6 +6255,7 @@
       "Villainy"
     ],
     "text": "Action [{{Exhaust}}]: Deal 1 damage to a unit with a BOUNTY. You may give it +1/+0 for this phase.",
+    "back_text": "When you collect a BOUNTY: You may collect that BOUNTY again. Use this ability only once each round.",
     "unique": true
   },
   "JTL_187": {
@@ -5846,6 +6299,7 @@
       "Villainy"
     ],
     "text": "Action [Exhaust]: Heal 1 damage from a damaged enemy unit and give a Weakness token to it,",
+    "back_text": "On Attack: You may deal 2 damage to a unit with a token upgrade on it. (Shield and Weakness tokens are token upgrades.)",
     "unique": true
   },
   "ASH_128": {
@@ -5990,6 +6444,27 @@
     "text": "If you've defeated an enemy unit this phase, this event costs 2 less to play. \nReady a unit.",
     "unique": false
   },
+  "IC27_152": {
+    "name": "Bravo Squadron Fighter",
+    "cost": "2",
+    "type": "Unit",
+    "arena": "Space",
+    "traits": [
+      "NABOO",
+      "VEHICLE",
+      "FIGHTER"
+    ],
+    "hp": "3",
+    "power": "2",
+    "set": "IC27",
+    "number": "152",
+    "aspects": [
+      "Cunning",
+      "Heroism"
+    ],
+    "text": "Saboteur (When this unit attacks, ignore Sentinel and defeat the defender's Shields.)",
+    "unique": false
+  },
   "SEC_199": {
     "name": "Bravo Squadron Fighter",
     "cost": "2",
@@ -6026,6 +6501,22 @@
       "Villainy"
     ],
     "text": "A friendly unit deals damage equal to its power to an enemy unit in its arena. If the friendly unit has Overwhelm, deal the excess damage to an enemy base.",
+    "unique": false
+  },
+  "IC27_176": {
+    "name": "Breaking In",
+    "cost": "2",
+    "type": "Event",
+    "arena": "None",
+    "traits": [
+      "TACTIC"
+    ],
+    "set": "IC27",
+    "number": "176",
+    "aspects": [
+      "Cunning"
+    ],
+    "text": "Attack with a unit. It gets +2/+0 and gains Saboteur for this attack. (Ignore Sentinel and defeat the defender's Shields.)",
     "unique": false
   },
   "TWI_224": {
@@ -6380,6 +6871,7 @@
       "Heroism"
     ],
     "text": "Action [C=1, Exhaust]: If you control an exhausted unit, exhaust a unit.",
+    "back_text": "On Attack: If you control another exhausted unit, you may exhaust a unit.",
     "unique": true
   },
   "SEC_093": {
@@ -6441,6 +6933,27 @@
       "Heroism"
     ],
     "text": "When Played: You may give an Ewok unit +2/+2 for this phase. You may give a Rebel unit +2/+2 for this phase.",
+    "unique": true
+  },
+  "IC27_070": {
+    "name": "C-3PO",
+    "subtitle": "Impulse Buy",
+    "cost": "1",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "REBEL",
+      "DROID"
+    ],
+    "hp": "3",
+    "power": "1",
+    "set": "IC27",
+    "number": "070",
+    "aspects": [
+      "Command",
+      "Heroism"
+    ],
+    "text": "Action [Exhaust]: Give an Experience token to another unit. Then, if it has 6 or more power, draw a card.",
     "unique": true
   },
   "JTL_071": {
@@ -6546,6 +7059,7 @@
       "Villainy"
     ],
     "text": "When you play an Underworld card: You may exhaust this leader. If you do, an opponent chooses a unit they control. Deal 1 damage to it.",
+    "back_text": "RAID 2 (This unit gets +2/+0 while attacking.)\nWhen you play an Underworld card: You may choose an opponent. They choose a unit they control. Deal 2 damage to it. Use this ability only once each round.",
     "unique": true
   },
   "ASH_011": {
@@ -6567,6 +7081,7 @@
       "Villainy"
     ],
     "text": "Action [Exhaust]: Deal 1 damage to a unit with 2 or more remaining HP.",
+    "back_text": "Overwhelm (When attacking an enemy unit, deal excess damage to the opponent's base.)\nOn Attack: You may deal 1 damage to a unit with 2 or more remaining HP.",
     "unique": true
   },
   "LOF_015": {
@@ -6588,6 +7103,7 @@
       "Heroism"
     ],
     "text": "Action [Exhaust, use the Force (lose your Force token)]: An opponent chooses a ready unit they control. Exhaust that unit.",
+    "back_text": "On Attack: An opponent chooses a ready unit they control. Exhaust that unit.",
     "unique": true
   },
   "SHD_039": {
@@ -6849,6 +7365,27 @@
     "text": "While a leader unit has been defeated this phase, this unit gains Raid 3. (He gets +3/+0 while attacking.)",
     "unique": true
   },
+  "IC27_064": {
+    "name": "Captain Phasma",
+    "subtitle": "On My Command",
+    "cost": "5",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "FIRST ORDER",
+      "TROOPER"
+    ],
+    "hp": "6",
+    "power": "5",
+    "set": "IC27",
+    "number": "064",
+    "aspects": [
+      "Command",
+      "Villainy"
+    ],
+    "text": "When Played/On Attack: You may give another First Order unit +2/+2 for this phase.",
+    "unique": true
+  },
   "JTL_010": {
     "name": "Captain Phasma",
     "subtitle": "Chrome Dome",
@@ -6868,6 +7405,7 @@
       "Villainy"
     ],
     "text": "Action [Exhaust]: If you played a First Order card this phase, deal 1 damage to a base.",
+    "back_text": "On Attack: If you played another First Order card this phase, you may deal 1 damage to a unit. If you do, deal 1 damage to a base.",
     "unique": true
   },
   "JTL_088": {
@@ -6933,6 +7471,7 @@
       "Heroism"
     ],
     "text": "Action [C=2, Exhaust]: If a friendly unit attacked this phase, create a Clone Trooper token.",
+    "back_text": "When Deployed: Create a Clone Trooper token.\nEach other friendly Trooper unit gets +0/+1.",
     "unique": true
   },
   "TWI_097": {
@@ -7237,6 +7776,26 @@
     "text": "Raid 2 (This unit gets +2/+0 while attacking.)",
     "unique": false
   },
+  "IC27_130": {
+    "name": "Cartel Interceptor",
+    "cost": "3",
+    "type": "Unit",
+    "arena": "Space",
+    "traits": [
+      "UNDERWORLD",
+      "VEHICLE",
+      "FIGHTER"
+    ],
+    "hp": "3",
+    "power": "2",
+    "set": "IC27",
+    "number": "130",
+    "aspects": [
+      "Aggression"
+    ],
+    "text": "Raid 2 (This unit gets +2/+0 while attacking.)",
+    "unique": false
+  },
   "SOR_178": {
     "name": "Cartel Spacer",
     "cost": "2",
@@ -7279,6 +7838,26 @@
     "text": "Bounty - Draw a card. (When this unit is defeated or captured, your opponent collects its bounty.)",
     "unique": false
   },
+  "IC27_114": {
+    "name": "Cassian Andor",
+    "subtitle": "Blending In",
+    "cost": "2",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "REBEL"
+    ],
+    "hp": "2",
+    "power": "4",
+    "set": "IC27",
+    "number": "114",
+    "aspects": [
+      "Aggression",
+      "Heroism"
+    ],
+    "text": "Hidden (This unit can't be attacked if he was played this phase.)",
+    "unique": true
+  },
   "SOR_013": {
     "name": "Cassian Andor",
     "subtitle": "Dedicated to the Rebellion",
@@ -7297,6 +7876,7 @@
       "Heroism"
     ],
     "text": "Action [1, {Exhaust}]: If you've dealt 3 or more damage to an enemy base this phase, draw a card.",
+    "back_text": "SABOTEUR (When this unit attacks, ignore Sentinel and defeat the defender's Shields.)\nWhen you deal damage to an enemy base: You may draw a card. Use this ability only once each round.",
     "unique": true
   },
   "LAW_056": {
@@ -7338,6 +7918,7 @@
       "Heroism"
     ],
     "text": "Friendly units that have damaged an opponent's base this phase can't be attacked (unless they have Sentinel).",
+    "back_text": "Overwhelm\nWhile you have the initiative, this unit isn't defeated by having no remaining HP and can't be defeated by enemy card abilities.",
     "unique": true
   },
   "SEC_042": {
@@ -7579,6 +8160,26 @@
     "text": "When a player draws 1 or more cards during the action phase: You may disclose Aggression Aggression (reveal cards from your hand with these aspect icons among them). If you do, create a Spy token.",
     "unique": true
   },
+  "IC27_131": {
+    "name": "Cham Syndulla",
+    "subtitle": "Rallying Ryloth",
+    "cost": "4",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "REBEL",
+      "TWI'LEK"
+    ],
+    "hp": "4",
+    "power": "5",
+    "set": "IC27",
+    "number": "131",
+    "aspects": [
+      "Aggression"
+    ],
+    "text": "When Played: If you control fewer resources than an opponent, you may resource the top card of your deck.",
+    "unique": true
+  },
   "JTL_164": {
     "name": "Cham Syndulla",
     "subtitle": "Rallying Ryloth",
@@ -7617,6 +8218,7 @@
       "Heroism"
     ],
     "text": "When non-combat damage is dealt to a friendly unit or base: You may exhaust this leader. If you do, deal 1 damage to an enemy unit or base.",
+    "back_text": "When non-combat damage is dealt to a friendly unit or base: You may deal 1 damage to an enemy unit or base.",
     "unique": true
   },
   "TS26_45": {
@@ -7715,6 +8317,7 @@
       "Villainy"
     ],
     "text": "Action [C=1, Exhaust]: Search the top 5 cards of your deck for a card with Plot, reveal it, and draw it. (Put the other cards on the bottom of your deck in a random order.)",
+    "back_text": "When Deployed: The next card you play using Plot this phase costs 3 less.",
     "unique": true
   },
   "SEC_082": {
@@ -7761,6 +8364,7 @@
       "Villainy"
     ],
     "text": "This leader starts the game with this side faceup.\nAction [Exhaust]: If a friendly Heroism unit was defeated this phase, draw a card, heal 2 damage from your base, then flip this leader.",
+    "back_text": "Action [Exhaust]: If you played a Villainy card this phase, create a Clone Trooper token, deal 2 damage to each enemy base, then flip this leader.",
     "unique": true
   },
   "SEC_107": {
@@ -7919,6 +8523,27 @@
     "text": "Ambush (When you play this unit, it may attack an enemy unit.)\nHidden (This unit can't be attacked if it was played this phase.)",
     "unique": false
   },
+  "IC27_162": {
+    "name": "Chewbacca",
+    "subtitle": "Cool Backpack",
+    "cost": "6",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "REBEL",
+      "WOOKIEE"
+    ],
+    "hp": "6",
+    "power": "4",
+    "set": "IC27",
+    "number": "162",
+    "aspects": [
+      "Cunning",
+      "Heroism"
+    ],
+    "text": "Sentinel (Enemy units in this arena must attack a Sentinel when they attack you.)\nWhile this unit is damaged, he gets +4/+0.",
+    "unique": true
+  },
   "SOR_003": {
     "name": "Chewbacca",
     "subtitle": "Walking Carpet",
@@ -7938,6 +8563,7 @@
       "Heroism"
     ],
     "text": "Action [{Exhaust}]: Play a unit that costs 3 or less from your hand (paying its cost). It gains Sentinel for this phase.",
+    "back_text": "SENTINEL (Units in this arena can't attack your non-Sentinel units or your base.)\nGRIT (This unit gets +1/+0 for each damage on it.)",
     "unique": true
   },
   "SOR_196": {
@@ -7980,6 +8606,7 @@
       "Heroism"
     ],
     "text": "Action [C=1, Exhaust, defeat a friendly resource]: Deal 2 damage to a unit and create a Credit token.",
+    "back_text": "On Attack: You may defeat a friendly resource. If you do, deal 2 damage to a unit and create a Credit token.",
     "unique": true
   },
   "LAW_034": {
@@ -8108,6 +8735,7 @@
       "Heroism"
     ],
     "text": "Action [C=2, Exhaust]: Attack with a unit, even if it's exhausted. It can't attack bases for this attack.",
+    "back_text": "Action: Attack with a unit, even if it's exhausted. It can't attack bases for this attack. Use this ability only once each round.",
     "unique": true
   },
   "HMW_117": {
@@ -8207,6 +8835,28 @@
     ],
     "text": "When Played: Create 2 Mandalorian tokens.",
     "unique": false
+  },
+  "IC27_029": {
+    "name": "Chimaera",
+    "subtitle": "Grand Admiral's Might",
+    "cost": "10",
+    "type": "Unit",
+    "arena": "Space",
+    "traits": [
+      "IMPERIAL",
+      "VEHICLE",
+      "CAPITAL SHIP"
+    ],
+    "hp": "8",
+    "power": "8",
+    "set": "IC27",
+    "number": "029",
+    "aspects": [
+      "Vigilance",
+      "Villainy"
+    ],
+    "text": "Shielded\nWhen Played: Give an Experience token to each friendly unit for each upgrade on it. Then, heal 1 damage from your base for each friendly upgrade.",
+    "unique": true
   },
   "SOR_185": {
     "name": "Chimaera",
@@ -8334,6 +8984,7 @@
       "Heroism"
     ],
     "text": "Action [{{Exhaust}}]: Give a unit +0/+2 for this phase.",
+    "back_text": "During the action phase, this unit isn't defeated by having no remaining HP. (During the regroup phase, if he has no remaining HP, defeat him.)",
     "unique": true
   },
   "LAW_046": {
@@ -8752,6 +9403,26 @@
     "text": "When Played: Search the top 5 cards of your deck for a card that shares a Trait with a unit you control, reveal it, and draw it. (Put the other cards on the bottom of your deck in a random order.)",
     "unique": false
   },
+  "IC27_033": {
+    "name": "Clan Wren Rescuer",
+    "cost": "2",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "MANDALORIAN",
+      "TROOPER"
+    ],
+    "hp": "2",
+    "power": "1",
+    "set": "IC27",
+    "number": "033",
+    "aspects": [
+      "Vigilance",
+      "Heroism"
+    ],
+    "text": "When Played: Give an Experience token to a unit.",
+    "unique": false
+  },
   "SHD_040": {
     "name": "Clan Wren Rescuer",
     "cost": "2",
@@ -8898,6 +9569,28 @@
     ],
     "text": "This unit gets +1/+1 for each other friendly space unit.",
     "unique": false
+  },
+  "IC27_076": {
+    "name": "Clone Commander Cody",
+    "subtitle": "Loyal to the Republic",
+    "cost": "4",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "REPUBLIC",
+      "CLONE",
+      "TROOPER"
+    ],
+    "hp": "4",
+    "power": "4",
+    "set": "IC27",
+    "number": "076",
+    "aspects": [
+      "Command",
+      "Heroism"
+    ],
+    "text": "When another friendly Republic unit enters play: Give an Experience token to it.",
+    "unique": true
   },
   "TWI_114": {
     "name": "Clone Commander Cody",
@@ -9327,6 +10020,7 @@
       "Villainy"
     ],
     "text": "Action [Exhaust]: Attack with a unit. Then, you may attack with another unit that costs less than it.",
+    "back_text": "When this unit completes an attack (and survives): You may attack with another unit that costs 4 or less.",
     "unique": true
   },
   "JTL_021": {
@@ -9554,6 +10248,27 @@
       "Vigilance"
     ],
     "text": "Action [c=2, exhaust]: Heal 2 damage from a unit or base.",
+    "unique": false
+  },
+  "IC27_036": {
+    "name": "Concord Dawn Interceptors",
+    "cost": "3",
+    "type": "Unit",
+    "arena": "Space",
+    "traits": [
+      "MANDALORIAN",
+      "VEHICLE",
+      "FIGHTER"
+    ],
+    "hp": "4",
+    "power": "1",
+    "set": "IC27",
+    "number": "036",
+    "aspects": [
+      "Vigilance",
+      "Heroism"
+    ],
+    "text": "Sentinel (Enemy units in this arena must attack a Sentinel when they attack you.)\nThis unit gets +2/+0 while defending.",
     "unique": false
   },
   "SHD_042": {
@@ -9976,6 +10691,22 @@
     "text": "Enemy Credit tokens lose all abilities.",
     "unique": false
   },
+  "IC27_193": {
+    "name": "Coordinated Front",
+    "cost": "2",
+    "type": "Event",
+    "arena": "None",
+    "traits": [
+      "PLAN"
+    ],
+    "set": "IC27",
+    "number": "193",
+    "aspects": [
+      "Heroism"
+    ],
+    "text": "You may give a ground unit +2/+2 for this phase.\nYou may give a space unit +2/+2 for this phase.",
+    "unique": false
+  },
   "JTL_253": {
     "name": "Coordinated Front",
     "cost": "2",
@@ -10358,6 +11089,29 @@
     "text": "Restore 2\nWhen Played: You may attach a friendly Pilot unit or upgrade to this unit. (Defeat all upgrades on that Pilot and remove all damage from it.)",
     "unique": true
   },
+  "IC27_148": {
+    "name": "Count Dooku",
+    "subtitle": "Silver-Tongued",
+    "cost": "7",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "FORCE",
+      "SEPARATIST",
+      "SITH",
+      "OFFICIAL"
+    ],
+    "hp": "7",
+    "power": "8",
+    "set": "IC27",
+    "number": "148",
+    "aspects": [
+      "Cunning",
+      "Villainy"
+    ],
+    "text": "Each opponent can't ready more than 1 ground unit and 1 space unit during the regroup phase.\nWhen Played: You may exhaust a unit.",
+    "unique": true
+  },
   "SOR_038": {
     "name": "Count Dooku",
     "subtitle": "Darth Tyrannus",
@@ -10400,6 +11154,7 @@
       "Villainy"
     ],
     "text": "Action [Exhaust]: Play a Separatist card from your hand. It gains Exploit 1. (You may defeat 1 unit you control. If you do, that card costs 2 less.)",
+    "back_text": "Overwhelm (When attacking an enemy unit, deal excess damage to the opponent's base.)\nOn Attack: The next Separatist card you play this phase gains Exploit 3.",
     "unique": true
   },
   "TWI_138": {
@@ -10445,6 +11200,7 @@
       "Villainy"
     ],
     "text": "Action [Exhaust]: Choose 2 players. They each heal 1 damage from their base and create a Battle Droid token.",
+    "back_text": "Restore 2 (When this unit attacks, heal 2 damage from your base.)\nOn Attack: Create 2 Battle Droid tokens.",
     "unique": true
   },
   "JTL_076": {
@@ -11049,6 +11805,7 @@
       "Cunning"
     ],
     "text": "Action [Exhaust]: Choose a friendly unit. If you do, play a unit from your hand. It costs 1 less. The chosen unit captures it. (When Played abilities resolve after the unit is captured.)",
+    "back_text": "Saboteur\nFriendly units that are rescued enter play ready.",
     "unique": true
   },
   "SHD_213": {
@@ -11320,6 +12077,50 @@
       "Villainy"
     ],
     "text": "Action [Exhaust, use the Force (lose your Force token)]: Deal 1 damage to a unit and 1 damage to a different unit.",
+    "back_text": "On Attack: Deal 1 damage to a unit and 1 damage to a different unit.",
+    "unique": true
+  },
+  "IC27_005": {
+    "name": "Darth Maul",
+    "subtitle": "Mechanism of Menace",
+    "cost": "5",
+    "type": "Leader",
+    "arena": "Ground",
+    "traits": [
+      "FORCE",
+      "SITH"
+    ],
+    "hp": "5",
+    "power": "4",
+    "set": "IC27",
+    "number": "005",
+    "aspects": [
+      "Aggression",
+      "Villainy"
+    ],
+    "text": "Action [C=1, Exhaust]: Deal 1 damage to a unit.",
+    "back_text": "On Attack: You may deal 1 damage to a unit.",
+    "unique": true
+  },
+  "IC27_065": {
+    "name": "Darth Maul",
+    "subtitle": "Mindful Apprentice",
+    "cost": "6",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "FORCE",
+      "SITH"
+    ],
+    "hp": "7",
+    "power": "4",
+    "set": "IC27",
+    "number": "065",
+    "aspects": [
+      "Command",
+      "Villainy"
+    ],
+    "text": "Sentinel\nOverwhelm\nRaid 3",
     "unique": true
   },
   "TWI_135": {
@@ -11402,6 +12203,7 @@
       "Villainy"
     ],
     "text": "When a friendly unit attacks and defeats a unit: You may exhaust this leader. If you do, give an Experience token to that friendly unit.",
+    "back_text": "Restore 1 \nWhen a friendly unit attacks and defeats a unit: You may give an Experience token to that friendly unit.",
     "unique": true
   },
   "LOF_238": {
@@ -11510,6 +12312,7 @@
       "Villainy"
     ],
     "text": "When you deal 4 or more damage to a unit or base: You may exhaust this leader. If you do, deal 1 damage to a different unit or base.",
+    "back_text": "Hidden (This unit can't be attacked if he was deployed this phase.)\nWhen you deal 4 or more damage to a unit or base: You may deal 1 damage to a different unit or base.",
     "unique": true
   },
   "SEC_035": {
@@ -11617,6 +12420,29 @@
       "Villainy"
     ],
     "text": "Action [C=1, Exhaust, defeat a friendly unit]: Draw a card and heal 2 damage from your base.",
+    "back_text": "On Attack: You may defeat another friendly unit. If you do, draw a card and heal 2 damage from your base.",
+    "unique": true
+  },
+  "IC27_067": {
+    "name": "Darth Vader",
+    "subtitle": "Useless to Resist",
+    "cost": "8",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "FORCE",
+      "IMPERIAL",
+      "SITH"
+    ],
+    "hp": "8",
+    "power": "8",
+    "set": "IC27",
+    "number": "067",
+    "aspects": [
+      "Command",
+      "Villainy"
+    ],
+    "text": "Ambush\nEach other friendly unit gains Ambush.",
     "unique": true
   },
   "SOR_010": {
@@ -11639,6 +12465,7 @@
       "Villainy"
     ],
     "text": "Action [{C=1}, {Exhaust}]: If you played a Villainy card this phase, deal 1 damage to a unit and 1 damage to a base.",
+    "back_text": "On Attack: You may deal 2 damage to a unit.",
     "unique": true
   },
   "SOR_087": {
@@ -11683,6 +12510,7 @@
       "Villainy"
     ],
     "text": "Action [Exhaust, discard a card from your hand]: Deal 1 damage to a unit or base.",
+    "back_text": "On Attack: Discard any number of cards from your hand. Deal damage to a unit or base equal to the number of cards discarded this way.",
     "unique": true
   },
   "IBH_53": {
@@ -11705,6 +12533,7 @@
       "Villainy"
     ],
     "text": "Action [C=1, Exhaust]: Deal 1 damage to a base.",
+    "back_text": "On Attack: Deal 2 damage to a base.",
     "unique": true
   },
   "JTL_006": {
@@ -11728,6 +12557,7 @@
       "Villainy"
     ],
     "text": "Action [Exhaust]: If you attacked with a non-token Vehicle unit this phase, create a TIE Fighter token.",
+    "back_text": "Attached unit is a leader unit.\nWhen deployed as an upgrade: Create 2 TIE Fighter tokens.",
     "unique": true
   },
   "JTL_142": {
@@ -11794,6 +12624,7 @@
       "Villainy"
     ],
     "text": "Friendly units that cost 3 or more gain Raid 1.",
+    "back_text": "Raid 1\nOther friendly units that cost 3 or more gain Raid 1.",
     "unique": true
   },
   "HMW_043": {
@@ -12286,6 +13117,7 @@
       "Villainy"
     ],
     "text": "Action [C=1, Exhaust]: Choose an enemy unit. Its controller may deal 2 damage to it. If they don't, draw a card.",
+    "back_text": "While you have more cards in hand than an opponent, this unit gains Raid 2. (She gets +2/+0 while attacking.)",
     "unique": true
   },
   "SEC_087": {
@@ -12308,6 +13140,24 @@
     ],
     "text": "Ambush (When you play this unit, it may attack an enemy unit.)\nOn Attack: Create a Spy token.",
     "unique": true
+  },
+  "IC27_091": {
+    "name": "Defenders of the Forest",
+    "cost": "5",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "EWOK"
+    ],
+    "hp": "3",
+    "power": "5",
+    "set": "IC27",
+    "number": "091",
+    "aspects": [
+      "Command"
+    ],
+    "text": "Ambush (When you play this unit, it may attack an enemy unit.)\nOverwhelm (When attacking an enemy unit, deal excess damage to the opponent's base.)",
+    "unique": false
   },
   "ASH_129": {
     "name": "Defenders of the Forest",
@@ -12611,6 +13461,22 @@
     "text": "",
     "unique": false
   },
+  "IC27_134": {
+    "name": "Desperate Attack",
+    "cost": "1",
+    "type": "Event",
+    "arena": "None",
+    "traits": [
+      "TACTIC"
+    ],
+    "set": "IC27",
+    "number": "134",
+    "aspects": [
+      "Aggression"
+    ],
+    "text": "Attack with a damaged unit. It gets +2/+0 for this attack.",
+    "unique": false
+  },
   "SHD_179": {
     "name": "Desperate Attack",
     "cost": "1",
@@ -12625,6 +13491,25 @@
       "Aggression"
     ],
     "text": "Attack with a damaged unit. It gets +2/+0 for this attack.",
+    "unique": false
+  },
+  "IC27_048": {
+    "name": "Desperate Commando",
+    "cost": "2",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "RESISTANCE",
+      "TROOPER"
+    ],
+    "hp": "2",
+    "power": "2",
+    "set": "IC27",
+    "number": "048",
+    "aspects": [
+      "Vigilance"
+    ],
+    "text": "When Defeated: You may give a unit -1/-1 for this phase.",
     "unique": false
   },
   "JTL_060": {
@@ -12742,6 +13627,28 @@
     "text": "Grit (This unit gets +1/+0 for each damage on it.) \nWhen Played: Defeat an enemy unit with 2 or less remaining HP.",
     "unique": false
   },
+  "IC27_068": {
+    "name": "Devastator",
+    "subtitle": "Lord Vader's Flagship",
+    "cost": "10",
+    "type": "Unit",
+    "arena": "Space",
+    "traits": [
+      "IMPERIAL",
+      "VEHICLE",
+      "CAPITAL SHIP"
+    ],
+    "hp": "9",
+    "power": "9",
+    "set": "IC27",
+    "number": "068",
+    "aspects": [
+      "Command",
+      "Villainy"
+    ],
+    "text": "Overwhelm\nWhen Played: Search the top 5 cards of your deck for a Villainy unit that costs 12 or less and play it for free. (Put the other cards on the bottom of your deck in a random order.)",
+    "unique": true
+  },
   "SOR_090": {
     "name": "Devastator",
     "subtitle": "Inescapable",
@@ -12821,6 +13728,25 @@
     ],
     "text": "Attached unit gains RESTORE 2. (When this unit attacks, heal 2 damage from its controller's base.)",
     "unique": false
+  },
+  "IC27_049": {
+    "name": "Dexter Jettster",
+    "subtitle": "OBI-WANNNN!!!",
+    "cost": "3",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "FRINGE"
+    ],
+    "hp": "6",
+    "power": "2",
+    "set": "IC27",
+    "number": "049",
+    "aspects": [
+      "Vigilance"
+    ],
+    "text": "On Attack: You may pay 1 resource. If you do, look at the top 3 cards of your deck. Put any number of them on the bottom of your deck and the rest on top in any order.",
+    "unique": true
   },
   "SEC_055": {
     "name": "Dhani Pilgrim",
@@ -13003,6 +13929,27 @@
     "text": "The Force is with you (create your Force token). You may play a unit from your hand (paying its cost).",
     "unique": false
   },
+  "IC27_057": {
+    "name": "Director Krennic",
+    "subtitle": "Architect of Annihilation",
+    "cost": "2",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "IMPERIAL",
+      "OFFICIAL"
+    ],
+    "hp": "4",
+    "power": "0",
+    "set": "IC27",
+    "number": "057",
+    "aspects": [
+      "Command",
+      "Villainy"
+    ],
+    "text": "Action [Exhaust]: Play a unit that costs 7 or more from your hand. It costs 2 less.",
+    "unique": true
+  },
   "SOR_001": {
     "name": "Director Krennic",
     "subtitle": "Aspiring to Authority",
@@ -13022,6 +13969,7 @@
       "Villainy"
     ],
     "text": "Each friendly damaged unit gets +1/+0.",
+    "back_text": "Restore 2 (When this unit attacks, heal 2 damage from your base.) Each friendly damaged unit gets +1/+0.",
     "unique": true
   },
   "LAW_008": {
@@ -13043,6 +13991,7 @@
       "Villainy"
     ],
     "text": "Action [Exhaust, defeat a friendly unit]: Create a Credit token.",
+    "back_text": "When Deployed: Another friendly unit deals damage equal to its power to an enemy unit.",
     "unique": true
   },
   "SEC_090": {
@@ -13199,6 +14148,24 @@
       "Command"
     ],
     "text": "When Played: This unit captures an enemy non-leader ground unit. (Put the captured card facedown under this unit until this unit leaves play.)",
+    "unique": false
+  },
+  "IC27_053": {
+    "name": "Disciples' Devotion",
+    "cost": "3",
+    "type": "Upgrade",
+    "arena": "None",
+    "traits": [
+      "INNATE"
+    ],
+    "hp": "3",
+    "power": "1",
+    "set": "IC27",
+    "number": "053",
+    "aspects": [
+      "Vigilance"
+    ],
+    "text": "While attached unit is exhausted, it gains Sentinel. (Enemy units in this arena must attack a Sentinel when they attack you.)",
     "unique": false
   },
   "SEC_071": {
@@ -13411,6 +14378,7 @@
       "Villainy"
     ],
     "text": "When the regroup phase starts: Discard a card from your deck.",
+    "back_text": "While there are 5 or more different costs among cards in your discard pile, this unit gets +3/+0.\nWhen Deployed: Choose 3 cards in your discard pile with different names. If you do, return 1 of them at random to your hand.",
     "unique": true
   },
   "SHD_185": {
@@ -13452,6 +14420,7 @@
       "Villainy"
     ],
     "text": "Action [C=1, Exhaust]: Give a Weakness token to a unit without a Weakness token on it.",
+    "back_text": "On Attack: You may give a Weakness token to a unit.",
     "unique": true
   },
   "SHD_028": {
@@ -13492,6 +14461,22 @@
     ],
     "text": "Support (When you play this unit, you may attack with another unit. It gains this unit's other abilities for this attack.)\nOn Attack: If this unit has 3 or more remaining HP, draw a card.",
     "unique": true
+  },
+  "IC27_094": {
+    "name": "Dogfight",
+    "cost": "1",
+    "type": "Event",
+    "arena": "None",
+    "traits": [
+      "TACTIC"
+    ],
+    "set": "IC27",
+    "number": "094",
+    "aspects": [
+      "Command"
+    ],
+    "text": "Attack with a unit, even if it's exhausted. That unit can't attack bases for this attack.",
+    "unique": false
   },
   "JTL_123": {
     "name": "Dogfight",
@@ -14032,6 +15017,26 @@
     "text": "Create 2 Clone Trooper tokens.",
     "unique": false
   },
+  "IC27_014": {
+    "name": "Dryden Vos",
+    "subtitle": "Thumb-Spiking the Scale",
+    "cost": "2",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "UNDERWORLD"
+    ],
+    "hp": "4",
+    "power": "1",
+    "set": "IC27",
+    "number": "014",
+    "aspects": [
+      "Vigilance",
+      "Villainy"
+    ],
+    "text": "On Attack: You may deal 1 damage to a friendly unit. If it survives, give an Experience token to it.",
+    "unique": true
+  },
   "SEC_007": {
     "name": "Dryden Vos",
     "subtitle": "I Never Ask Twice",
@@ -14050,6 +15055,7 @@
       "Villainy"
     ],
     "text": "Action [Exhaust, discard a card that costs 6 or more from your hand]: Play a unit that costs 5 or less from your hand (paying its cost). It gains Ambush for this phase.",
+    "back_text": "Overwhelm\nAction [discard a card from your hand]: Play a unit from your hand (paying its cost). It gains Ambush for this phase.",
     "unique": true
   },
   "SEC_137": {
@@ -14822,6 +15828,7 @@
       "Villainy"
     ],
     "text": "Action [{C=1}, {Exhaust}, defeat a friendly unit]: Deal 1 damage to a unit and draw a card.",
+    "back_text": "When Deployed: Take control of a damaged non-leader unit.\nOn Attack: You may defeat another friendly unit. If you do, deal 1 damage to a unit and draw a card.",
     "unique": true
   },
   "SOR_135": {
@@ -14868,6 +15875,7 @@
       "Villainy"
     ],
     "text": "Action [Exhaust]: Choose an exhausted friendly unit. Give an Advantage token to it for each other friendly unit.",
+    "back_text": "On Attack: You may choose another exhausted friendly unit. If you do, give an Advantage token to it for each other friendly unit.",
     "unique": true
   },
   "HMW_110": {
@@ -15104,6 +16112,26 @@
       "Heroism"
     ],
     "text": "When you use an \"On Attack\" ability: You may pay 2 and exhaust this leader. If you do, use that ability again.",
+    "back_text": "When you use an \"On Attack\" ability: You may use that ability again. Use this ability only once each round.",
+    "unique": true
+  },
+  "IC27_086": {
+    "name": "Enfys Nest",
+    "subtitle": "No More!",
+    "cost": "5",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "UNDERWORLD"
+    ],
+    "hp": "6",
+    "power": "4",
+    "set": "IC27",
+    "number": "086",
+    "aspects": [
+      "Command"
+    ],
+    "text": "Ambush (When you play this unit, she may attack an enemy unit.)\nWhile attacking a unit that costs 3 or less, this unit gets +2/+0 and gains Overwhelm.",
     "unique": true
   },
   "TWI_198": {
@@ -15728,6 +16756,28 @@
     "text": "Overwhelm (When attacking an enemy unit, deal excess damage to the opponent's base.)",
     "unique": false
   },
+  "IC27_059": {
+    "name": "Exegol Patroller",
+    "cost": "2",
+    "type": "Unit",
+    "arena": "Space",
+    "traits": [
+      "FIRST ORDER",
+      "SITH",
+      "VEHICLE",
+      "FIGHTER"
+    ],
+    "hp": "1",
+    "power": "3",
+    "set": "IC27",
+    "number": "059",
+    "aspects": [
+      "Command",
+      "Villainy"
+    ],
+    "text": "Overwhelm (When attacking an enemy unit, deal excess damage to the opponent's base.)",
+    "unique": false
+  },
   "SEC_054": {
     "name": "Exiled from the Force",
     "cost": "1",
@@ -15984,6 +17034,29 @@
     "text": "On Attack: You may give an Experience token to another Creature or Spectre unit.",
     "unique": true
   },
+  "IC27_113": {
+    "name": "Ezra Bridger",
+    "subtitle": "Down With the Freedom",
+    "cost": "2",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "FORCE",
+      "JEDI",
+      "REBEL",
+      "SPECTRE"
+    ],
+    "hp": "3",
+    "power": "1",
+    "set": "IC27",
+    "number": "113",
+    "aspects": [
+      "Aggression",
+      "Heroism"
+    ],
+    "text": "Raid 2 (This unit gets +2/+0 while attacking.)\nOn Attack: Give another friendly Heroism unit Raid 2 for this phase.",
+    "unique": true
+  },
   "SOR_192": {
     "name": "Ezra Bridger",
     "subtitle": "Resourceful Troublemaker",
@@ -16050,6 +17123,7 @@
       "Heroism"
     ],
     "text": "When a friendly unit's attack ends: If it dealt 3 or more combat damage to a base, you may exhaust this leader. If you do, give an Advantage token to a different unit.",
+    "back_text": "Saboteur (When this unit attacks, ignore Sentinel and defeat the defender's Shields.)\nWhen a friendly unit's attack ends: If it dealt 3 or more combat damage to a base, you may give an Advantage token to a different unit.",
     "unique": true
   },
   "ASH_209": {
@@ -16436,6 +17510,7 @@
       "Heroism"
     ],
     "text": "Action [{C=1}, {{Exhaust}}]: Play a unit that costs 4 or less from your hand (paying its cost). Give it AMBUSH for this phase. (After you play the unit, it may ready and attack an enemy unit.)",
+    "back_text": "SABOTEUR (When this unit attacks, ignore Sentinel and defeat the defender's Shields.)\nAction: Play a unit that costs 4 or less from your hand (paying its cost.) Give it AMBUSH for this phase.",
     "unique": true
   },
   "SHD_220": {
@@ -16475,6 +17550,7 @@
       "Cunning"
     ],
     "text": "Action [C=1, Exhaust, exhaust a friendly unit]: Play a unit from your hand (paying its cost). It enters play ready.",
+    "back_text": "Saboteur\nAction [C=1, exhaust a friendly unit]: Play a unit from your hand. It enters play ready.",
     "unique": true
   },
   "ASH_192": {
@@ -16807,6 +17883,26 @@
     "text": "Overwhelm\nWhen Played: Choose any number of friendly units. Each of those units captures an enemy non-leader unit in the same arena.",
     "unique": true
   },
+  "IC27_037": {
+    "name": "Finn",
+    "subtitle": "Stand and Fight",
+    "cost": "4",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "RESISTANCE"
+    ],
+    "hp": "5",
+    "power": "4",
+    "set": "IC27",
+    "number": "037",
+    "aspects": [
+      "Vigilance",
+      "Heroism"
+    ],
+    "text": "Sentinel (Enemy units in this arena must attack a Sentinel when they attack you.)\nWhile this unit is upgraded, he gains Restore 2. (When he attacks, heal 2 damage from your base.)",
+    "unique": true
+  },
   "LAW_095": {
     "name": "Finn",
     "subtitle": "Looking Closer",
@@ -16867,6 +17963,7 @@
       "Heroism"
     ],
     "text": "Action [{{Exhaust}}]: Defeat a friendly upgrade on a unit. If you do, give a Shield token to that unit.",
+    "back_text": "On Attack: You may defeat a friendly upgrade on a unit. If you do, give a Shield token to that unit.",
     "unique": true
   },
   "LAW_256": {
@@ -17470,6 +18567,23 @@
     "text": "Exhaust an enemy unit. A friendly unit gains Sentinel for this phase.",
     "unique": false
   },
+  "IC27_177": {
+    "name": "Force Illusion",
+    "cost": "2",
+    "type": "Event",
+    "arena": "None",
+    "traits": [
+      "FORCE",
+      "TRICK"
+    ],
+    "set": "IC27",
+    "number": "177",
+    "aspects": [
+      "Cunning"
+    ],
+    "text": "Exhaust an enemy unit. A friendly unit gains Sentinel for this phase.",
+    "unique": false
+  },
   "SOR_138": {
     "name": "Force Lightning",
     "cost": "1",
@@ -17910,6 +19024,25 @@
     "text": "Action [defeat this unit]: Attack with a unit, even if it's exhausted. it can't attack bases for this attack.",
     "unique": false
   },
+  "IC27_150": {
+    "name": "Frozen in Carbonite",
+    "cost": "3",
+    "type": "Upgrade",
+    "arena": "None",
+    "traits": [
+      "CONDITION"
+    ],
+    "hp": "0",
+    "power": "0",
+    "set": "IC27",
+    "number": "150",
+    "aspects": [
+      "Cunning",
+      "Villainy"
+    ],
+    "text": "Attach to a non–leader unit.\nAttached unit can't ready.\nWhen Played: Exhaust attached unit.",
+    "unique": false
+  },
   "SHD_193": {
     "name": "Frozen in Carbonite",
     "cost": "3",
@@ -18324,6 +19457,7 @@
       "Villainy"
     ],
     "text": "Each friendly upgraded unit gets +1/+0.",
+    "back_text": "Each friendly upgraded unit gets +1/+0 and gains \"When Defeated: You may return an upgrade that was attached to this unit to its owner's hand.\"",
     "unique": true
   },
   "TS26_21": {
@@ -18449,6 +19583,27 @@
     "text": "When Played/On Attack: Create an X-Wing token.",
     "unique": true
   },
+  "IC27_021": {
+    "name": "General Grievous",
+    "subtitle": "Four-Armed Menace",
+    "cost": "4",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "SEPARATIST",
+      "OFFICIAL"
+    ],
+    "hp": "5",
+    "power": "4",
+    "set": "IC27",
+    "number": "021",
+    "aspects": [
+      "Vigilance",
+      "Villainy"
+    ],
+    "text": "When you play an upgrade on this unit: Choose one that hasn't been chosen this phase:\nGive an Experience token to him.\nHeal 3 damage from your base.\nDraw a card.\n",
+    "unique": true
+  },
   "TWI_015": {
     "name": "General Grievous",
     "subtitle": "General of the Droid Armies",
@@ -18468,6 +19623,7 @@
       "Villainy"
     ],
     "text": "Action [Exhaust]: Give a Droid unit Sentinel for this phase. (Units in its arena can't attack your non-Sentinel units or your base.)",
+    "back_text": "On Attack: You may give a Droid unit +1/+0 and Sentinel for this phase.",
     "unique": true
   },
   "TWI_034": {
@@ -18552,6 +19708,7 @@
       "Villainy"
     ],
     "text": "Action [Exhaust]: Play 2 units from your hand (one at a time, paying their costs).",
+    "back_text": "While you control more units than an opponent, this unit gets +3/+0.",
     "unique": true
   },
   "HMW_159": {
@@ -18573,6 +19730,27 @@
       "Villainy"
     ],
     "text": "Bases can't be healed.\nWhen Played: Deal 4 damage to a base.",
+    "unique": true
+  },
+  "IC27_101": {
+    "name": "General Hux",
+    "subtitle": "Fire Ventral Cannons!",
+    "cost": "3",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "FIRST ORDER",
+      "OFFICIAL"
+    ],
+    "hp": "4",
+    "power": "3",
+    "set": "IC27",
+    "number": "101",
+    "aspects": [
+      "Aggression",
+      "Villainy"
+    ],
+    "text": "Overwhelm (When attacking an enemy unit, deal excess damage to the opponent's base.)\nEach other friendly First Order unit gets +1/+0 and gains Overwhelm.",
     "unique": true
   },
   "JTL_134": {
@@ -18721,6 +19899,27 @@
       "Villainy"
     ],
     "text": "When Played: Give an Experience token to each of up to 3 Trooper units.",
+    "unique": true
+  },
+  "IC27_058": {
+    "name": "General Veers",
+    "subtitle": "Prepared",
+    "cost": "2",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "IMPERIAL",
+      "OFFICIAL"
+    ],
+    "hp": "3",
+    "power": "3",
+    "set": "IC27",
+    "number": "058",
+    "aspects": [
+      "Command",
+      "Villainy"
+    ],
+    "text": "Overwhelm (When attacking an enemy unit, deal excess damage to the opponent's base.)",
     "unique": true
   },
   "IC27_105": {
@@ -19184,6 +20383,7 @@
       "Villainy"
     ],
     "text": "Action [C=1, Exhaust]: Ready a token unit.",
+    "back_text": "This unit gets +1/+0 for each ready friendly token unit.\nOn Attack: Create a Spy token.",
     "unique": true
   },
   "LAW_099": {
@@ -19265,6 +20465,7 @@
       "Villainy"
     ],
     "text": "Action [Exhaust]: Choose One:\nGive each ground unit Sentinel and Overwhelm for this phase.\nGive each space unit Sentinel and Overwhelm for this phase.",
+    "back_text": "Overwhelm\nEach other friendly unit gains Overwhelm and Sentinel.",
     "unique": true
   },
   "IC27_024": {
@@ -19307,6 +20508,7 @@
       "Villainy"
     ],
     "text": "When the action phase starts: Look at the top card of each player's deck.\nAction [{C=1}, {Exhaust}]: Reveal the top card of any player's deck. Exhaust a unit that costs the same as or less than the revealed card.",
+    "back_text": "When the action phase starts: Look at the top card of each player's deck.\nOn Attack: You may reveal the top card of any player's deck. Exhaust a unit that costs the same as or less than the revealed card.",
     "unique": true
   },
   "SEC_193": {
@@ -19349,6 +20551,7 @@
       "Villainy"
     ],
     "text": "When you use a \"When Defeated\" ability: You may exhaust this leader. If you do, use that ability again. ",
+    "back_text": "When you use a \"When Defeated\" ability: You may use that ability again. Use this ability only once each round.",
     "unique": true
   },
   "ASH_004": {
@@ -19370,6 +20573,7 @@
       "Villainy"
     ],
     "text": "Action [Exhaust]: Attack with a unit. It gains Restore 2 for this attack if you control the same number of units as the defending player.",
+    "back_text": "Restore 2\nOn Attack: If you control more units than the defending player, you may defeat a non-leader unit they control.",
     "unique": true
   },
   "ASH_033": {
@@ -19434,6 +20638,7 @@
       "Villainy"
     ],
     "text": "Action [Exhaust, use the Force (lose your Force token)]: Attack with a friendly unit. The defender gets -2/-0 for this attack.",
+    "back_text": "Shielded (When you deploy this leader, give a Shield token to him.)\nOn Attack: The defender gets -2/-0 for this attack.",
     "unique": true
   },
   "LOF_132": {
@@ -19500,6 +20705,28 @@
       "Villainy"
     ],
     "text": "Action [{Exhaust}]: Deal 2 damage to a friendly unit with 3 or less power and ready it.",
+    "back_text": "On Attack: You may deal 1 damage to another friendly unit with 3 or less power and ready it.",
+    "unique": true
+  },
+  "IC27_023": {
+    "name": "Grand Moff Tarkin",
+    "subtitle": "Cracking Down on Lothal",
+    "cost": "5",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "IMPERIAL",
+      "OFFICIAL"
+    ],
+    "hp": "6",
+    "power": "3",
+    "set": "IC27",
+    "number": "023",
+    "aspects": [
+      "Vigilance",
+      "Villainy"
+    ],
+    "text": "Each friendly unit with Sentinel gets +1/+1.",
     "unique": true
   },
   "SOR_007": {
@@ -19521,6 +20748,7 @@
       "Villainy"
     ],
     "text": "Action [{C=1}, {{Exhaust}}]: Give an Experience token to an IMPERIAL unit.",
+    "back_text": "On Attack: You may give an Experience token to another IMPERIAL unit.",
     "unique": true
   },
   "SOR_084": {
@@ -19586,6 +20814,7 @@
       "Villainy"
     ],
     "text": "Ignore the aspect penalties on upgrades with Fortify you play.",
+    "back_text": "Ignore the aspect penalties on upgrades with Fortify you play.\nWhen the regroup phase starts: You may defeat a base with 10 or less remaining HP.",
     "unique": true
   },
   "LOF_071": {
@@ -19711,6 +20940,27 @@
     "text": "Overwhelm \nWhile playing this unit, you may defeat any number of ready resources you control. For each resource defeated this way, this unit costs 3 less to play.",
     "unique": false
   },
+  "IC27_142": {
+    "name": "Greedo",
+    "subtitle": "Big-Timer",
+    "cost": "3",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "UNDERWORLD",
+      "BOUNTY HUNTER"
+    ],
+    "hp": "3",
+    "power": "5",
+    "set": "IC27",
+    "number": "142",
+    "aspects": [
+      "Cunning",
+      "Villainy"
+    ],
+    "text": "Ambush (When you play this unit, he may attack an enemy unit.)\nWhile attacking or defending, this unit deals combat damage after the other attacking or defending unit.",
+    "unique": true
+  },
   "SOR_204": {
     "name": "Greedo",
     "subtitle": "Slow on the Draw",
@@ -19729,6 +20979,26 @@
       "Cunning"
     ],
     "text": "When Defeated: You may discard a card from your deck. If it's not a unit, deal 2 damage to a ground unit.",
+    "unique": true
+  },
+  "IC27_153": {
+    "name": "Greef Karga",
+    "subtitle": "I Celebrate Your Success",
+    "cost": "2",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "OFFICIAL"
+    ],
+    "hp": "5",
+    "power": "0",
+    "set": "IC27",
+    "number": "153",
+    "aspects": [
+      "Cunning",
+      "Heroism"
+    ],
+    "text": "Raid 3 (This unit gets +3/+0 while attacking.)",
     "unique": true
   },
   "SHD_245": {
@@ -19769,6 +21039,7 @@
       "Heroism"
     ],
     "text": "When you play or create a unit: You may exhaust this leader. If you do, give an Advantage token to that unit.",
+    "back_text": "When you play or create a unit: Give an Advantage token to that unit.",
     "unique": true
   },
   "ASH_119": {
@@ -20014,6 +21285,7 @@
       "Heroism"
     ],
     "text": "",
+    "back_text": "While another friendly unit is defending, it gets +1/+0.\nWhile another friendly unit is attacking, the defending unit gets -1/-0.",
     "unique": true
   },
   "ASH_155": {
@@ -20481,6 +21753,26 @@
     "text": "Support (When you play this unit, you may attack with another unit. It gains this unit's other abilities for this attack.)\nWhen Attack Ends: If the defending unit was defeated, give a Shield token to this unit.",
     "unique": true
   },
+  "IC27_155": {
+    "name": "Han Solo",
+    "subtitle": "Gamblin' Man",
+    "cost": "3",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "REBEL"
+    ],
+    "hp": "3",
+    "power": "5",
+    "set": "IC27",
+    "number": "155",
+    "aspects": [
+      "Cunning",
+      "Heroism"
+    ],
+    "text": "Saboteur\nWhen Played: Search the top 10 cards of your deck for a card and draw it, then discard a random card from your hand.",
+    "unique": true
+  },
   "IC27_161": {
     "name": "Han Solo",
     "subtitle": "Scruffy-Looking Nerf Herder",
@@ -20498,7 +21790,7 @@
       "Cunning",
       "Heroism"
     ],
-    "text": "Raid 2 (This unit gets +2/+0 while attacking.)\nOn Attack: The defender gets –2/–0 for this attack.",
+    "text": "Raid 2 (This unit gets +2/+0 while attacking.)\nOn Attack: The defender gets -2/-0 for this attack.",
     "unique": true
   },
   "SOR_017": {
@@ -20519,6 +21811,7 @@
       "Heroism"
     ],
     "text": "Action [{Exhaust}]: Put a card from your hand into play as a resource and ready it. At the start of the next action phase, defeat a resource you control.",
+    "back_text": "On Attack: Put the top card of your deck into play as a resource and ready it. At the start of the next action phase, defeat a resource you control.",
     "unique": true
   },
   "SOR_198": {
@@ -20559,6 +21852,7 @@
       "Heroism"
     ],
     "text": "Action [Exhaust, defeat a friendly token]: Deal 1 damage to a unit.",
+    "back_text": "Saboteur (When this unit attacks, ignore Sentinel and defeat the defender's Shields.)\nOn Attack: Defeat any number of friendly tokens. Deal damage to a unit equal to the number of tokens defeated this way.",
     "unique": true
   },
   "LAW_037": {
@@ -20639,6 +21933,7 @@
       "Heroism"
     ],
     "text": "Action [{{Exhaust}}]: Play a unit from your hand. It costs 1 less. Deal 2 damage to it.",
+    "back_text": "Action: Play a unit from your hand. It costs 1 less. Deal 2 damage to it.",
     "unique": true
   },
   "JTL_017": {
@@ -20660,6 +21955,7 @@
       "Heroism"
     ],
     "text": "Action [Exhaust]: Reveal the top card of your deck, then attack with a unit. If the revealed card and that unit have different odd costs, that unit gets +1/+0 for this attack.",
+    "back_text": "Attached unit is a leader unit. \nWhen deployed as an upgrade: For each friendly unit or upgrade that has an odd cost, ready a resource.",
     "unique": true
   },
   "JTL_203": {
@@ -21008,6 +22304,23 @@
     "text": "When Played: If an opponent controls a space unit, give a Shield token to this unit. Otherwise, give 2 Advantage tokens to this unit.",
     "unique": false
   },
+  "IC27_044": {
+    "name": "Hello There",
+    "cost": "3",
+    "type": "Event",
+    "arena": "None",
+    "traits": [
+      "TRICK"
+    ],
+    "set": "IC27",
+    "number": "044",
+    "aspects": [
+      "Vigilance",
+      "Heroism"
+    ],
+    "text": "Choose a unit that entered play this phase. It gets –4/–4 for this phase.",
+    "unique": false
+  },
   "TWI_052": {
     "name": "Hello There",
     "cost": "3",
@@ -21024,6 +22337,28 @@
     ],
     "text": "Choose a unit that entered play this phase. It gets -4/-4 for this phase.",
     "unique": false
+  },
+  "IC27_117": {
+    "name": "Hera Syndulla",
+    "subtitle": "Against the Odds",
+    "cost": "3",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "REBEL",
+      "TWI'LEK",
+      "SPECTRE"
+    ],
+    "hp": "3",
+    "power": "4",
+    "set": "IC27",
+    "number": "117",
+    "aspects": [
+      "Aggression",
+      "Heroism"
+    ],
+    "text": "When you play another Rebel card: Deal 1 damage to a base.",
+    "unique": true
   },
   "SOR_008": {
     "name": "Hera Syndulla",
@@ -21045,6 +22380,7 @@
       "Heroism"
     ],
     "text": "Ignore the aspect penalty on SPECTRE cards you play.",
+    "back_text": "Ignore the aspect penalty on SPECTRE cards you play.\nOn Attack: You may give an Experience token to another unique unit.",
     "unique": true
   },
   "LAW_009": {
@@ -21067,6 +22403,7 @@
       "Heroism"
     ],
     "text": "While you control 2 or more units, ignore the aspect penalties on Heroism units you play.",
+    "back_text": "Restore 1 (When this unit attacks, heal 1 damage from your base.)\nWhile you control 2 or more units, ignore the aspect penalties on Heroism units you play.",
     "unique": true
   },
   "JTL_045": {
@@ -21555,6 +22892,25 @@
     "text": "Sentinel (Enemy units in this arena must attack a Sentinel when they attack you.)\nWhen Played: Heal all damage from each friendly unit.",
     "unique": true
   },
+  "IC27_090": {
+    "name": "Homestead Militia",
+    "cost": "3",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "FRINGE",
+      "TROOPER"
+    ],
+    "hp": "4",
+    "power": "3",
+    "set": "IC27",
+    "number": "090",
+    "aspects": [
+      "Command"
+    ],
+    "text": "While you control 6 or more resources, this unit gains Sentinel. (Enemy units in this arena must attack a Sentinel when they attack you.)",
+    "unique": false
+  },
   "SOR_113": {
     "name": "Homestead Militia",
     "cost": "3",
@@ -21651,6 +23007,7 @@
       "Villainy"
     ],
     "text": "When you play a card using SMUGGLE: You may exhaust this leader. If you do, give an Experience token to a unit.",
+    "back_text": "RAID 1 (This unit gets +1/+0 while attacking.)\nWhen you play a card using SMUGGLE: You may give an Experience token to a unit.",
     "unique": true
   },
   "JTL_056": {
@@ -22066,6 +23423,7 @@
       "Heroism"
     ],
     "text": "Action [{{C=1}}, {{Exhaust}}]: Reveal a resource you control. If it shares a name with a friendly unique unit, return the resource to its owner's hand and put the top card of your deck into play as a resource.",
+    "back_text": "OVERWHELM\nOn Attack: You may reveal a resource you control. If it shares a name with a friendly unique unit, return the resource to its owner's hand and put the top card of your deck into play as a resource.",
     "unique": true
   },
   "HMW_035": {
@@ -22652,6 +24010,7 @@
       "Villainy"
     ],
     "text": "Action [{Exhaust}]: Attack with a unit. If you control more units than the defending player, the attacker gets +1/+0 for this attack.",
+    "back_text": "Each other friendly unit gains Raid 1. (They get +1/+0 while attacking.)",
     "unique": true
   },
   "LAW_042": {
@@ -22799,6 +24158,7 @@
       "Villainy"
     ],
     "text": "Action [{Exhaust}]: If an enemy unit was defeated this phase, heal 1 damage from your base.",
+    "back_text": "SHIELDED (When you deploy this leader, give her a Shield token.)\nWhen an enemy unit is defeated: Heal 1 damage from your base.",
     "unique": true
   },
   "JTL_036": {
@@ -23525,6 +24885,24 @@
     "text": "Exploit 1 (While playing this card, defeat up to 1 unit you control. This card costs 2 less for each unit defeated this way.) \nSaboteur (When this unit attacks, ignore Sentinel and defeat the defender's Shields.)",
     "unique": false
   },
+  "IC27_133": {
+    "name": "Infiltrator's Skill",
+    "cost": "1",
+    "type": "Upgrade",
+    "arena": "None",
+    "traits": [
+      "LEARNED"
+    ],
+    "hp": "1",
+    "power": "1",
+    "set": "IC27",
+    "number": "133",
+    "aspects": [
+      "Aggression"
+    ],
+    "text": "Attached unit gains Saboteur. (When this unit attacks, ignore Sentinel and defeat the defender's Shields.)",
+    "unique": false
+  },
   "SOR_166": {
     "name": "Infiltrator's Skill",
     "cost": "1",
@@ -23753,6 +25131,25 @@
     "text": "Fortify (Attach this to your base, not a unit.) \nWhen you play a unit with 3 or less power: You may defeat this upgrade. If you do, ready that unit.",
     "unique": false
   },
+  "IC27_132": {
+    "name": "Insurgent Saboteurs",
+    "cost": "6",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "REBEL",
+      "TROOPER"
+    ],
+    "hp": "5",
+    "power": "6",
+    "set": "IC27",
+    "number": "132",
+    "aspects": [
+      "Aggression"
+    ],
+    "text": "Saboteur (When this unit attacks, ignore Sentinel and defeat the defender's Shields.)\nOn Attack: You may defeat an upgrade.",
+    "unique": false
+  },
   "JTL_168": {
     "name": "Insurgent Saboteurs",
     "cost": "6",
@@ -23967,6 +25364,22 @@
     "text": "Action [Exhaust]: Deal 3 damage to a space unit.",
     "unique": false
   },
+  "IC27_087": {
+    "name": "Issue a Command",
+    "cost": "4",
+    "type": "Event",
+    "arena": "None",
+    "traits": [
+      "PLAN"
+    ],
+    "set": "IC27",
+    "number": "087",
+    "aspects": [
+      "Command"
+    ],
+    "text": "Reveal the top card of your deck. If it's a unit, draw it.\nGive an Experience token to a friendly unit.\nResource this event.",
+    "unique": false
+  },
   "SOR_075": {
     "name": "It Binds All Things",
     "cost": "2",
@@ -24071,6 +25484,48 @@
     "text": "When Played: Draw a card. \nWhen Defeated: Discard a card from your hand.",
     "unique": false
   },
+  "IC27_156": {
+    "name": "J-Type Nubian Starship",
+    "cost": "3",
+    "type": "Unit",
+    "arena": "Space",
+    "traits": [
+      "NABOO",
+      "VEHICLE",
+      "TRANSPORT"
+    ],
+    "hp": "4",
+    "power": "2",
+    "set": "IC27",
+    "number": "156",
+    "aspects": [
+      "Cunning",
+      "Heroism"
+    ],
+    "text": "When Played: Draw a card.\nWhen Defeated: Discard a card from your hand.",
+    "unique": false
+  },
+  "IC27_060": {
+    "name": "Jabba the Hutt",
+    "subtitle": "Bounties Left and Right",
+    "cost": "3",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "UNDERWORLD",
+      "HUTT"
+    ],
+    "hp": "8",
+    "power": "0",
+    "set": "IC27",
+    "number": "060",
+    "aspects": [
+      "Command",
+      "Villainy"
+    ],
+    "text": "Action [Exhaust]: Choose an enemy unit. For this phase, while that unit is defending, the attacker gets +4/+0.",
+    "unique": true
+  },
   "SOR_181": {
     "name": "Jabba the Hutt",
     "subtitle": "Cunning Daimyo",
@@ -24111,6 +25566,7 @@
       "Villainy"
     ],
     "text": "Action [C=1, Exhaust, return a friendly Underworld unit to its owner's hand]: Create a Credit token.",
+    "back_text": "Action: Play an Underworld unit from your hand. If you defeated a Credit while paying its cost, that unit gains Ambush for this phase.",
     "unique": true
   },
   "SEC_002": {
@@ -24132,6 +25588,7 @@
       "Villainy"
     ],
     "text": "Action [C=1, Exhaust]: A friendly damaged unit deals 1 damage to an enemy unit. If the friendly unit has 3 or more damage on it, it deals 2 damage instead.",
+    "back_text": "When another friendly unit is dealt damage and survives: You may have that unit deal that much damage to an enemy unit. Use this ability only once each round.",
     "unique": true
   },
   "SHD_006": {
@@ -24153,6 +25610,7 @@
       "Villainy"
     ],
     "text": "Action [{{Exhaust}}]: Choose a unit. For this phase it gains: \"BOUNTY - The next unit you play this phase costs 1 less.\"",
+    "back_text": "When Deployed: Another friendly unit captures an enemy non-leader unit.\nAction [{{Exhaust}}]: Choose a unit. For this phase, it gains \"BOUNTY - The next unit you play this phase costs 2 less.\"",
     "unique": true
   },
   "ASH_042": {
@@ -24272,6 +25730,27 @@
     "text": "Look at an opponent's hand and discard an event from it.",
     "unique": false
   },
+  "IC27_144": {
+    "name": "Jango Fett",
+    "subtitle": "Straight Shooter",
+    "cost": "4",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "SEPARATIST",
+      "BOUNTY HUNTER"
+    ],
+    "hp": "4",
+    "power": "4",
+    "set": "IC27",
+    "number": "144",
+    "aspects": [
+      "Cunning",
+      "Villainy"
+    ],
+    "text": "Ambush\nWhen Defeated: You may discard a card from your hand. If you do, return an event from your discard pile to your hand.",
+    "unique": true
+  },
   "LAW_087": {
     "name": "Jango Fett",
     "subtitle": "Wily Mercenary",
@@ -24313,6 +25792,7 @@
       "Villainy"
     ],
     "text": "When a friendly unit deals damage to an enemy unit: You may exhaust this leader. If you do, exhaust that enemy unit.",
+    "back_text": "When a friendly unit deals damage to an enemy unit: You may exhaust that unit.",
     "unique": true
   },
   "SHD_138": {
@@ -24438,6 +25918,7 @@
       "Heroism"
     ],
     "text": "Action [C=1, Exhaust]: If you gave a token upgrade to a unit this phase, deal 1 damage to a unit and heal 1 damage from a base.",
+    "back_text": "Shielded (When you deploy this leader, give a Shield token to him.)\nOn Attack: If you gave a token upgrade to a unit this phase, you may deal 1 damage to a unit and heal 1 damage from a base.",
     "unique": true
   },
   "JTL_109": {
@@ -24686,6 +26167,26 @@
     "power": "3",
     "set": "LOF",
     "number": "145",
+    "aspects": [
+      "Aggression",
+      "Heroism"
+    ],
+    "text": "When Played: If you have the initiative, deal 2 damage to an enemy ground unit.",
+    "unique": false
+  },
+  "IC27_118": {
+    "name": "Jedi Knight",
+    "cost": "3",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "FORCE",
+      "JEDI"
+    ],
+    "hp": "3",
+    "power": "3",
+    "set": "IC27",
+    "number": "118",
     "aspects": [
       "Aggression",
       "Heroism"
@@ -25032,6 +26533,26 @@
     "text": "When Played/On Attack: You may deal 1 damage to a unit. If that unit is defeated this way, give an Advantage token to a unit.",
     "unique": true
   },
+  "IC27_123": {
+    "name": "Jyn Erso",
+    "subtitle": "Her Father's Revenge",
+    "cost": "8",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "REBEL"
+    ],
+    "hp": "7",
+    "power": "8",
+    "set": "IC27",
+    "number": "123",
+    "aspects": [
+      "Aggression",
+      "Heroism"
+    ],
+    "text": "Saboteur\nWhen Played: Ready up to 3 units with combined cost 7 or less. They each gain Saboteur for this phase.",
+    "unique": true
+  },
   "SOR_018": {
     "name": "Jyn Erso",
     "subtitle": "Resisting Oppression",
@@ -25050,6 +26571,7 @@
       "Heroism"
     ],
     "text": "Action [{Exhaust}]: Attack with a unit. The defender gets -1/-0 for this attack.",
+    "back_text": "While a friendly unit is attacking, the defender gets -1/-0.",
     "unique": true
   },
   "LAW_005": {
@@ -25070,6 +26592,7 @@
       "Heroism"
     ],
     "text": "Action [C=1, Exhaust]: If a friendly Rebel unit was defeated this phase, search the top 3 cards of your deck for a card and draw it. (Put the other cards on the bottom of your deck in a random order.)",
+    "back_text": "On Attack: If a friendly Rebel unit was defeated this phase, search the top 3 cards of your deck for a card and draw it.",
     "unique": true
   },
   "LAW_067": {
@@ -25133,6 +26656,27 @@
       "Heroism"
     ],
     "text": "Ambush\nOn Attack: You may deal 3 damage to a damaged ground unit.",
+    "unique": true
+  },
+  "IC27_124": {
+    "name": "K-2SO",
+    "subtitle": "Evacuate the Vault Door",
+    "cost": "9",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "REBEL",
+      "DROID"
+    ],
+    "hp": "5",
+    "power": "10",
+    "set": "IC27",
+    "number": "124",
+    "aspects": [
+      "Aggression",
+      "Heroism"
+    ],
+    "text": "When Defeated: Deal 5 damage to each enemy unit and each enemy base.",
     "unique": true
   },
   "SOR_145": {
@@ -25302,6 +26846,30 @@
       "Heroism"
     ],
     "text": "Action [C=1, Exhaust]: Give a Shield token to a Creature or Spectre unit.",
+    "back_text": "Shielded (When you deploy this leader, give a Shield token to him.)\nWhile you control another Creature or Spectre unit, this unit gets +2/+2.",
+    "unique": true
+  },
+  "IC27_121": {
+    "name": "Kanan Jarrus",
+    "subtitle": "Sometimes I Hate Being Right",
+    "cost": "6",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "FORCE",
+      "JEDI",
+      "REBEL",
+      "SPECTRE"
+    ],
+    "hp": "7",
+    "power": "8",
+    "set": "IC27",
+    "number": "121",
+    "aspects": [
+      "Aggression",
+      "Heroism"
+    ],
+    "text": "",
     "unique": true
   },
   "SOR_047": {
@@ -25428,6 +26996,26 @@
     "text": "Grit (This unit gets +1/+0 for each damage on it.) \nWhen Played: Heal up to 2 damage from another unit and deal that much damage to this unit.",
     "unique": false
   },
+  "IC27_032": {
+    "name": "Kaydel Connix",
+    "subtitle": "Keep Going!",
+    "cost": "2",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "RESISTANCE"
+    ],
+    "hp": "5",
+    "power": "1",
+    "set": "IC27",
+    "number": "032",
+    "aspects": [
+      "Vigilance",
+      "Heroism"
+    ],
+    "text": "Sentinel (Enemy units in this arena must attack a Sentinel when they attack you.)",
+    "unique": true
+  },
   "SEC_149": {
     "name": "Kaydel Connix",
     "subtitle": "For Our Survival",
@@ -25487,6 +27075,7 @@
       "Heroism"
     ],
     "text": "Action [Exhaust]: A friendly unit loses all abilities for this round. Take an extra action after this one.",
+    "back_text": "On Attack: Choose any number of friendly units. They lose all abilities for this round.\nAttached unit is a leader unit. It gains: \"On Attack: Choose any number of friendly units. They lose all abilities for this round.\"",
     "unique": true
   },
   "SOR_169": {
@@ -25865,6 +27454,25 @@
     "text": "This unit gets +1/+0 for each other exhausted friendly unit.",
     "unique": true
   },
+  "IC27_137": {
+    "name": "Kintan Intimidator",
+    "cost": "1",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "UNDERWORLD"
+    ],
+    "hp": "4",
+    "power": "1",
+    "set": "IC27",
+    "number": "137",
+    "aspects": [
+      "Cunning",
+      "Villainy"
+    ],
+    "text": "On Attack: Exhaust the defending unit.",
+    "unique": false
+  },
   "SHD_183": {
     "name": "Kintan Intimidator",
     "cost": "1",
@@ -25904,6 +27512,7 @@
       "Heroism"
     ],
     "text": "Action [C=1, Exhaust]: If you attacked with a Jedi unit this phase, deal 2 damage to a unit.",
+    "back_text": "Saboteur (When this unit attacks, ignore Sentinel and defeat the defender's Shields.)\nThis unit gets +1/+0 for each other friendly Jedi unit.",
     "unique": true
   },
   "TWI_165": {
@@ -25962,6 +27571,25 @@
     "power": "4",
     "set": "LOF",
     "number": "084",
+    "aspects": [
+      "Command",
+      "Villainy"
+    ],
+    "text": "",
+    "unique": false
+  },
+  "IC27_061": {
+    "name": "Knight of Ren",
+    "cost": "3",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "FIRST ORDER"
+    ],
+    "hp": "4",
+    "power": "4",
+    "set": "IC27",
+    "number": "061",
     "aspects": [
       "Command",
       "Villainy"
@@ -26330,6 +27958,7 @@
       "Villainy"
     ],
     "text": "Action [Exhaust]: Discard a card from your hand. If you discarded an upgrade this way, draw a card.",
+    "back_text": "Sentinel\nWhen Deployed: Play any number of upgrades from your discard pile on this unit (one at a time, paying their costs).",
     "unique": true
   },
   "LOF_229": {
@@ -26352,6 +27981,50 @@
     "text": "Overwhelm (When attacking an enemy unit, deal excess damage to the opponent's base.) \nWhen you play an upgrade on this unit: You may use the Force (lose your Force token). If you do, draw a card.",
     "unique": true
   },
+  "IC27_003": {
+    "name": "Kylo Ren",
+    "subtitle": "Supreme Leader",
+    "cost": "5",
+    "type": "Leader",
+    "arena": "Ground",
+    "traits": [
+      "FORCE",
+      "FIRST ORDER",
+      "OFFICIAL"
+    ],
+    "hp": "3",
+    "power": "5",
+    "set": "IC27",
+    "number": "003",
+    "aspects": [
+      "Command",
+      "Villainy"
+    ],
+    "text": "Action [Exhaust, discard a card from your hand]: Give an Experience token to a unit.",
+    "back_text": "When Deployed: You may return a unit from your discard pile to your hand.",
+    "unique": true
+  },
+  "IC27_106": {
+    "name": "Kylo Ren",
+    "subtitle": "Relentless",
+    "cost": "5",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "FORCE",
+      "FIRST ORDER"
+    ],
+    "hp": "5",
+    "power": "5",
+    "set": "IC27",
+    "number": "106",
+    "aspects": [
+      "Aggression",
+      "Villainy"
+    ],
+    "text": "Hidden\nOn Attack: If this is the first time this unit has attacked this phase, ready him.",
+    "unique": true
+  },
   "SHD_011": {
     "name": "Kylo Ren",
     "subtitle": "Rash and Deadly",
@@ -26371,6 +28044,7 @@
       "Villainy"
     ],
     "text": "Action [{{Exhaust}}, discard a card from your hand]: Give a unit +2/+0 for this phase.",
+    "back_text": "This unit gets -1/-0 for each card in your hand.",
     "unique": true
   },
   "SHD_141": {
@@ -26435,6 +28109,28 @@
       "Villainy"
     ],
     "text": "Attach to a non-Vehicle unit.\nIf attached unit is a Force unit, it gains: “This unit can't be exhausted by enemy card abilities.”",
+    "unique": true
+  },
+  "IC27_063": {
+    "name": "Kylo's TIE Silencer",
+    "subtitle": "Follow My Lead",
+    "cost": "4",
+    "type": "Unit",
+    "arena": "Space",
+    "traits": [
+      "FIRST ORDER",
+      "VEHICLE",
+      "FIGHTER"
+    ],
+    "hp": "4",
+    "power": "4",
+    "set": "IC27",
+    "number": "063",
+    "aspects": [
+      "Command",
+      "Villainy"
+    ],
+    "text": "Restore 1 (When this unit attacks, heal 1 damage from your base.)\nWhen this unit is discarded from your hand: For this phase, you may play it from your discard pile (paying its cost).",
     "unique": true
   },
   "SHD_135": {
@@ -26680,6 +28376,7 @@
       "Villainy"
     ],
     "text": "Action [Exhaust]: Play an upgrade from your hand on a friendly non-Vehicle unit. It costs 1 less. If you do, deal 1 damage to that unit.",
+    "back_text": "When this unit completes an attack (and survives): You may play an upgrade from your discard pile on a friendly non-Vehicle unit. It costs 1 less.",
     "unique": true
   },
   "IBH_58": {
@@ -26776,6 +28473,25 @@
     "text": "When Defeated: You may draw a card.",
     "unique": false
   },
+  "IC27_167": {
+    "name": "Lando Calrissian",
+    "subtitle": "Check This Out",
+    "cost": "3",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "OFFICIAL"
+    ],
+    "hp": "4",
+    "power": "4",
+    "set": "IC27",
+    "number": "167",
+    "aspects": [
+      "Cunning"
+    ],
+    "text": "When Played: Return 3 friendly resources to their owners' hands. Then, you may resource up to 3 cards from your hand.",
+    "unique": true
+  },
   "SOR_197": {
     "name": "Lando Calrissian",
     "subtitle": "Responsible Businessman",
@@ -26815,6 +28531,7 @@
       "Heroism"
     ],
     "text": "Action [C=1, Exhaust]: Choose an aspect, then discard a card from a deck. If it has the chosen aspect, create a Credit token.",
+    "back_text": "When Deployed: You may defeat a friendly Credit token. If you do, create 3 Credit tokens.",
     "unique": true
   },
   "LAW_108": {
@@ -26876,6 +28593,7 @@
       "Heroism"
     ],
     "text": "Action [{{Exhaust}}]: Play a card using SMUGGLE. It costs 2 less. Defeat a resource you own and control.",
+    "back_text": "Action: Play a card using SMUGGLE. It costs 2 less. Defeat a resource you own and control. Use this ability only once each round.",
     "unique": true
   },
   "JTL_003": {
@@ -26898,6 +28616,7 @@
       "Heroism"
     ],
     "text": "Action [C=1, Exhaust]: Play a card from your hand (paying its cost). If you do and you control a ground unit and a space unit, give a Shield token to a unit.",
+    "back_text": "Sentinel\nAttached unit is a leader unit.\nAttached unit gains Sentinel.\nWhen deployed as an upgrade: You may give a Shield token to a unit in a different arena.",
     "unique": true
   },
   "ASH_123": {
@@ -27035,6 +28754,7 @@
       "Heroism"
     ],
     "text": "Action [{Exhaust}]: Attack with a REBEL unit. Then, you may attack with another REBEL unit.",
+    "back_text": "Raid 1 (This unit gets +1/+0 while attacking.)\nWhen this unit completes an attack: You may attack with another REBEL unit.",
     "unique": true
   },
   "SOR_189": {
@@ -27076,6 +28796,7 @@
       "Heroism"
     ],
     "text": "Action [C=2, Exhaust]: For this phase, give a unit +1/+1 for each different aspect it has.",
+    "back_text": "Overwhelm\nWhen Deployed: Choose a unit. Give an Experience token to that unit for each different aspect among units you control.",
     "unique": true
   },
   "IBH_1": {
@@ -27097,6 +28818,7 @@
       "Heroism"
     ],
     "text": "Action [C=1, Exhaust]: Heal 1 damage from a friendly unit.",
+    "back_text": "On Attack: Heal 1 damage from a friendly unit and 1 damage from another friendly unit.",
     "unique": true
   },
   "SEC_004": {
@@ -27118,6 +28840,7 @@
       "Heroism"
     ],
     "text": "Action [C=1, Exhaust]: Disclose Vigilance, Command, Aggression, Cunning, or Heroism (reveal a card from your hand with this aspect icon). If you do, give an Experience token to a unit that doesn't share an aspect with the disclosed card.",
+    "back_text": "On Attack: You may disclose Vigilance, Command, Aggression, Cunning, or Heroism. If you do, give an Experience token to a unit that doesn't share an aspect with the disclosed card.",
     "unique": true
   },
   "JTL_097": {
@@ -27758,6 +29481,26 @@
     "text": "When Defeated: You may give an Experience token to a unique (unique) unit.",
     "unique": true
   },
+  "IC27_072": {
+    "name": "Lor San Tekka",
+    "subtitle": "Secret Keeper",
+    "cost": "2",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "RESISTANCE"
+    ],
+    "hp": "2",
+    "power": "3",
+    "set": "IC27",
+    "number": "072",
+    "aspects": [
+      "Command",
+      "Heroism"
+    ],
+    "text": "When Defeated: You may give an Experience token to a <uq> (unique) unit.",
+    "unique": true
+  },
   "SEC_058": {
     "name": "Lost Jedi",
     "cost": "2",
@@ -27928,6 +29671,29 @@
     "text": "When you play another unique unit: You may use the Force (lose your Force token). If you do, give an Experience token and a Shield token to this unit.",
     "unique": true
   },
+  "IC27_006": {
+    "name": "Luke Skywalker",
+    "subtitle": "I Have to Face Him",
+    "cost": "6",
+    "type": "Leader",
+    "arena": "Ground",
+    "traits": [
+      "FORCE",
+      "JEDI",
+      "REBEL"
+    ],
+    "hp": "6",
+    "power": "4",
+    "set": "IC27",
+    "number": "006",
+    "aspects": [
+      "Aggression",
+      "Heroism"
+    ],
+    "text": "Draw 2 more cards in your starting hand.",
+    "back_text": "Overwhelm (When attacking an enemy unit, deal excess damage to the opponent's base.)\nOn Attack: You may discard a card from your hand. If you do, this unit gets +2/+0 for this attack.",
+    "unique": true
+  },
   "IC27_082": {
     "name": "Luke Skywalker",
     "subtitle": "Do You Read Me?",
@@ -27949,6 +29715,27 @@
     "text": "Restore 2 (When this unit attacks, heal 2 damage from your base.)\nWhen Played: You may deal 3 damage to a ground unit.",
     "unique": true
   },
+  "IC27_165": {
+    "name": "Luke Skywalker",
+    "subtitle": "Overplaying His Hand",
+    "cost": "8",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "FORCE",
+      "REBEL"
+    ],
+    "hp": "9",
+    "power": "9",
+    "set": "IC27",
+    "number": "165",
+    "aspects": [
+      "Cunning",
+      "Heroism"
+    ],
+    "text": "When Played: You may put an enemy non-leader unit on the bottom of its owner's deck. Its owner draws 2 cards.",
+    "unique": true
+  },
   "SOR_005": {
     "name": "Luke Skywalker",
     "subtitle": "Faithful Friend",
@@ -27968,6 +29755,7 @@
       "Heroism"
     ],
     "text": "Action [{C=1}, {Exhaust}]: Give a Shield token to a Heroism unit you played this phase.",
+    "back_text": "On Attack: You may give another unit a Shield token.",
     "unique": true
   },
   "SOR_051": {
@@ -28056,6 +29844,7 @@
       "Heroism"
     ],
     "text": "Action [Exhaust]: If you attacked with a Fighter unit this phase, deal 1 damage to a unit.",
+    "back_text": "This upgrade can't be defeated by enemy card abilities.\nAttached unit is a leader unit. If it's a Fighter, it gains: \"On Attack: You may deal 3 damage to a unit.\"",
     "unique": true
   },
   "JTL_094": {
@@ -28100,6 +29889,7 @@
       "Heroism"
     ],
     "text": "When a friendly unit's attack ends: You may exhaust this leader. If you do, heal 1 damage from that unit.",
+    "back_text": "When a friendly unit's attack ends: Heal 2 damage from that unit or from your base.",
     "unique": true
   },
   "ASH_112": {
@@ -28345,6 +30135,7 @@
       "Heroism"
     ],
     "text": "When a friendly unit is defeated while attacking: You may exhaust this leader. If you do, deal 1 damage to a unit or base.",
+    "back_text": "When a friendly unit is defeated while attacking: You may deal 2 damage to a unit or base.",
     "unique": true
   },
   "SEC_153": {
@@ -28466,6 +30257,51 @@
     "text": "Overwhelm (When attacking an enemy unit, deal excess damage to the opponent's base.)\nWhen Played: You may use the Force (lose your Force token). If you do, deal 4 damage to a unit.",
     "unique": true
   },
+  "IC27_004": {
+    "name": "Mace Windu",
+    "subtitle": "Here With Backup",
+    "cost": "6",
+    "type": "Leader",
+    "arena": "Ground",
+    "traits": [
+      "FORCE",
+      "JEDI",
+      "REPUBLIC"
+    ],
+    "hp": "7",
+    "power": "4",
+    "set": "IC27",
+    "number": "004",
+    "aspects": [
+      "Command",
+      "Heroism"
+    ],
+    "text": "Action [C=1, Exhaust]: Attack with a unit. It gains Restore 2 for this attack. (When it attacks, heal 2 damage from your base.)",
+    "back_text": "Restore 2\nWhen Deployed: Resource the top card of your deck.",
+    "unique": true
+  },
+  "IC27_081": {
+    "name": "Mace Windu",
+    "subtitle": "Dropping By",
+    "cost": "6",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "FORCE",
+      "JEDI",
+      "REPUBLIC"
+    ],
+    "hp": "5",
+    "power": "5",
+    "set": "IC27",
+    "number": "081",
+    "aspects": [
+      "Command",
+      "Heroism"
+    ],
+    "text": "Ambush\nOn Attack: Give an Experience token to this unit.",
+    "unique": true
+  },
   "SOR_149": {
     "name": "Mace Windu",
     "subtitle": "Party Crasher",
@@ -28508,6 +30344,7 @@
       "Heroism"
     ],
     "text": "Action [C=1, Exhaust]: Deal 1 damage to a damaged enemy unit. Then, if it has 5 or more damage on it, deal 1 damage to it.",
+    "back_text": "When Deployed: Deal 2 damage to each damaged enemy unit.",
     "unique": true
   },
   "HMW_128": {
@@ -28594,6 +30431,26 @@
     "text": "Restore 2 (When this unit attacks, heal 2 damage from your base.)",
     "unique": false
   },
+  "IC27_018": {
+    "name": "Magistrate's Scout",
+    "cost": "3",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "IMPERIAL",
+      "TROOPER"
+    ],
+    "hp": "4",
+    "power": "2",
+    "set": "IC27",
+    "number": "018",
+    "aspects": [
+      "Vigilance",
+      "Villainy"
+    ],
+    "text": "Restore 2 (When this unit attacks, heal 2 damage from your base.)",
+    "unique": false
+  },
   "TWI_082": {
     "name": "MagnaGuard Wing Leader",
     "cost": "3",
@@ -28672,6 +30529,7 @@
       "Villainy"
     ],
     "text": "Action [Exhaust]: Play a Vehicle unit from your hand (paying its cost). If you do, give another unit +1/+0 for this phase.",
+    "back_text": "Attached unit is a leader unit. It gains: \"On Attack: You may give another unit in this arena +1/+0 for this phase.\"",
     "unique": true
   },
   "SOR_076": {
@@ -29155,6 +31013,7 @@
       "Villainy"
     ],
     "text": "Action [Exhaust]: Attack with a unit. It gains Overwhelm for this attack. (When attacking an enemy unit, deal excess damage to the opponent’s base.)",
+    "back_text": "Overwhelm\nEach other friendly unit gains Overwhelm.",
     "unique": true
   },
   "SHD_090": {
@@ -29197,6 +31056,7 @@
       "Villainy"
     ],
     "text": "Action [Exhaust]: Choose a unit. If it has more different Keywords than it has Experience tokens on it, give an Experience token to it and deal 1 damage to it.",
+    "back_text": "When Deployed/On Attack: Choose a unit. If it has more different Keywords than it has Experience tokens on it, give an Experience token to it and deal 1 damage to it.",
     "unique": true
   },
   "TS26_30": {
@@ -29239,6 +31099,7 @@
       "Villainy"
     ],
     "text": "Action [Exhaust]: Play a unit from your hand. It costs 1 less. Then, defeat it. (When Played abilities resolve after the unit is defeated.)",
+    "back_text": "Shielded\nWhen Deployed: You may play a unit that was defeated this phase from your discard pile. It costs 5 less.",
     "unique": true
   },
   "HMW_174": {
@@ -29338,6 +31199,25 @@
     "text": "When Played: You may attack with a Force unit. It gets +2/+0 for this attack.",
     "unique": true
   },
+  "IC27_089": {
+    "name": "Maz Kanata",
+    "subtitle": "It Calls to You",
+    "cost": "2",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "UNDERWORLD"
+    ],
+    "hp": "1",
+    "power": "2",
+    "set": "IC27",
+    "number": "089",
+    "aspects": [
+      "Command"
+    ],
+    "text": "Hidden (This unit can't be attacked if she was played this phase.)\nWhen you resource a card (including during the regroup phase): Give an Experience token to this unit.",
+    "unique": true
+  },
   "LAW_074": {
     "name": "Maz Kanata",
     "subtitle": "Where's My Boyfriend?",
@@ -29396,6 +31276,7 @@
       "Cunning"
     ],
     "text": "Action [Exhaust]: Play a Fringe or Underworld unit from your hand. It costs 1 less. Give a Weakness token to it.",
+    "back_text": "Hidden (This unit can't be attacked if she was deployed this phase.)\nAction: Play a Fringe or Underworld unit from your hand. It costs 1 less. Give a Weakness token to it.",
     "unique": true
   },
   "SHD_021": {
@@ -29703,6 +31584,28 @@
     ],
     "text": "Fortify (Attach this to your base, not a unit.) \nAttached base gains: \"Friendly units gain Overwhelm. (When attacking an enemy unit, deal excess damage to the opponent's base.)\"",
     "unique": false
+  },
+  "IC27_158": {
+    "name": "Millennium Falcon",
+    "subtitle": "Ya-Hoo!",
+    "cost": "4",
+    "type": "Unit",
+    "arena": "Space",
+    "traits": [
+      "REBEL",
+      "VEHICLE",
+      "TRANSPORT"
+    ],
+    "hp": "4",
+    "power": "4",
+    "set": "IC27",
+    "number": "158",
+    "aspects": [
+      "Cunning",
+      "Heroism"
+    ],
+    "text": "When Attack Ends: You may pay 1 resource. If you do, return a friendly unit that costs 3 or less to its owner's hand. If it's returned to your hand, you may play it for free.",
+    "unique": true
   },
   "IC27_164": {
     "name": "Millennium Falcon",
@@ -30088,6 +31991,7 @@
       "Villainy"
     ],
     "text": "Action [{{Exhaust}}]: Attack with a unit that costs 3 or less. If it's attacking a unit, it gets +1/+0 for this attack.",
+    "back_text": "OVERWHELM (When attacking an enemy unit, deal excess damage to the opponent's base.)\nEach friendly unit that costs 3 or less gets +1/+0 and gains OVERWHELM while attacking an enemy unit.",
     "unique": true
   },
   "JTL_188": {
@@ -30130,6 +32034,7 @@
       "Villainy"
     ],
     "text": "Action [Exhaust]: If a friendly Imperial unit was defeated this phase, play a unit from your hand. It costs 1 less.",
+    "back_text": "This unit gains each of the following Keywords if it is on an Imperial unit in your discard pile: Ambush, Grit, Hidden, Overwhelm, Saboteur, Sentinel, Shielded, Support.",
     "unique": true
   },
   "ASH_097": {
@@ -30174,6 +32079,24 @@
     "text": "If you would create a number of tokens, you may defeat this unit. If you do, create twice that number of tokens instead.",
     "unique": true
   },
+  "IC27_047": {
+    "name": "Moisture Farmer",
+    "cost": "1",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "FRINGE"
+    ],
+    "hp": "4",
+    "power": "0",
+    "set": "IC27",
+    "number": "047",
+    "aspects": [
+      "Vigilance"
+    ],
+    "text": "Restore 2 (When this unit attacks, heal 2 damage from your base.)",
+    "unique": false
+  },
   "SHD_055": {
     "name": "Moisture Farmer",
     "cost": "1",
@@ -30192,6 +32115,22 @@
     "text": "Restore 2 (When this unit attacks, heal 2 damage from your base.)",
     "unique": false
   },
+  "IC27_096": {
+    "name": "Moment of Glory",
+    "cost": "3",
+    "type": "Event",
+    "arena": "None",
+    "traits": [
+      "TACTIC"
+    ],
+    "set": "IC27",
+    "number": "096",
+    "aspects": [
+      "Command"
+    ],
+    "text": "Give a unit +4/+4 for this phase.",
+    "unique": false
+  },
   "SHD_130": {
     "name": "Moment of Glory",
     "cost": "3",
@@ -30206,6 +32145,22 @@
       "Command"
     ],
     "text": "Give a unit +4/+4 for this phase.",
+    "unique": false
+  },
+  "IC27_054": {
+    "name": "Moment of Peace",
+    "cost": "1",
+    "type": "Event",
+    "arena": "None",
+    "traits": [
+      "INNATE"
+    ],
+    "set": "IC27",
+    "number": "054",
+    "aspects": [
+      "Vigilance"
+    ],
+    "text": "Give a Shield token to a unit.",
     "unique": false
   },
   "SOR_073": {
@@ -30243,6 +32198,27 @@
     ],
     "text": "When Played: Choose one: \nAttack with a unit. It gets +2/+0 for this attack.\nLook at an opponent's hand. You may discard a card from it. If you do, they draw a card.",
     "unique": false
+  },
+  "IC27_077": {
+    "name": "Mon Mothma",
+    "subtitle": "Truth is an Abyss",
+    "cost": "4",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "REBEL",
+      "OFFICIAL"
+    ],
+    "hp": "6",
+    "power": "3",
+    "set": "IC27",
+    "number": "077",
+    "aspects": [
+      "Command",
+      "Heroism"
+    ],
+    "text": "When Played: You may attack with another unit, even if it's exhausted. For this attack, it gains Overwhelm and can't attack bases.",
+    "unique": true
   },
   "SOR_096": {
     "name": "Mon Mothma",
@@ -30284,6 +32260,7 @@
       "Heroism"
     ],
     "text": "Ignore the aspect penalties on non‑Villainy Official units you play. each other friendly official unit gets +0/+1.",
+    "back_text": "Ignore the aspect penalties on non‑Villainy Official units you play.\nEach other friendly Official unit gets +0/+1.",
     "unique": true
   },
   "SEC_103": {
@@ -30365,6 +32342,28 @@
       "Villainy"
     ],
     "text": "Action [Exhaust]: Choose a friendly unit that attacked this phase. Play a unit from your hand that shares a Keyword with the chosen unit. It costs 1 less.",
+    "back_text": "On Attack: The next unit you play this phase costs 1 less if it shares a Keyword with a friendly unit.",
+    "unique": true
+  },
+  "IC27_179": {
+    "name": "Morgan Elsbeth",
+    "subtitle": "Tales Based on Truths",
+    "cost": "2",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "FORCE",
+      "IMPERIAL",
+      "NIGHT"
+    ],
+    "hp": "5",
+    "power": "1",
+    "set": "IC27",
+    "number": "179",
+    "aspects": [
+      "Villainy"
+    ],
+    "text": "On Attack: Reveal the top card of your deck. If it costs 6 or more, draw it. Otherwise, discard it.",
     "unique": true
   },
   "TWI_035": {
@@ -30533,6 +32532,28 @@
       "Villainy"
     ],
     "text": "Action [Exhaust, use the Force (lose your Force token)]: Give a unit -1/-1 for this phase.",
+    "back_text": "On Attack: You may give a unit -1/-1 for this phase.",
+    "unique": true
+  },
+  "IC27_066": {
+    "name": "Mother Talzin",
+    "subtitle": "The Time Has Come",
+    "cost": "7",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "FORCE",
+      "NIGHT"
+    ],
+    "hp": "5",
+    "power": "5",
+    "set": "IC27",
+    "number": "066",
+    "aspects": [
+      "Command",
+      "Villainy"
+    ],
+    "text": "When Played: You may play a Villainy unit that costs 4 or less from your discard pile for free. If it's not a Night or Undead unit, deal damage equal to its cost to this unit.",
     "unique": true
   },
   "TS26_26": {
@@ -30651,6 +32672,26 @@
       "Vigilance"
     ],
     "text": "Exploit 2 (While playing this card, defeat up to 2 units you control. This card costs 2 less for each unit defeated this way.)\nOn Attack: Create a Battle Droid token.",
+    "unique": false
+  },
+  "IC27_051": {
+    "name": "Munificent Frigate",
+    "cost": "5",
+    "type": "Unit",
+    "arena": "Space",
+    "traits": [
+      "SEPARATIST",
+      "VEHICLE",
+      "CAPITAL SHIP"
+    ],
+    "hp": "7",
+    "power": "4",
+    "set": "IC27",
+    "number": "051",
+    "aspects": [
+      "Vigilance"
+    ],
+    "text": "",
     "unique": false
   },
   "JTL_069": {
@@ -30950,6 +32991,7 @@
       "Villainy"
     ],
     "text": "Ignore the aspect penalty on Clone units you play.",
+    "back_text": "Ignore the aspect penalty on Clone units you play.\nEach friendly Clone unit gains: \"When Defeated: Heal 2 damage from your base.\"",
     "unique": true
   },
   "SEC_065": {
@@ -31115,6 +33157,28 @@
       "Heroism"
     ],
     "text": "When Played/On Attack: The next unit you play this phase with 1 or less power enters play ready.",
+    "unique": true
+  },
+  "IC27_084": {
+    "name": "Negotiator",
+    "subtitle": "Prepare the Troops",
+    "cost": "9",
+    "type": "Unit",
+    "arena": "Space",
+    "traits": [
+      "REPUBLIC",
+      "VEHICLE",
+      "CAPITAL SHIP"
+    ],
+    "hp": "7",
+    "power": "9",
+    "set": "IC27",
+    "number": "084",
+    "aspects": [
+      "Command",
+      "Heroism"
+    ],
+    "text": "Sentinel (Enemy units in this arena must attack a Sentinel when they attack you.)\nOn Attack/When Defeated: Resource the top card of your deck. Then, you may return a friendly resource to its owner's hand.",
     "unique": true
   },
   "SEC_156": {
@@ -31696,6 +33760,27 @@
     "text": "Restore 1 (When this unit attacks, heal 1 damage from your base.) \nIf this unit would be dealt damage, prevent 1 of that damage.",
     "unique": true
   },
+  "IC27_013": {
+    "name": "Nute Gunray",
+    "subtitle": "Ring Ring, Space Calling",
+    "cost": "1",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "SEPARATIST",
+      "OFFICIAL"
+    ],
+    "hp": "4",
+    "power": "1",
+    "set": "IC27",
+    "number": "013",
+    "aspects": [
+      "Vigilance",
+      "Villainy"
+    ],
+    "text": "Each other friendly Separatist unit gains Restore 1. (When it attacks, heal 1 damage from your base.)",
+    "unique": true
+  },
   "TWI_002": {
     "name": "Nute Gunray",
     "subtitle": "Vindictive Viceroy",
@@ -31715,6 +33800,7 @@
       "Villainy"
     ],
     "text": "Action [Exhaust]: If 2 or more friendly units were defeated this phase, create a Battle Droid token.",
+    "back_text": "On Attack: Create a Battle Droid token.",
     "unique": true
   },
   "SEC_031": {
@@ -31839,6 +33925,7 @@
       "Heroism"
     ],
     "text": "Action [Exhaust, use the Force (lose your Force token)]: Give an Experience token to a unit without an Experience token on it.",
+    "back_text": "On Attack: You may give an Experience token to another unit without an Experience token on it.",
     "unique": true
   },
   "LOF_096": {
@@ -31861,6 +33948,28 @@
       "Heroism"
     ],
     "text": "When you play a Force unit (including this one): This unit gains Sentinel for this phase.",
+    "unique": true
+  },
+  "IC27_042": {
+    "name": "Obi-Wan Kenobi",
+    "subtitle": "I Sense a Trap",
+    "cost": "8",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "FORCE",
+      "JEDI",
+      "REPUBLIC"
+    ],
+    "hp": "9",
+    "power": "5",
+    "set": "IC27",
+    "number": "042",
+    "aspects": [
+      "Vigilance",
+      "Heroism"
+    ],
+    "text": "When Played: You may choose one:\nPlay a unit that was defeated this phase from your discard pile. It costs 5 resources less.\nChoose a unit that entered play this phase. It gets -5/-5 for this phase.\n",
     "unique": true
   },
   "SOR_049": {
@@ -31927,6 +34036,7 @@
       "Heroism"
     ],
     "text": "Action [Exhaust]: Heal 1 damage from a unit.",
+    "back_text": "Sentinel (Units in this arena can't attack your non-Sentinel units or your base.)\nOn Attack: Heal 1 damage from a unit. If you do, deal 1 damage to a different unit.",
     "unique": true
   },
   "SEC_205": {
@@ -31994,6 +34104,29 @@
       "Heroism"
     ],
     "text": "When Played/On Attack: You may deal 1 damage to this unit and 2 damage to another space unit.",
+    "unique": true
+  },
+  "IC27_034": {
+    "name": "Obi-Wan's Interceptor",
+    "subtitle": "Nothing Too Fancy",
+    "cost": "2",
+    "type": "Unit",
+    "arena": "Space",
+    "traits": [
+      "JEDI",
+      "REPUBLIC",
+      "VEHICLE",
+      "FIGHTER"
+    ],
+    "hp": "3",
+    "power": "2",
+    "set": "IC27",
+    "number": "034",
+    "aspects": [
+      "Vigilance",
+      "Heroism"
+    ],
+    "text": "Other friendly Republic units get +0/+1.",
     "unique": true
   },
   "HMW_242": {
@@ -32205,6 +34338,7 @@
       "Heroism"
     ],
     "text": "Action [C=1, Exhaust]: Attack with a Heroic unit. It gains Grit for this attack. (It gets +1/+0 for each damage on it.)",
+    "back_text": "Other friendly Heroic units gain Grit.",
     "unique": true
   },
   "JTL_064": {
@@ -32412,6 +34546,22 @@
     "text": "",
     "unique": false
   },
+  "IC27_136": {
+    "name": "Open Fire",
+    "cost": "3",
+    "type": "Event",
+    "arena": "None",
+    "traits": [
+      "TACTIC"
+    ],
+    "set": "IC27",
+    "number": "136",
+    "aspects": [
+      "Aggression"
+    ],
+    "text": "Deal 4 damage to a unit.",
+    "unique": false
+  },
   "SOR_172": {
     "name": "Open Fire",
     "cost": "3",
@@ -32595,6 +34745,7 @@
       "Heroism"
     ],
     "text": "Action [Exhaust]: If a friendly Heroism unit was defeated this phase, play a Villainy unit from your resources, ignoring its Villainy aspect penalties. If you do, you may resource a card from your hand.",
+    "back_text": "Saboteur\nAction: Play a Villainy unit from your resources, ignoring its Villainy aspect penalties. If you do, you may resource a card from your hand.",
     "unique": true
   },
   "TWI_115": {
@@ -33046,6 +35197,28 @@
     "text": "While you control a Force unit or a Force upgrade, this unit gets +1/+1.",
     "unique": false
   },
+  "IC27_083": {
+    "name": "Padmé Amidala",
+    "subtitle": "With Great Pleasure",
+    "cost": "8",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "NABOO",
+      "REPUBLIC",
+      "OFFICIAL"
+    ],
+    "hp": "7",
+    "power": "5",
+    "set": "IC27",
+    "number": "083",
+    "aspects": [
+      "Command",
+      "Heroism"
+    ],
+    "text": "Sentinel (Enemy units in this arena must attack a Sentinel when they attack you.)\nOther friendly Heroism units get +3/+3.",
+    "unique": true
+  },
   "TWI_008": {
     "name": "Padmé Amidala",
     "subtitle": "Serving the Republic",
@@ -33066,6 +35239,7 @@
       "Heroism"
     ],
     "text": "Coordinate — Action [C=1, Exhaust]: Search the top 3 cards of your deck for a Republic card, reveal it, and draw it. (Put the other cards on the bottom of your deck in a random order. Gain this ability while you control 3 or more units.)",
+    "back_text": "Restore 1 (When this unit attacks, heal 1 damage from your base.)\nCoordinate - On Attack: Search the top 3 cards of your deck for a Republic card, reveal it, and draw it.",
     "unique": true
   },
   "TWI_192": {
@@ -33110,6 +35284,7 @@
       "Heroism"
     ],
     "text": "When you reveal or discard 1 or more cards from your hand: You may exhaust this leader. If you do, deal 1 damage to a unit.",
+    "back_text": "When you reveal or discard 1 or more cards from your hand: You may deal 1 damage to a unit.",
     "unique": true
   },
   "TS26_4": {
@@ -33132,6 +35307,7 @@
       "Heroism"
     ],
     "text": "Action [Exhaust]: If 2 or more friendly units entered play this phase (including tokens and leaders), attack with 1 of them, even if it's exhausted. It can't attack bases for this attack.",
+    "back_text": "When Attack Ends: You may attack with another friendly unit that entered play this phase, even if it's exhausted. It can't attack bases for this attack.",
     "unique": true
   },
   "JTL_046": {
@@ -34160,6 +36336,26 @@
     "text": "When Played: You may defeat this unit. If you do, create a Beast token and deal 1 damage to it.",
     "unique": false
   },
+  "IC27_115": {
+    "name": "Poe Dameron",
+    "subtitle": "Hero of the Resistance",
+    "cost": "2",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "RESISTANCE"
+    ],
+    "hp": "4",
+    "power": "2",
+    "set": "IC27",
+    "number": "115",
+    "aspects": [
+      "Aggression",
+      "Heroism"
+    ],
+    "text": "When you play another Resistance card: This unit gets +1/+0 for this phase.",
+    "unique": true
+  },
   "SHD_153": {
     "name": "Poe Dameron",
     "subtitle": "Quick to Improvise",
@@ -34199,6 +36395,7 @@
       "Heroism"
     ],
     "text": "Action [C=1, Exhaust]: Flip this leader and attach him as an upgrade to a friendly Vehicle unit without a Pilot on it.",
+    "back_text": "Action [C=1]: Attach this upgrade to a friendly Vehicle unit without a Pilot on it. Use this ability only once each round.",
     "unique": true
   },
   "JTL_100": {
@@ -34243,6 +36440,27 @@
     "text": "All units lose Sentinel.",
     "unique": true
   },
+  "IC27_145": {
+    "name": "Poggle the Lesser",
+    "subtitle": "Secret Designs",
+    "cost": "4",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "SEPARATIST",
+      "OFFICIAL"
+    ],
+    "hp": "5",
+    "power": "3",
+    "set": "IC27",
+    "number": "145",
+    "aspects": [
+      "Cunning",
+      "Villainy"
+    ],
+    "text": "On Attack: You may pay 1 resource and discard a card from your hand. If you do, the next card you play this phase costs 3 resources less.",
+    "unique": true
+  },
   "TWI_080": {
     "name": "Poggle the Lesser",
     "subtitle": "Archduke of the Stalgasin Hive",
@@ -34283,6 +36501,7 @@
       "Villainy"
     ],
     "text": "Action [C=1, Exhaust]: Ready a friendly Creature unit and deal 1 damage to it.",
+    "back_text": "When Deployed: Create a Beast token.\nOn Attack: You may ready a friendly Creature unit and deal 1 damage to it.",
     "unique": true
   },
   "LOF_092": {
@@ -34470,6 +36689,22 @@
     "text": "Attack with a Creature unit. It gets +4/+0 for this attack.",
     "unique": false
   },
+  "IC27_135": {
+    "name": "Power Failure",
+    "cost": "2",
+    "type": "Event",
+    "arena": "None",
+    "traits": [
+      "TACTIC"
+    ],
+    "set": "IC27",
+    "number": "135",
+    "aspects": [
+      "Aggression"
+    ],
+    "text": "Defeat any number of upgrades on a unit.",
+    "unique": false
+  },
   "SOR_170": {
     "name": "Power Failure",
     "cost": "2",
@@ -34577,6 +36812,7 @@
       "Villainy"
     ],
     "text": "Action [C=1, Exhaust]: Deal damage to a unit equal to the number of cards you’ve drawn this phase. (This doesn’t include cards drawn in the regroup phase.)",
+    "back_text": "While you have 3 or more cards in your hand, this unit gains Saboteur.\nWhile you have 6 or more cards in your hand, this unit gets +2/+0.",
     "unique": true
   },
   "SHD_142": {
@@ -34693,6 +36929,24 @@
       "Heroism"
     ],
     "text": "The next time you take the initiative this phase, exhaust all units.",
+    "unique": false
+  },
+  "IC27_174": {
+    "name": "Preparation",
+    "cost": "1",
+    "type": "Upgrade",
+    "arena": "None",
+    "traits": [
+      "PLAN"
+    ],
+    "hp": "1",
+    "power": "2",
+    "set": "IC27",
+    "number": "174",
+    "aspects": [
+      "Cunning"
+    ],
+    "text": "When Played: Exhaust attached unit.",
     "unique": false
   },
   "ASH_228": {
@@ -34823,6 +37077,28 @@
       "Heroism"
     ],
     "text": "Action [C=1, Exhaust]: Draw a card, then put a card from your hand on the top or bottom of your deck.",
+    "back_text": "On Attack: Draw a card, then put a card from your hand on the top or bottom of your deck.",
+    "unique": true
+  },
+  "IC27_159": {
+    "name": "Princess Leia",
+    "subtitle": "Calculated Distraction",
+    "cost": "5",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "REBEL",
+      "OFFICIAL"
+    ],
+    "hp": "5",
+    "power": "5",
+    "set": "IC27",
+    "number": "159",
+    "aspects": [
+      "Cunning",
+      "Heroism"
+    ],
+    "text": "When Played/On Attack: Exhaust up to 2 units in the same arena with combined cost 4 or less.",
     "unique": true
   },
   "SHD_201": {
@@ -35325,6 +37601,25 @@
     "text": "For this phase, each friendly unit gains: \"When Defeated: Deal 2 damage to an enemy unit.\"",
     "unique": false
   },
+  "IC27_045": {
+    "name": "Qi'ra",
+    "subtitle": "Survivor",
+    "cost": "3",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "UNDERWORLD"
+    ],
+    "hp": "1",
+    "power": "1",
+    "set": "IC27",
+    "number": "045",
+    "aspects": [
+      "Vigilance"
+    ],
+    "text": "When Played: Give 2 Experience tokens to this unit.\nWhen Defeated: Choose a unit. You may give an Experience token to it for each Experience token that was on this unit.",
+    "unique": true
+  },
   "SHD_002": {
     "name": "Qi'ra",
     "subtitle": "I Alone Survived",
@@ -35343,6 +37638,7 @@
       "Villainy"
     ],
     "text": "Action [{{C=1}}, {{Exhaust}}]: Deal 2 damage to a friendly unit. Then, give a Shield token to it.",
+    "back_text": "GRIT (This unit gets +1/+0 for each damage on her.)\nWhen Deployed: Heal all damage from each unit. Then, deal damage to each unit equal to half its remaining HP, rounded down.",
     "unique": true
   },
   "SHD_202": {
@@ -35524,6 +37820,7 @@
       "Heroism"
     ],
     "text": "Action [Exhaust, use the Force (lose your Force token)]: Return a friendly non-leader unit to its owner's hand. Play a non-Villainy unit that costs less than the returned unit from your hand for free.",
+    "back_text": "When this unit completes an attack (and survives): You may return a friendly non-leader unit to its owner's hand. Play a non-Villainy unit that costs less than the returned unit from your hand for free.",
     "unique": true
   },
   "LOF_200": {
@@ -35698,6 +37995,28 @@
       "Heroism"
     ],
     "text": "When you play a unit: You may exhaust this leader. If you do, deal 1 damage to an enemy unit that costs the same as the played unit.",
+    "back_text": "When you play a unit: You may deal 1 damage to an enemy unit that costs the same as or less than the played unit.",
+    "unique": true
+  },
+  "IC27_151": {
+    "name": "R2-D2",
+    "subtitle": "The First Protagonist",
+    "cost": "1",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "REBEL",
+      "DROID"
+    ],
+    "hp": "3",
+    "power": "1",
+    "set": "IC27",
+    "number": "151",
+    "aspects": [
+      "Cunning",
+      "Heroism"
+    ],
+    "text": "On Attack: Choose one: \nReady a resource.\nDeal 1 damage to a ground unit.\nLook at the top card of your deck. You may discard it.\n",
     "unique": true
   },
   "IC27_186": {
@@ -35884,6 +38203,28 @@
       "Heroism"
     ],
     "text": "Support (When you play this unit, you may attack with another unit. It gains this unit's other abilities for this attack.)\nOn Attack: Defeat all upgrades on the defending unit.",
+    "unique": true
+  },
+  "IC27_043": {
+    "name": "Raddus",
+    "subtitle": "Hope of the Resistance",
+    "cost": "9",
+    "type": "Unit",
+    "arena": "Space",
+    "traits": [
+      "RESISTANCE",
+      "VEHICLE",
+      "CAPITAL SHIP"
+    ],
+    "hp": "9",
+    "power": "8",
+    "set": "IC27",
+    "number": "043",
+    "aspects": [
+      "Vigilance",
+      "Heroism"
+    ],
+    "text": "Restore 3 (When this unit attacks, heal 3 damage from your base.)\nWhile this unit is exhausted, cards your opponents play cost 3 resources more.",
     "unique": true
   },
   "JTL_104": {
@@ -36208,6 +38549,27 @@
     "text": "Each player discards all but 3 cards from their hand.",
     "unique": false
   },
+  "IC27_172": {
+    "name": "Razor Crest",
+    "subtitle": "Stay Off the Ice",
+    "cost": "3",
+    "type": "Unit",
+    "arena": "Space",
+    "traits": [
+      "MANDALORIAN",
+      "VEHICLE",
+      "TRANSPORT"
+    ],
+    "hp": "5",
+    "power": "2",
+    "set": "IC27",
+    "number": "172",
+    "aspects": [
+      "Cunning"
+    ],
+    "text": "Each unit (including friendly units) loses all “When Defeated” abilities.",
+    "unique": true
+  },
   "SHD_044": {
     "name": "Razor Crest",
     "subtitle": "Reliable Gunship",
@@ -36491,6 +38853,26 @@
     "text": "On Attack: Deal 1 damage to a base.",
     "unique": false
   },
+  "IC27_112": {
+    "name": "Rebellious Functionary",
+    "cost": "1",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "REBEL",
+      "OFFICIAL"
+    ],
+    "hp": "2",
+    "power": "2",
+    "set": "IC27",
+    "number": "112",
+    "aspects": [
+      "Aggression",
+      "Heroism"
+    ],
+    "text": "Hidden (This unit can't be attacked if it was played this phase.)",
+    "unique": false
+  },
   "SEC_146": {
     "name": "Rebellious Functionary",
     "cost": "1",
@@ -36565,6 +38947,25 @@
       "Cunning"
     ],
     "text": "Play a unit from your hand. It costs 4 less. Deal 4 damage to it.",
+    "unique": false
+  },
+  "IC27_128": {
+    "name": "Reckless Rebel",
+    "cost": "1",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "REBEL",
+      "TWI'LEK"
+    ],
+    "hp": "1",
+    "power": "2",
+    "set": "IC27",
+    "number": "128",
+    "aspects": [
+      "Aggression"
+    ],
+    "text": "Saboteur (When this unit attacks, ignore Sentinel and defeat the defender's Shields.)",
     "unique": false
   },
   "SEC_160": {
@@ -37905,6 +40306,26 @@
     "text": "Put this event into play as a resource.",
     "unique": false
   },
+  "IC27_092": {
+    "name": "Resupply Carrier",
+    "cost": "6",
+    "type": "Unit",
+    "arena": "Space",
+    "traits": [
+      "IMPERIAL",
+      "VEHICLE",
+      "CAPITAL SHIP"
+    ],
+    "hp": "5",
+    "power": "4",
+    "set": "IC27",
+    "number": "092",
+    "aspects": [
+      "Command"
+    ],
+    "text": "When Played: You may resource the top card of your deck.",
+    "unique": false
+  },
   "JTL_119": {
     "name": "Resupply Carrier",
     "cost": "6",
@@ -37993,6 +40414,7 @@
       "Heroism"
     ],
     "text": "Action [Exhaust, ready an exhausted enemy unit]: The next event you play this phase costs 1 less.",
+    "back_text": "On Attack: You may ready an exhausted enemy unit. If you do, the next event you play this phase costs 2 less.",
     "unique": true
   },
   "HMW_141": {
@@ -38054,6 +40476,7 @@
       "Heroism"
     ],
     "text": "Action [Exhaust]: If you played a non-unit Force card this phase, deal 1 damage to a unit.",
+    "back_text": "When Deployed: You may discard your hand. If you do, draw 2 cards.",
     "unique": true
   },
   "LOF_148": {
@@ -38076,6 +40499,48 @@
       "Heroism"
     ],
     "text": "When you draw this card during the action phase: If you control a Aggression leader or base, you may reveal this card from your hand. If you do, deal 2 damage to a unit and 2 damage to a base.",
+    "unique": true
+  },
+  "IC27_002": {
+    "name": "Rey",
+    "subtitle": "In Balance",
+    "cost": "5",
+    "type": "Leader",
+    "arena": "Ground",
+    "traits": [
+      "FORCE",
+      "RESISTANCE"
+    ],
+    "hp": "6",
+    "power": "3",
+    "set": "IC27",
+    "number": "002",
+    "aspects": [
+      "Vigilance",
+      "Heroism"
+    ],
+    "text": "Action [C=1, Exhaust]: Give an Experience token to a damaged unit.",
+    "back_text": "On Attack: You may give an Experience token to a damaged unit.",
+    "unique": true
+  },
+  "IC27_120": {
+    "name": "Rey",
+    "subtitle": "Embracing Destiny",
+    "cost": "5",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "FORCE"
+    ],
+    "hp": "6",
+    "power": "6",
+    "set": "IC27",
+    "number": "120",
+    "aspects": [
+      "Aggression",
+      "Heroism"
+    ],
+    "text": "Action [1 resource, discard a card from your hand]: Attack with a unit. It gets +2/+0 for this attack.",
     "unique": true
   },
   "LAW_149": {
@@ -38119,6 +40584,7 @@
       "Heroism"
     ],
     "text": "Action [{{C=1}}, {{Exhaust}}]: Give an Experience token to a unit with 2 or less power.",
+    "back_text": "RESTORE 3 (When this unit attacks, heal 3 damage from your base.)\nOn Attack: You may give an Experience token to a unit with 2 or less power.",
     "unique": true
   },
   "SHD_046": {
@@ -38296,6 +40762,7 @@
       "Villainy"
     ],
     "text": "Action [C=1, Exhaust]: Attack with a space unit. It gets +1/+0 and gains Saboteur for this attack. (Ignore Sentinel and defeat the defender's Shields.)",
+    "back_text": "Saboteur (When this unit attacks, ignore Sentinel and defeat the defender's Shields.)\nAttached unit is a leader unit. It gains Saboteur. If it's a Transport, it also gets +1/+0.",
     "unique": true
   },
   "HMW_200": {
@@ -38590,6 +41057,26 @@
     "text": "When Played: You may pay 1. If you do, give a Shield token to this unit.",
     "unique": false
   },
+  "IC27_040": {
+    "name": "Rose Tico",
+    "subtitle": "In the Fight",
+    "cost": "6",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "RESISTANCE"
+    ],
+    "hp": "6",
+    "power": "6",
+    "set": "IC27",
+    "number": "040",
+    "aspects": [
+      "Vigilance",
+      "Heroism"
+    ],
+    "text": "Shielded (When you play this unit, give a Shield token to her.)\nOn Attack: You may give a Shield token to another Resistance unit.",
+    "unique": true
+  },
   "LAW_223": {
     "name": "Rose Tico",
     "subtitle": "Now it's Worth It",
@@ -38648,7 +41135,27 @@
       "Heroism"
     ],
     "text": "Action [Exhaust]: Heal 2 damage from a Vehicle unit that attacked this phase.",
+    "back_text": "On Attack: You may heal 2 damage from a Vehicle unit.",
     "unique": true
+  },
+  "IC27_050": {
+    "name": "Rotunda Senate Guards",
+    "cost": "4",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "REPUBLIC",
+      "TROOPER"
+    ],
+    "hp": "5",
+    "power": "4",
+    "set": "IC27",
+    "number": "050",
+    "aspects": [
+      "Vigilance"
+    ],
+    "text": "While this unit is undamaged, it gains Sentinel. (Enemy units in this arena must attack a Sentinel when they attack you.)",
+    "unique": false
   },
   "SEC_063": {
     "name": "Rotunda Senate Guards",
@@ -39060,6 +41567,28 @@
     "text": "While you control 6 or more resources, this unit gains Ambush and Overwhelm.",
     "unique": false
   },
+  "IC27_119": {
+    "name": "Sabine Wren",
+    "subtitle": "Liberator of Krownest",
+    "cost": "4",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "MANDALORIAN",
+      "REBEL",
+      "SPECTRE"
+    ],
+    "hp": "4",
+    "power": "5",
+    "set": "IC27",
+    "number": "119",
+    "aspects": [
+      "Aggression",
+      "Heroism"
+    ],
+    "text": "Saboteur (When this unit attacks, ignore Sentinel and defeat the defender's Shields.)\nWhen Played: Discard 2 cards from a deck. You may deal damage to a unit equal to the difference in those cards' costs.",
+    "unique": true
+  },
   "SOR_014": {
     "name": "Sabine Wren",
     "subtitle": "Galvanized Revolutionary",
@@ -39080,6 +41609,7 @@
       "Heroism"
     ],
     "text": "Action [{Exhaust}]: Deal 1 damage to each base.",
+    "back_text": "On Attack: Deal 1 damage to each enemy base.",
     "unique": true
   },
   "SOR_142": {
@@ -39169,6 +41699,7 @@
       "Heroism"
     ],
     "text": "Action [Exhaust]: An opponent gives 2 Advantage tokens to a unit they control. If they do, the next unit you play this phase gains Shielded for this phase. (When you play that unit, give a Shield token to it.)",
+    "back_text": "On Attack: The next unit you play this phase gains Shielded for this phase.",
     "unique": true
   },
   "ASH_208": {
@@ -39255,6 +41786,7 @@
       "Heroism"
     ],
     "text": "When a friendly unit deals combat damage to a base: You may exhaust this leader. If you do, look at the top 2 cards of the defending player's deck. Discard 1 of those cards. (Put the other back on top.)",
+    "back_text": "Raid 1\nWhen this unit deals combat damage to a base: Look at the defending player's hand. You may discard a card from it. If you do, that player draws a card.",
     "unique": true
   },
   "LOF_167": {
@@ -39544,6 +42076,7 @@
       "Heroism"
     ],
     "text": "Action [Exhaust]: Heal up to 2 damage from a unit. If you do, deal that much damage to your base.",
+    "back_text": "Restore 4",
     "unique": true
   },
   "LOF_137": {
@@ -39630,6 +42163,7 @@
       "Villainy"
     ],
     "text": "Each friendly unit with the most power among friendly units gains Overwhelm. (When attacking an enemy unit, deal excess damage to the opponent's base.)",
+    "back_text": "Raid 3 (This unit gets +3/+0 while attacking.)\nOverwhelm\nEach other friendly unit gains Overwhelm.",
     "unique": true
   },
   "LAW_188": {
@@ -39649,6 +42183,25 @@
     ],
     "text": "Hidden (This unit can't be attacked if it was played this phase.)",
     "unique": false
+  },
+  "IC27_126": {
+    "name": "Saw Gerrera",
+    "subtitle": "For the Cause",
+    "cost": "5",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "REBEL"
+    ],
+    "hp": "5",
+    "power": "6",
+    "set": "IC27",
+    "number": "126",
+    "aspects": [
+      "Aggression"
+    ],
+    "text": "On Attack: You may double another friendly unit's power for this phase.",
+    "unique": true
   },
   "SOR_153": {
     "name": "Saw Gerrera",
@@ -39688,6 +42241,7 @@
       "Aggression"
     ],
     "text": "Action [Exhaust]: Attack with a unit. It gets +2/+0 and gains Overwhelm for this attack. After completing this attack, defeat it.",
+    "back_text": "When Attack Ends: If this unit survived, you may attack with another unit. It gets +2/+0 and gains Overwhelm for this attack. After completing this attack, defeat it.",
     "unique": true
   },
   "TWI_150": {
@@ -40183,6 +42737,7 @@
       "Villainy"
     ],
     "text": "Action [Exhaust, discard a card from your deck]: A friendly unit gains Raid 1 for this phase.",
+    "back_text": "Raid 1\nOn Attack: Discard a card from your deck.",
     "unique": true
   },
   "LAW_176": {
@@ -40425,6 +42980,25 @@
     "text": "Restore 1 (When this unit attacks, heal 1 damage from your base.)\nOn Attack: Give another friendly Official unit Restore 2 for this phase.",
     "unique": true
   },
+  "IC27_088": {
+    "name": "Senator's Aide",
+    "cost": "1",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "REPUBLIC",
+      "OFFICIAL"
+    ],
+    "hp": "3",
+    "power": "0",
+    "set": "IC27",
+    "number": "088",
+    "aspects": [
+      "Command"
+    ],
+    "text": "While you have the initiative, this unit gets +2/+0.",
+    "unique": false
+  },
   "SEC_108": {
     "name": "Senator's Aide",
     "cost": "1",
@@ -40479,6 +43053,27 @@
       "Cunning"
     ],
     "text": "Choose a number, then search the top 5 cards of your deck for a card, reveal it, and draw it. If its cost is the chosen number, you may give 3 Advantage tokens to a Force unit.",
+    "unique": false
+  },
+  "IC27_140": {
+    "name": "Separatist Commando",
+    "cost": "2",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "SEPARATIST",
+      "DROID",
+      "TROOPER"
+    ],
+    "hp": "3",
+    "power": "2",
+    "set": "IC27",
+    "number": "140",
+    "aspects": [
+      "Cunning",
+      "Villainy"
+    ],
+    "text": "While you control another Separatist unit, this unit gains Raid 2. (It gets +2/+0 while attacking.)",
     "unique": false
   },
   "TWI_180": {
@@ -41102,6 +43697,7 @@
       "Villainy"
     ],
     "text": "When a friendly unit's attack ends: You may exhaust this leader. If you do, exhaust a unit that costs less than the amount of combat damage dealt to a base this attack.",
+    "back_text": "When a friendly unit's attack ends: You may exhaust a unit that costs less than the amount of combat damage dealt to a base this attack. Use this ability only once each round.",
     "unique": true
   },
   "ASH_049": {
@@ -41588,6 +44184,7 @@
       "Villainy"
     ],
     "text": "Action [C=1, Exhaust]: If there are 4 or more exhausted units in play, create a Spy token.",
+    "back_text": "On Attack: You may deal 2 damage to an exhausted unit.",
     "unique": true
   },
   "SEC_033": {
@@ -42121,6 +44718,28 @@
     "text": "Play a Force unit from your hand (paying its cost) and give a Shield token to it.",
     "unique": false
   },
+  "IC27_019": {
+    "name": "Soulless One",
+    "subtitle": "Soulless Fun",
+    "cost": "4",
+    "type": "Unit",
+    "arena": "Space",
+    "traits": [
+      "SEPARATIST",
+      "VEHICLE",
+      "FIGHTER"
+    ],
+    "hp": "5",
+    "power": "3",
+    "set": "IC27",
+    "number": "019",
+    "aspects": [
+      "Vigilance",
+      "Villainy"
+    ],
+    "text": "When Played: Choose an enemy ground unit. While this unit is in play, the chosen unit gets -3/-0.",
+    "unique": true
+  },
   "TWI_179": {
     "name": "Soulless One",
     "subtitle": "Customized for Grievous",
@@ -42234,6 +44853,27 @@
       "Heroism"
     ],
     "text": "When Played: A unit loses SENTINEL for this phase.",
+    "unique": false
+  },
+  "IC27_100": {
+    "name": "Special Forces TIE Fighter",
+    "cost": "2",
+    "type": "Unit",
+    "arena": "Space",
+    "traits": [
+      "FIRST ORDER",
+      "VEHICLE",
+      "FIGHTER"
+    ],
+    "hp": "3",
+    "power": "2",
+    "set": "IC27",
+    "number": "100",
+    "aspects": [
+      "Aggression",
+      "Villainy"
+    ],
+    "text": "When Played: If an opponent controls more space units than you, ready this unit.",
     "unique": false
   },
   "JTL_135": {
@@ -43281,6 +45921,28 @@
     "text": "Ambush \nOther friendly Vehicle units get +6/+6.",
     "unique": true
   },
+  "IC27_110": {
+    "name": "Supremacy",
+    "subtitle": "Destroy the Resistance",
+    "cost": "10",
+    "type": "Unit",
+    "arena": "Space",
+    "traits": [
+      "FIRST ORDER",
+      "VEHICLE",
+      "CAPITAL SHIP"
+    ],
+    "hp": "10",
+    "power": "10",
+    "set": "IC27",
+    "number": "110",
+    "aspects": [
+      "Aggression",
+      "Villainy"
+    ],
+    "text": "When Played: Deal damage to a base equal to half its remaining HP, rounded down.",
+    "unique": true
+  },
   "LOF_034": {
     "name": "Supremacy TIE/sf",
     "cost": "3",
@@ -43341,6 +46003,29 @@
       "Villainy"
     ],
     "text": "Action [C=1, Exhaust]: Give an Experience token to the unit with the most power among friendly Villainy units. (If multiple units are tied, choose one.)",
+    "back_text": "On Attack: Give an Experience token to the unit with the most power among friendly Villainy units.",
+    "unique": true
+  },
+  "IC27_109": {
+    "name": "Supreme Leader Snoke",
+    "subtitle": "Darkness Rising",
+    "cost": "8",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "FORCE",
+      "FIRST ORDER",
+      "OFFICIAL"
+    ],
+    "hp": "6",
+    "power": "8",
+    "set": "IC27",
+    "number": "109",
+    "aspects": [
+      "Aggression",
+      "Villainy"
+    ],
+    "text": "Overwhelm\nWhen Played: Deal 4 damage to each other unit. Draw a card for each friendly unit defeated this way.",
     "unique": true
   },
   "SHD_037": {
@@ -43588,6 +46273,24 @@
       "Cunning"
     ],
     "text": "Attack with a space unit. It gains Saboteur and can attack ground units for this attack. If it attacks a ground unit, it gets +2/+0 and the defender gets -2/-0 for this attack.",
+    "unique": false
+  },
+  "IC27_171": {
+    "name": "Swoop Racer",
+    "cost": "3",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "FRINGE"
+    ],
+    "hp": "3",
+    "power": "4",
+    "set": "IC27",
+    "number": "171",
+    "aspects": [
+      "Cunning"
+    ],
+    "text": "",
     "unique": false
   },
   "SOR_210": {
@@ -44284,6 +46987,22 @@
     "text": "Piloting [C=2 Vigilance Villainy] (You may play this as an upgrade on a friendly Vehicle without a Pilot.)\nAttached unit gains: \"On Attack: Give an enemy unit in this arena -1/-1 for this phase.\"",
     "unique": false
   },
+  "IC27_095": {
+    "name": "Tandem Assault",
+    "cost": "1",
+    "type": "Event",
+    "arena": "None",
+    "traits": [
+      "TACTIC"
+    ],
+    "set": "IC27",
+    "number": "095",
+    "aspects": [
+      "Command"
+    ],
+    "text": "Attack with a space unit. If you do, attack with a ground unit, and that ground unit gets +2/+0 for this attack.",
+    "unique": false
+  },
   "JTL_124": {
     "name": "Tandem Assault",
     "cost": "1",
@@ -44299,6 +47018,28 @@
     ],
     "text": "Attack with a space unit. If you do, attack with a ground unit, and that ground unit gets +2/+0 for this attack.",
     "unique": false
+  },
+  "IC27_160": {
+    "name": "Tantive IV",
+    "subtitle": "For Alderaan",
+    "cost": "5",
+    "type": "Unit",
+    "arena": "Space",
+    "traits": [
+      "REBEL",
+      "VEHICLE",
+      "CAPITAL SHIP"
+    ],
+    "hp": "5",
+    "power": "3",
+    "set": "IC27",
+    "number": "160",
+    "aspects": [
+      "Cunning",
+      "Heroism"
+    ],
+    "text": "Each other friendly Rebel unit gains Raid 2 and Saboteur.",
+    "unique": true
   },
   "LAW_109": {
     "name": "Tantive IV",
@@ -44402,6 +47143,7 @@
       "Heroism"
     ],
     "text": "Action [C=2, Exhaust, discard a card from your hand]: Create a Beast token.",
+    "back_text": "Sentinel (Enemy units in this arena must attack a Sentinel when they attack you.)\nOn Attack: You may pay 1. If you do, create a Beast token.",
     "unique": true
   },
   "LAW_157": {
@@ -44900,6 +47642,7 @@
       "Command"
     ],
     "text": "Action [Exhaust]: Play an upgrade from your resources on a unit that entered play this phase (paying its cost). If you do, resource the top card of your deck.",
+    "back_text": "When Attack Ends: You may play an upgrade from your resources on a friendly unit. If you do, resource the top card of your deck.",
     "unique": true
   },
   "ASH_064": {
@@ -45053,6 +47796,7 @@
       "Villainy"
     ],
     "text": "Action [Exhaust]: If you created a token this phase, exhaust an enemy unit.",
+    "back_text": "Shielded (When you deploy this leader, give him a Shield token.)\nOn Attack: If you created a token this phase, exhaust an enemy unit.",
     "unique": true
   },
   "SHD_031": {
@@ -45391,6 +48135,29 @@
     "text": "When Played: You may disclose Aggression Aggression Villainy (reveal cards from your hand with these aspect icons among them). If you do, create 3 Spy tokens.",
     "unique": true
   },
+  "IC27_122": {
+    "name": "The Ghost",
+    "subtitle": "Whale Watching",
+    "cost": "7",
+    "type": "Unit",
+    "arena": "Space",
+    "traits": [
+      "REBEL",
+      "VEHICLE",
+      "TRANSPORT",
+      "SPECTRE"
+    ],
+    "hp": "7",
+    "power": "7",
+    "set": "IC27",
+    "number": "122",
+    "aspects": [
+      "Aggression",
+      "Heroism"
+    ],
+    "text": "Overwhelm (When attacking an enemy unit, deal excess damage to the opponent's base.)\nWhen a friendly unit deals damage to an enemy base: If you have 7 or fewer cards in your hand, draw a card.",
+    "unique": true
+  },
   "SOR_050": {
     "name": "The Ghost",
     "subtitle": "Spectre Home Base",
@@ -45518,6 +48285,29 @@
     "text": "When a friendly Force unit attacks: The Force is with you (create your Force token).",
     "unique": false
   },
+  "IC27_104": {
+    "name": "The Inquisitor's TIE",
+    "subtitle": "Would Rather Win",
+    "cost": "4",
+    "type": "Unit",
+    "arena": "Space",
+    "traits": [
+      "IMPERIAL",
+      "VEHICLE",
+      "FIGHTER",
+      "INQUISITOR"
+    ],
+    "hp": "5",
+    "power": "4",
+    "set": "IC27",
+    "number": "104",
+    "aspects": [
+      "Aggression",
+      "Villainy"
+    ],
+    "text": "On Attack: Each player with 4 or more cards in their hand discards a card from their hand.",
+    "unique": true
+  },
   "TWI_078": {
     "name": "The Invasion of Christophsis",
     "cost": "15",
@@ -45534,6 +48324,28 @@
     ],
     "text": "Exploit 4 \nChoose an opponent. Defeat each unit that player controls.",
     "unique": false
+  },
+  "IC27_149": {
+    "name": "The Invisible Hand",
+    "subtitle": "Confederate Might",
+    "cost": "10",
+    "type": "Unit",
+    "arena": "Space",
+    "traits": [
+      "SEPARATIST",
+      "VEHICLE",
+      "CAPITAL SHIP"
+    ],
+    "hp": "9",
+    "power": "9",
+    "set": "IC27",
+    "number": "149",
+    "aspects": [
+      "Cunning",
+      "Villainy"
+    ],
+    "text": "When Played/When Defeated: The next card you play this phase costs 9 resources less.",
+    "unique": true
   },
   "TWI_234": {
     "name": "The Invisible Hand",
@@ -45599,6 +48411,27 @@
     "text": "When Defeated: Deal 6 damage divided as you choose among enemy units.",
     "unique": true
   },
+  "IC27_157": {
+    "name": "The Mandalorian",
+    "subtitle": "From the Shadows",
+    "cost": "4",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "MANDALORIAN",
+      "BOUNTY HUNTER"
+    ],
+    "hp": "3",
+    "power": "5",
+    "set": "IC27",
+    "number": "157",
+    "aspects": [
+      "Cunning",
+      "Heroism"
+    ],
+    "text": "Shielded (When you play this unit, give a Shield token to him.)\nOn Attack: If the defending unit is exhausted, it gets -4/-0 for this attack.",
+    "unique": true
+  },
   "LAW_052": {
     "name": "The Mandalorian",
     "subtitle": "Let's See the Puck",
@@ -45660,6 +48493,7 @@
       "Heroism"
     ],
     "text": "When you play an upgrade: You may exhaust this leader. If you do, exhaust an enemy unit with 4 or less remaining HP.",
+    "back_text": "When you play an upgrade: You may exhaust an enemy unit with 6 or less remaining HP.",
     "unique": true
   },
   "SHD_049": {
@@ -45723,6 +48557,7 @@
       "Heroism"
     ],
     "text": "When you take the initiative: You may pay 1. If you do, draw a card.",
+    "back_text": "Support (When you deploy this leader, you may attack with another unit. It gains this unit's other abilities for this attack.)\nOn Attack: If you have the initiative, you may draw a card.",
     "unique": true
   },
   "ASH_062": {
@@ -46069,6 +48904,7 @@
       "Heroism"
     ],
     "text": "Action [C=1, Exhaust]: Play a unit with 3 or less power from your hand (paying its cost) and give it Ambush for this phase.",
+    "back_text": "Ambush (When you deploy this leader, she may immediately attack an enemy unit.) Raid 1 (This unit gets +1/+0 while attacking.)",
     "unique": true
   },
   "ASH_263": {
@@ -46318,6 +49154,29 @@
       "Villainy"
     ],
     "text": "Action [Exhaust]: Play a unit from your hand. It gains Hidden for this phase. (It can't be attacked for this phase unless it has Sentinel.)",
+    "back_text": "Hidden (This unit can't be attacked if she was deployed this phase.)\nOn Attack: The next unit you play this phase gains Hidden.",
+    "unique": true
+  },
+  "IC27_102": {
+    "name": "Third Sister",
+    "subtitle": "Reckless",
+    "cost": "3",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "FORCE",
+      "IMPERIAL",
+      "INQUISITOR"
+    ],
+    "hp": "5",
+    "power": "3",
+    "set": "IC27",
+    "number": "102",
+    "aspects": [
+      "Aggression",
+      "Villainy"
+    ],
+    "text": "On Attack: Deal 1 damage to a friendly ground unit and 1 damage to an enemy ground unit.",
     "unique": true
   },
   "HMW_051": {
@@ -46530,6 +49389,7 @@
       "Vigilance"
     ],
     "text": "Action [Exhaust]: Choose a friendly unit. An opponent takes control of it. If they do, create a Credit token.",
+    "back_text": "When Deployed: Defeat any number of units you own but don't control. For each unit defeated this way, create a Credit token and draw a card.",
     "unique": true
   },
   "SHD_217": {
@@ -48109,6 +50969,7 @@
       "Villainy"
     ],
     "text": "Action [Exhaust, defeat a friendly upgrade]: Deal 2 damage to a base.",
+    "back_text": "On Attack: You may defeat a friendly upgrade. If you do, deal 2 damage to the defending unit or a base.",
     "unique": true
   },
   "ASH_144": {
@@ -48299,6 +51160,7 @@
       "Heroism"
     ],
     "text": "Action [Exhaust]: Give an Experience token to a unit. An opponent creates a Credit token.",
+    "back_text": "On Attack: You may give an Experience token to a unit. If you do, an opponent creates a Credit token.",
     "unique": true
   },
   "SEC_224": {
@@ -48577,6 +51439,22 @@
       "Vigilance"
     ],
     "text": "Choose two, in any order:\nDiscard 6 cards from an opponent's deck. \nHeal 5 damage from a base. \nDefeat a unit with 3 or less remaining HP. \nGive a Shield token to a unit.",
+    "unique": false
+  },
+  "IC27_046": {
+    "name": "Vigilant Defense",
+    "cost": "4",
+    "type": "Event",
+    "arena": "None",
+    "traits": [
+      "TACTIC"
+    ],
+    "set": "IC27",
+    "number": "046",
+    "aspects": [
+      "Vigilance"
+    ],
+    "text": "Give a friendly unit +0/+3 and Sentinel for this phase.\nHeal 3 damage from a friendly unit or base.\nDefeat an enemy unit with 3 or less remaining HP.",
     "unique": false
   },
   "SOR_048": {
@@ -49214,6 +52092,27 @@
     "text": "",
     "unique": false
   },
+  "IC27_143": {
+    "name": "Wat Tambor",
+    "subtitle": "Warped Warbling",
+    "cost": "3",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "SEPARATIST",
+      "OFFICIAL"
+    ],
+    "hp": "2",
+    "power": "4",
+    "set": "IC27",
+    "number": "143",
+    "aspects": [
+      "Cunning",
+      "Villainy"
+    ],
+    "text": "Sentinel (Enemy units in this arena must attack a Sentinel when they attack you.)\nWhen Played: You may attack with a unit.",
+    "unique": true
+  },
   "TWI_006": {
     "name": "Wat Tambor",
     "subtitle": "Techno Union Foreman",
@@ -49233,6 +52132,7 @@
       "Villainy"
     ],
     "text": "Action [Exhaust]: If a friendly unit was defeated this phase, give a unit +2/+2 for this phase.",
+    "back_text": "On Attack: If a friendly unit was defeated this phase, you may give another unit +2/+2 for this phase.",
     "unique": true
   },
   "IBH_52": {
@@ -49426,6 +52326,7 @@
       "Heroism"
     ],
     "text": "Action [Exhaust]: Play a card from your hand using Piloting. It costs 1 less.",
+    "back_text": "Attached unit is a leader unit. It gains: \"On Attack: The next Pilot card you play this phase costs 1 less. (This includes Piloting costs.)\"",
     "unique": true
   },
   "LAW_231": {
@@ -49554,6 +52455,7 @@
       "Heroism"
     ],
     "text": "When a friendly unit attacks a unit that costs more than it: You may exhaust this leader. If you do, draw a card.",
+    "back_text": "On Attack: If you control a unit that costs 3 or less, draw a card.",
     "unique": true
   },
   "SHD_158": {
@@ -50152,6 +53054,28 @@
     "text": "When Played: You may use the Force. If you do, heal 5 damage from a base.\nWhen you use the Force: You may deal damage to a unit equal to twice the number of units you control.",
     "unique": true
   },
+  "IC27_035": {
+    "name": "Yoda",
+    "subtitle": "A Disturbing Puzzle",
+    "cost": "3",
+    "type": "Unit",
+    "arena": "Ground",
+    "traits": [
+      "FORCE",
+      "JEDI",
+      "REPUBLIC"
+    ],
+    "hp": "4",
+    "power": "3",
+    "set": "IC27",
+    "number": "035",
+    "aspects": [
+      "Vigilance",
+      "Heroism"
+    ],
+    "text": "On Attack: You may choose an enemy unit. Prevent all combat damage that would be dealt to and dealt by that unit for this phase.",
+    "unique": true
+  },
   "SOR_045": {
     "name": "Yoda",
     "subtitle": "Old Master",
@@ -50193,6 +53117,7 @@
       "Heroism"
     ],
     "text": "Action [Exhaust]: If a unit left play this phase, draw a card, then put a card from your hand on the top or bottom of your deck.",
+    "back_text": "Restore 2\nWhen Deployed: You may discard a card from your deck. If you do, defeat an enemy non-leader unit that costs the same as or less than the discarded card.",
     "unique": true
   },
   "TS26_14": {
@@ -50332,6 +53257,22 @@
       "Heroism"
     ],
     "text": "Defeat an enemy space unit with 3 or less remaining HP. If you do and an opponent controls no space units, you may give an Experience token to a unit.",
+    "unique": false
+  },
+  "IC27_194": {
+    "name": "You're My Only Hope",
+    "cost": "3",
+    "type": "Event",
+    "arena": "None",
+    "traits": [
+      "GAMBIT"
+    ],
+    "set": "IC27",
+    "number": "194",
+    "aspects": [
+      "Heroism"
+    ],
+    "text": "Look at the top card of your deck. You may play it. It costs 5 resources less. If your base has 5 or less remaining HP, you may play it for free instead.",
     "unique": false
   },
   "SOR_246": {

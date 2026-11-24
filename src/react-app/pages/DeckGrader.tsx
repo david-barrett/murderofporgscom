@@ -9,6 +9,7 @@ import {
 } from 'recharts';
 import { Seo } from '../components/Seo';
 import { ASPECT_CONFIG, SET_CONFIG, PREMIER_BAN_LIST, ETERNAL_BAN_LIST } from '../lib/consts'
+import { ParsedCard } from '../components/Decks'
 
 import cardCache from '../../data/card-cache.json';
 import metaDecksCache from '../../data/meta-decks.json';
@@ -148,20 +149,6 @@ const STAR_WARS_LOADING_PHRASES = [
   "Calculating hyperdrive jump coordinates for initiative seize..."
 ];
 
-interface ParsedCard {
-  name: string;
-  count: number;
-  cost: number;
-  type: string;
-  arena: string;
-  traits: string[];
-  set: string;
-  number: string;
-  imageUrl: string | null;
-  aspects: string[];
-  unique: boolean;
-}
-
 export default function DeckGrader() {
   const [fetchStats] = useState({ 
     cached: Object.keys(cardCache || {}).length, 
@@ -292,6 +279,7 @@ export default function DeckGrader() {
       }
 
       const data = await res.json();
+      console.log(data)
       
       // Build deck list lines from SWUDB response
       const deckLines: string[] = [];

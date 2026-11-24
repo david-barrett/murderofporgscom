@@ -38,6 +38,7 @@ async function buildCache() {
         number: number,
         aspects: card.Aspects || [],
         text: card.FrontText,
+        back_text: card.BackText,
         unique: card.Unique,
       };
     });
