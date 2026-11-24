@@ -48,7 +48,7 @@ export interface ParsedCard {
 }
 
 export interface Deck {
-  leader: Card;
+  leader: LeaderCard;
   base: Card;
   main: DeckCard[];
   side: DeckCard[];
@@ -83,9 +83,20 @@ function mapCardType(rawType: unknown): CardType {
   }
 }
 
+function normalizeAspectsList(rawAspects: unknown): string[] {
+  if (Array.isArray(rawAspects)) {
+    return rawAspects.map(String).map((s) => s.trim()).filter(Boolean);
+  }
+  if (typeof rawAspects === "string") {
+    return rawAspects.split(",").map((s) => s.trim()).filter(Boolean);
+  }
+  return [];
+}
+
 export function parseSWUDBCard(card: RawCard = {}): Card {
-  const rawAspects = card.aspects ?? card.Aspects ?? [];
-  const aspects = Array.isArray(rawAspects) ? rawAspects.map(String) : [];
+  const aspects = normalizeAspectsList(
+    card.aspects ?? card.Aspects ?? card.aspect ?? card.Aspect ?? []
+  );
 
   const rawTraits = card.traits ?? card.Traits ?? [];
   const traits = Array.isArray(rawTraits) ? rawTraits.map(String) : [];
@@ -120,7 +131,7 @@ function getMergedCardSource(
   entry: RawCard | null | undefined,
   cache: CardCache
 ): { id: string; merged: RawCard } {
-  const rawId = String(entry?.id ?? entry?.Id ?? "");
+  const rawId = String(entry?.id ?? entry?.Id ?? entry?.cardId ?? "");
   const id = normalizeCardId(rawId);
   const cached = id ? (cache[id] ?? cache[rawId] ?? {}) : {};
   const count = Number(
@@ -261,24 +272,34 @@ export const parseMetaDeck = (
   const leaderItem = allCards.find((item) => item?.section === "Leader");
   const baseItem = allCards.find((item) => item?.section === "Base");
 
-  const leaderSource = metaDeck.leaderCard ?? leaderItem?.card ?? {};
-  const baseSource = metaDeck.baseCard ?? baseItem?.card ?? {};
+  const leaderSource = metaDeck.leaderCard ?? metaDeck.leader ?? leaderItem?.card ?? {};
+  const baseSource = metaDeck.baseCard ?? metaDeck.base ?? baseItem?.card ?? {};
+
+  const resolvedLeaderId =
+    leaderSource?.id ??
+    leaderSource?.cardId ??
+    extractAndNormalizeId(
+      metaDeck.leaderCard?.imageUrl ?? leaderItem?.card?.imageUrl,
+      "JTL_006"
+    );
+
+  const resolvedBaseId =
+    baseSource?.id ??
+    baseSource?.cardId ??
+    extractAndNormalizeId(
+      metaDeck.baseCard?.imageUrl ?? baseItem?.card?.imageUrl,
+      "ASH_025"
+    );
 
   const normalizedDeckInput: RawDeck = {
     leader: {
       ...leaderSource,
-      id: extractAndNormalizeId(
-        metaDeck.leaderCard?.imageUrl ?? leaderItem?.card?.imageUrl,
-        "JTL_006"
-      ),
+      id: normalizeCardId(String(resolvedLeaderId)),
       count: 1,
     },
     base: {
       ...baseSource,
-      id: extractAndNormalizeId(
-        metaDeck.baseCard?.imageUrl ?? baseItem?.card?.imageUrl,
-        "ASH_025"
-      ),
+      id: normalizeCardId(String(resolvedBaseId)),
       count: 1,
     },
     deck: Array.isArray(metaDeck.deck) ? metaDeck.deck : mapSectionItems("MainDeck"),
