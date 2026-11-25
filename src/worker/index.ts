@@ -1,6 +1,6 @@
 import { Hono } from "hono";
 import { callGeminiWithTrace, generateHexId } from "../gemini"
-import { Deck } from "../react-app/components/Decks"
+import { Deck } from "../lib/decks"
 
 const SLUG_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 

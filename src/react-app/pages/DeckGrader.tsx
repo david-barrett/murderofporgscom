@@ -2,33 +2,37 @@ import { useState, useMemo, useEffect } from 'react';
 import { 
   Cpu, Database, TrendingUp, Swords, 
   CheckCircle2, AlertTriangle, ArrowRightLeft, BarChart3, Sparkles, Crosshair, FileText,
-  Crown, Shield, Compass, Download, HelpCircle, Eye, X
+  Crown, Shield, Compass, Download, HelpCircle, Eye, X, RotateCw
 } from 'lucide-react';
 import { 
   BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Legend 
 } from 'recharts';
 import { Seo } from '../components/Seo';
-import { ASPECT_CONFIG, SET_CONFIG, PREMIER_BAN_LIST, ETERNAL_BAN_LIST } from '../lib/consts';
+import { CardPreviewModal, type CardPreviewState } from '../components/CardPreviewModal';
+import { ASPECT_CONFIG, SET_CONFIG } from '../lib/consts';
 import {
-  Card,
-  CardType,
-  Deck,
-  DeckCard,
-  LeaderCard,
-  normalizeCardId,
+  type Deck,
+  createEmptyDeck,
+  formatCardTypeLabel,
+  formatDeckLines,
+  getCardImageUrl,
+  getLeaderBackImageUrl,
   parseMetaDeck,
   parseSWUDBDeck,
-} from '../components/Decks';
+} from '../../lib/decks';
+import {
+  type AiCoachAnalysis,
+  type DeckMetaInfo,
+  analyzeDeck,
+  buildHeuristicAnalysis,
+  buildSideboardPlan,
+  computeMetaTargetCurves,
+  extractSwudbDeckId,
+  findCardData,
+} from '../../lib/deckGrader';
 
 import cardCache from '../../data/card-cache.json';
 import metaDecksCache from '../../data/meta-decks-v2.json';
-// import metaDecksCache from '../../data/meta-decks.json';
-
-interface DeckMetaInfo {
-  name: string;
-  author: string;
-  winRate?: string;
-}
 
 function getAspectConfig(name: string) {
   const clean = name.trim();
@@ -58,173 +62,6 @@ function getSetConfig(name: string) {
       };
 }
 
-/** Resolve an image URL for a card, preferring official CDN URLs or card data */
-function getCardImageUrl(cardData: any, fallbackCard?: any): string | null {
-  if (fallbackCard?.imageUrl) return fallbackCard.imageUrl;
-  if (cardData?.imageUrl) return cardData.imageUrl;
-  if (cardData?.set && cardData?.number) {
-    return `https://api.swu-db.com/cards/${cardData.set.toLowerCase()}/${cardData.number}?format=image`;
-  }
-  return null;
-}
-
-function formatCardTypeLabel(type: CardType | string): string {
-  if (typeof type === 'number') {
-    switch (type) {
-      case CardType.LEADER:
-        return 'Leader';
-      case CardType.BASE:
-        return 'Base';
-      case CardType.UNIT:
-        return 'Unit';
-      case CardType.UPGRADE:
-        return 'Upgrade';
-      case CardType.EVENT:
-        return 'Event';
-      default:
-        return 'Unit';
-    }
-  }
-  return String(type || 'Unit');
-}
-
-function parseCardTypeFromString(rawType?: string): CardType {
-  switch (String(rawType ?? '').toUpperCase()) {
-    case 'LEADER':
-      return CardType.LEADER;
-    case 'BASE':
-      return CardType.BASE;
-    case 'UNIT':
-      return CardType.UNIT;
-    case 'UPGRADE':
-      return CardType.UPGRADE;
-    case 'EVENT':
-      return CardType.EVENT;
-    default:
-      return CardType.UNIT;
-  }
-}
-
-function formatDeckMainLines(main: DeckCard[] = []): string {
-  return main
-    .map((item) => {
-      const displayName = item.name || item.id || 'Unknown Card';
-      const idPart = item.id ? ` (${item.id})` : '';
-      return `${item.count}x ${displayName}${idPart}`;
-    })
-    .join('\n');
-}
-
-function createEmptyDeck(): Deck {
-  const emptyLeader: LeaderCard = {
-    id: '',
-    name: 'Commander',
-    count: 1,
-    cost: 0,
-    type: CardType.LEADER,
-    arena: 'None',
-    traits: [],
-    set: '',
-    number: '',
-    imageUrl: null,
-    aspects: [],
-    unique: false,
-  };
-
-  const emptyBase: Card = {
-    id: '',
-    name: 'Unassigned Base',
-    count: 1,
-    cost: 0,
-    type: CardType.BASE,
-    arena: 'None',
-    traits: [],
-    set: '',
-    number: '',
-    imageUrl: null,
-    aspects: [],
-    unique: false,
-  };
-
-  return {
-    leader: emptyLeader,
-    base: emptyBase,
-    main: [],
-    side: [],
-  };
-}
-
-/** Classify a deck by archetype based on its cost and unit distribution */
-function classifyArchetype(costDist: Record<string, number>, totalUnits: number, costSum: number, spaceUnits: number) {
-  const avgUnitCost = totalUnits > 0 ? costSum / totalUnits : 0;
-  const spaceRatio = totalUnits > 0 ? Math.round((spaceUnits / totalUnits) * 100) : 0;
-  const earlyGame = (costDist['1'] || 0) + (costDist['2'] || 0);
-  const lateGame = (costDist['5'] || 0) + (costDist['6+'] || 0);
-
-  if (earlyGame >= 18 && avgUnitCost <= 2.6) return "Aggro Rush";
-  if (lateGame >= 12 && avgUnitCost >= 3.6) return "Hard Control Ramp";
-  if (spaceRatio >= 55) return "Space Swarm Tempo";
-  return "Midrange Tempo";
-}
-
-/** Compute target curves by averaging meta deck distributions, grouped by archetype */
-function computeMetaTargetCurves(metaDecks: Record<string, any>, resolvedCards: Record<string, any>) {
-  const archetypeBuckets: Record<string, { curves: Record<string, number>[]; count: number }> = {};
-
-  for (const key of Object.keys(metaDecks)) {
-    const rawMetaDeck = metaDecks[key];
-    if (!rawMetaDeck) continue;
-
-    const parsedDeck = parseMetaDeck(rawMetaDeck, resolvedCards);
-    if (!parsedDeck.main || parsedDeck.main.length === 0) continue;
-
-    const c: Record<string, number> = { '1': 0, '2': 0, '3': 0, '4': 0, '5': 0, '6+': 0 };
-    let unitCount = 0, costSum = 0, spaceUnits = 0;
-
-    for (const item of parsedDeck.main) {
-      const qty = item.count || item.quantity || 1;
-      const cost = typeof item.cost === 'number' ? item.cost : parseInt(String(item.cost || '2'), 10);
-      const costKey = cost >= 6 ? '6+' : String(cost);
-      c[costKey] = (c[costKey] || 0) + qty;
-
-      if (item.type === CardType.UNIT) {
-        unitCount += qty;
-        costSum += cost * qty;
-        if (item.arena.toLowerCase() === 'space') spaceUnits += qty;
-      }
-    }
-
-    const archetype = classifyArchetype(c, unitCount, costSum, spaceUnits);
-    if (!archetypeBuckets[archetype]) {
-      archetypeBuckets[archetype] = { curves: [], count: 0 };
-    }
-    archetypeBuckets[archetype].curves.push(c);
-    archetypeBuckets[archetype].count += 1;
-  }
-
-  // Average each archetype's curves
-  const result: Record<string, { curve: Record<string, number>; sampleSize: number }> = {};
-  for (const [archetype, bucket] of Object.entries(archetypeBuckets)) {
-    const avg: Record<string, number> = {};
-    const keys = ['1', '2', '3', '4', '5', '6+'];
-    for (const k of keys) {
-      const total = bucket.curves.reduce((sum, curve) => sum + (curve[k] || 0), 0);
-      avg[k] = Math.round(total / bucket.count);
-    }
-    result[archetype] = { curve: avg, sampleSize: bucket.count };
-  }
-
-  return result;
-}
-
-// Hardcoded competitive baseline curves
-const FALLBACK_CURVES: Record<string, Record<string, number>> = {
-  "Aggro Rush": { '1': 9, '2': 18, '3': 12, '4': 6, '5': 3, '6+': 2 },
-  "Hard Control Ramp": { '1': 3, '2': 8, '3': 10, '4': 9, '5': 8, '6+': 12 },
-  "Space Swarm Tempo": { '1': 6, '2': 15, '3': 14, '4': 8, '5': 4, '6+': 3 },
-  "Midrange Tempo": { '1': 4, '2': 12, '3': 12, '4': 8, '5': 6, '6+': 8 },
-};
-
 const STAR_WARS_LOADING_PHRASES = [
   "Consulting tactical battle droid databanks...",
   "Calibrating deflector shields for opening mulligan...",
@@ -251,36 +88,13 @@ export default function DeckGrader() {
 
   const resolvedCards: Record<string, any> = cardCache || {};
 
-  const findCardData = (identifier: string) => {
-    if (!identifier) return null;
-    const cleanId = String(identifier).trim().toUpperCase();
-    if (resolvedCards[cleanId]) return resolvedCards[cleanId];
-
-    // Check if ID is in SET_NUM format: normalize padded and unpadded (e.g. HMW_14 <-> HMW_014)
-    const m = cleanId.match(/^([A-Z0-9]+)_0*(\d+)$/);
-    if (m) {
-      const paddedKey = `${m[1]}_${m[2].padStart(3, '0')}`;
-      if (resolvedCards[paddedKey]) return resolvedCards[paddedKey];
-      const unpaddedKey = `${m[1]}_${m[2]}`;
-      if (resolvedCards[unpaddedKey]) return resolvedCards[unpaddedKey];
-    }
-
-    const found = Object.values(resolvedCards).find((v: any) => 
-      v.name?.toUpperCase() === cleanId || 
-      (v.set && `${v.set}_${v.number}`.toUpperCase() === cleanId) ||
-      (v.set && `${v.set}_${parseInt(String(v.number), 10)}`.toUpperCase() === cleanId)
-    );
-    return found || null;
-  };
-
   const [selectedPreset, setSelectedPreset] = useState<string>(defaultKey);
   const [selectedMetaDeck, setSelectedMetaDeck] = useState<any>(() =>
     defaultKey ? metaDecks[defaultKey] ?? null : null
   );
-  const [manualMainOverride, setManualMainOverride] = useState<DeckCard[] | null>(null);
 
   // Resolve the full Deck directly from selectedMetaDeck + cardCache JSON
-  const resolvedDeck = useMemo<Deck>(() => {
+  const currentDeck = useMemo<Deck>(() => {
     if (!selectedMetaDeck) {
       return createEmptyDeck();
     }
@@ -288,15 +102,6 @@ export default function DeckGrader() {
       ? parseSWUDBDeck(selectedMetaDeck, resolvedCards)
       : parseMetaDeck(selectedMetaDeck, resolvedCards);
   }, [selectedMetaDeck, resolvedCards]);
-
-  // Combine resolved leader/base/side with any manual textarea edits to main
-  const currentDeck = useMemo<Deck>(
-    () => ({
-      ...resolvedDeck,
-      main: manualMainOverride ?? resolvedDeck.main,
-    }),
-    [resolvedDeck, manualMainOverride]
-  );
 
   const deckMeta = useMemo<DeckMetaInfo>(
     () => ({
@@ -307,27 +112,15 @@ export default function DeckGrader() {
     [selectedMetaDeck]
   );
 
-  const [rawDeckInput, setRawDeckInput] = useState<string>(() =>
-    formatDeckMainLines(currentDeck.main)
-  );
-  const [skipNextMainSync, setSkipNextMainSync] = useState(false);
+  const deckDisplayText = useMemo(() => formatDeckLines(currentDeck), [currentDeck]);
 
   const [activeTab, setActiveTab] = useState<string>('overview');
   const [showTargetExplainer, setShowTargetExplainer] = useState(false);
-  const [aiAnalysis, setAiAnalysis] = useState<any>(null);
+  const [aiAnalysis, setAiAnalysis] = useState<AiCoachAnalysis | null>(null);
   const [aiSource, setAiSource] = useState<'gemini' | 'heuristic' | null>(null);
   const [aiError, setAiError] = useState<string | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [loadingPhraseIdx, setLoadingPhraseIdx] = useState(0);
-
-  // Sync rawDeckInput lines whenever currentDeck.main changes
-  useEffect(() => {
-    if (skipNextMainSync) {
-      setSkipNextMainSync(false);
-      return;
-    }
-    setRawDeckInput(formatDeckMainLines(currentDeck.main));
-  }, [currentDeck.main, skipNextMainSync]);
 
   useEffect(() => {
     if (!isAnalyzing) {
@@ -346,7 +139,8 @@ export default function DeckGrader() {
   const [importError, setImportError] = useState('');
 
   // Card image hover/lightbox preview state
-  const [previewCard, setPreviewCard] = useState<{ name: string; url: string } | null>(null);
+  const [previewCard, setPreviewCard] = useState<CardPreviewState | null>(null);
+  const [galleryView, setGalleryView] = useState<'main' | 'side'>('main');
 
   const handleSelectPreset = (key: string) => {
     const preset = metaDecks[key];
@@ -354,7 +148,6 @@ export default function DeckGrader() {
 
     setSelectedPreset(key);
     setSelectedMetaDeck(preset);
-    setManualMainOverride(null);
     setImportError('');
   };
 
@@ -365,14 +158,7 @@ export default function DeckGrader() {
     setImportError('');
 
     try {
-      // Extract deck ID: handle full URL, /deck/view/ID, /deck/ID, or plain ID
-      const input = importUrl.trim();
-      const match = input.match(/\/deck(?:\/view)?\/([a-zA-Z0-9_\-]+)/);
-      const deckId = match ? match[1] : input.replace(/^https?:\/\/[^/]+\//, '').replace(/^\/+/, '');
-      
-      if (!/^[a-zA-Z0-9_\-]+$/.test(deckId)) {
-        throw new Error('Please enter a valid SWUDB deck URL or alphanumeric ID (e.g. ABCD1234).');
-      }
+      const deckId = extractSwudbDeckId(importUrl);
 
       const res = await fetch(`/api/swudb/${deckId}`);
       if (!res.ok) {
@@ -389,7 +175,6 @@ export default function DeckGrader() {
 
       setSelectedPreset('');
       setSelectedMetaDeck({ ...data, _source: 'swudb' });
-      setManualMainOverride(null);
       setImportUrl('');
     } catch (err: any) {
       setImportError(err.message || 'Import failed');
@@ -398,98 +183,27 @@ export default function DeckGrader() {
     }
   };
 
-  /** Update manual main deck override when user edits the decklist textarea directly */
-  const handleDeckInputChange = (nextText: string) => {
-    setRawDeckInput(nextText);
-    setSkipNextMainSync(true);
-
-    const nextMain: DeckCard[] = [];
-    const lineRegex = /^(\d+)x?\s+(.+?)(?:\s+\(([^)]+)\))?$/i;
-
-    for (const rawLine of nextText.split('\n')) {
-      const line = rawLine.trim();
-      if (!line) continue;
-
-      const match = line.match(lineRegex);
-      if (!match) continue;
-
-      const qty = parseInt(match[1], 10) || 1;
-      const namePart = match[2].trim();
-      const idPart = match[3]?.trim();
-      const lookupKey = idPart || namePart;
-      const cached = findCardData(lookupKey);
-      const existing = currentDeck.main.find(
-        (c) =>
-          (idPart && normalizeCardId(c.id) === normalizeCardId(idPart)) ||
-          c.name.toLowerCase() === namePart.toLowerCase()
-      );
-
-      const normalizedId = normalizeCardId(
-        idPart || existing?.id || (cached?.set && cached?.number ? `${cached.set}_${cached.number}` : '')
-      );
-
-      const parsedType = cached?.type
-        ? parseCardTypeFromString(cached.type)
-        : (existing?.type ?? CardType.UNIT);
-
-      const parsedCost = cached?.cost !== undefined
-        ? Number(cached.cost)
-        : (existing?.cost ?? 2);
-
-      const parsedArena = String(
-        cached?.arenas?.[0] ?? cached?.arena ?? existing?.arena ?? 'Ground'
-      );
-
-      const parsedTraits = Array.isArray(cached?.traits)
-        ? cached.traits.map(String)
-        : (existing?.traits ?? []);
-
-      const parsedAspects = Array.isArray(cached?.aspects)
-        ? cached.aspects.map(String)
-        : (existing?.aspects ?? []);
-
-      nextMain.push({
-        id: normalizedId,
-        name: cached?.name || existing?.name || namePart,
-        subtitle: cached?.subtitle ?? existing?.subtitle,
-        count: qty,
-        quantity: qty,
-        cost: Number.isNaN(parsedCost) ? 2 : parsedCost,
-        type: parsedType,
-        arena: parsedArena,
-        traits: parsedTraits,
-        hp: cached?.hp !== undefined ? Number(cached.hp) : existing?.hp,
-        power: cached?.power !== undefined ? Number(cached.power) : existing?.power,
-        set: String(cached?.set ?? existing?.set ?? ''),
-        number: String(cached?.number ?? existing?.number ?? ''),
-        imageUrl: getCardImageUrl(cached, existing),
-        aspects: parsedAspects,
-        text: cached?.text ?? existing?.text,
-        unique: Boolean(cached?.unique ?? existing?.unique ?? false),
-      });
-    }
-
-    setManualMainOverride(nextMain);
-  };
-
-  // Leader resolution from resolvedDeck / currentDeck
+  // Leader resolution from currentDeck
   const leaderCard = currentDeck.leader;
   const leaderRawId = leaderCard.id || '';
-  const leaderCardFromCache = findCardData(leaderRawId);
+  const leaderCardFromCache = findCardData(leaderRawId, resolvedCards);
   const [leaderRawTitle, leaderRawSub] = leaderCard.name.includes('|')
     ? leaderCard.name.split('|').map((s: string) => s.trim())
     : [leaderCard.name, ''];
 
   const leaderName = leaderCard.name || leaderCardFromCache?.name || leaderRawTitle || leaderRawId || 'Commander';
   const leaderSubtitle = leaderCard.subtitle || leaderCardFromCache?.subtitle || leaderRawSub || '';
+  const leaderFrontUrl = getCardImageUrl(leaderCardFromCache, leaderCard);
+  const leaderBackUrl = getLeaderBackImageUrl(leaderCardFromCache, leaderCard);
 
   // Base resolution from resolvedDeck / currentDeck
   const baseCard = currentDeck.base;
   const baseRawId = baseCard.id || '';
-  const baseCardFromCache = findCardData(baseRawId);
+  const baseCardFromCache = findCardData(baseRawId, resolvedCards);
   const baseName = baseCard.name || baseCardFromCache?.name || baseRawId || 'Unassigned Base';
   const baseSubtitle = baseCard.subtitle || baseCardFromCache?.subtitle || '';
   const baseHp = baseCard.hp ?? baseCardFromCache?.hp ?? '30';
+  const baseFrontUrl = getCardImageUrl(baseCardFromCache, baseCard);
 
   // Aspects from Leader & Base in resolvedDeck
   const allAspects = useMemo(() => {
@@ -506,273 +220,29 @@ export default function DeckGrader() {
     return computeMetaTargetCurves(metaDecks, resolvedCards);
   }, [metaDecks, resolvedCards]);
 
-  const analysis = useMemo(() => {
-    const c: Record<string, number> = { '1': 0, '2': 0, '3': 0, '4': 0, '5': 0, '6+': 0 };
-    let countTotal = 0;
-    let costSum = 0;
-    let unitCount = 0;
-    let groundUnits = 0;
-    let spaceUnits = 0;
-    let events = 0;
-    let upgrades = 0;
-    const sets: Set<string> = new Set();
-    let outOfAspect = 0;
-    const traitCounts: Record<string, number> = {};
-    const parsedCards: DeckCard[] = [];
-    let validForPremier = true;
-    let validForEternal = true;
+  const analysis = useMemo(
+    () => analyzeDeck(currentDeck.main, allAspects, resolvedCards, metaTargetData),
+    [currentDeck.main, allAspects, resolvedCards, metaTargetData]
+  );
 
-    const now = new Date();
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, '0');
-    const day = String(now.getDate()).padStart(2, '0');
-    const todayStr = `${year}_${month}_${day}`;
-
-    const allAspectsSet = new Set(allAspects);
-
-    for (const item of currentDeck.main) {
-      const qty = item.count || item.quantity || 1;
-      const cardId = normalizeCardId(item.id);
-      const cached = findCardData(cardId || item.name);
-
-      if (qty > 3) {
-        validForEternal = false;
-        validForPremier = false;
-      }
-
-      const rawCost = item.cost ?? cached?.cost ?? 2;
-      const cost = typeof rawCost === 'number' ? rawCost : parseInt(String(rawCost || '2'), 10);
-      const safeCost = Number.isNaN(cost) ? 2 : cost;
-      const costKey = safeCost >= 6 ? '6+' : String(safeCost);
-      c[costKey] = (c[costKey] || 0) + qty;
-      countTotal += qty;
-
-      const cardType = item.type ?? parseCardTypeFromString(cached?.type);
-      if (cardType === CardType.UNIT) {
-        unitCount += qty;
-        costSum += safeCost * qty;
-        const arena = (item.arena || cached?.arena || cached?.arenas?.[0] || '').toLowerCase();
-        if (arena === 'space') spaceUnits += qty;
-        else groundUnits += qty;
-      } else if (cardType === CardType.EVENT) {
-        events += qty;
-      } else if (cardType === CardType.UPGRADE) {
-        upgrades += qty;
-      }
-
-      const traits = item.traits.length > 0 ? item.traits : (Array.isArray(cached?.traits) ? cached.traits : []);
-      traits.forEach((t: string) => {
-        traitCounts[t] = (traitCounts[t] || 0) + qty;
-      });
-
-      const cardSet = item.set || cached?.set || '';
-      if (cardSet) {
-        sets.add(cardSet);
-      }
-
-      const aspects = item.aspects.length > 0 ? item.aspects : (Array.isArray(cached?.aspects) ? cached.aspects : []);
-      if (aspects.some((t: string) => !allAspectsSet.has(t))) {
-        outOfAspect += qty;
-      }
-
-      if (!validForEternal) {
-        const bannedCard = ETERNAL_BAN_LIST[cardId] || ETERNAL_BAN_LIST[item.name];
-        if (bannedCard && bannedCard.ban_date < todayStr) {
-          if (!bannedCard.unban_date || bannedCard.unban_date > todayStr) {
-            validForEternal = false;
-          }
-        }
-      }
-      if (!validForPremier) {
-        const bannedCard = PREMIER_BAN_LIST[cardId] || PREMIER_BAN_LIST[item.name];
-        if (bannedCard && bannedCard.ban_date < todayStr) {
-          if (!bannedCard.unban_date || bannedCard.unban_date > todayStr) {
-            validForPremier = false;
-          }
-        }
-      }
-
-      parsedCards.push({
-        ...item,
-        id: cardId,
-        name: item.name || cached?.name || cardId || 'Unknown Card',
-        count: qty,
-        quantity: qty,
-        cost: safeCost,
-        type: cardType,
-        arena: item.arena || cached?.arena || cached?.arenas?.[0] || 'Ground',
-        traits,
-        set: cardSet,
-        number: item.number || cached?.number || '',
-        imageUrl: getCardImageUrl(cached, item),
-        aspects,
-        unique: Boolean(item.unique ?? cached?.unique ?? false),
-      });
-    }
-
-    const avgUnitCost = unitCount > 0 ? (costSum / unitCount) : 0;
-    const spaceRatio = unitCount > 0 ? Math.round((spaceUnits / unitCount) * 100) : 0;
-    const groundRatio = unitCount > 0 ? Math.round((groundUnits / unitCount) * 100) : 0;
-
-    const inferredArchetype = classifyArchetype(c, unitCount, costSum, spaceUnits);
-
-    // Dynamic curve selection: averaged from meta or fallback baseline
-    const targetMetaBucket = metaTargetData[inferredArchetype];
-    const targetCurve = targetMetaBucket?.curve || FALLBACK_CURVES[inferredArchetype] || FALLBACK_CURVES["Midrange Tempo"];
-    const targetSource = targetMetaBucket ? 'meta' : 'fallback';
-    const sampleSize = targetMetaBucket?.sampleSize || 0;
-
-    const chartData = Object.keys(c).map(cost => ({
-      cost: `${cost} Cost`,
-      Actual: c[cost],
-      "Inferred Target": targetCurve[cost] || 0
-    }));
-
-    let score = 100;
-    const warnings: string[] = [];
-    const bonuses: string[] = [];
-
-    if (countTotal < 50) {
-      score -= (50 - countTotal) * 2;
-      validForEternal = false;
-      validForPremier = false;
-      warnings.push(`Deck contains only ${countTotal} cards (Standard minimum is 50).`);
-    } else if (countTotal > 54) {
-      score -= (countTotal - 50) * 1.5;
-      warnings.push(`Deck count (${countTotal}) exceeds optimal 50 cards, lowering draw consistency.`);
-    } else {
-      bonuses.push("Optimized Deck Thickness (50-52 cards)");
-    }
-
-    if (c['2'] < 8) {
-      score -= 15;
-      warnings.push("Severely low 2-drop unit count. You may stumble on critical resource turn 1-2.");
-    } else {
-      bonuses.push("Consistent Early Game Curve Base");
-    }
-
-    if (unitCount > 0 && spaceRatio < 20) {
-      score -= 10;
-      warnings.push("Vulnerable to space raids (<20% space units). Control of space arena at risk.");
-    } else if (unitCount > 0 && groundRatio < 25) {
-      score -= 10;
-      warnings.push("Lacking ground anchor units (<25% ground). Opponents may freely seize initiative.");
-    } else {
-      bonuses.push("Healthy Ground & Space Arena Split");
-    }
-
-    if (inferredArchetype === "Aggro Rush" && c['6+'] > 2) {
-      score -= 10;
-      warnings.push("Too many high-cost cards (>5 cost) for an aggressive curve profile.");
-    }
-
-    if (events > 14) {
-      score -= 8;
-      warnings.push("High event count may result in dead hands with no unit presence on board.");
-    } else {
-      bonuses.push("Strong Unit-to-Event Balance");
-    }
-
-    let grade = 'A';
-    if (score >= 90) grade = 'S';
-    else if (score >= 80) grade = 'A';
-    else if (score >= 70) grade = 'B';
-    else if (score >= 60) grade = 'C';
-    else grade = 'F';
-
-    return {
-      curve: c,
-      targetCurve,
-      targetSource,
-      sampleSize,
-      chartData,
-      totalCards: countTotal,
-      totalUnits: unitCount,
-      groundUnits,
-      spaceUnits,
-      events,
-      upgrades,
-      spaceRatio,
-      groundRatio,
-      avgUnitCost: avgUnitCost.toFixed(2),
-      inferredArchetype,
-      score: Math.max(0, Math.min(100, score)),
-      grade,
-      warnings,
-      bonuses,
-      parsedCards,
-      traitCounts,
-      outOfAspect,
-      sets,
-    };
-  }, [currentDeck.main, allAspects, metaTargetData]);
+  const resolvedSideCards = useMemo(
+    () =>
+      (currentDeck.side || []).map((card) => {
+        const cached = findCardData(card.id || card.name, resolvedCards);
+        return {
+          ...card,
+          name: card.name || cached?.name || card.id || 'Unknown Card',
+          imageUrl: getCardImageUrl(cached, card),
+        };
+      }),
+    [currentDeck.side, resolvedCards]
+  );
 
   // Compute specific sideboard recommendations naming actual cards to add/remove
-  const sideboardPlan = useMemo(() => {
-    const { parsedCards } = analysis;
-    const deckSideboard: DeckCard[] = currentDeck.side || [];
-
-    const sortedByCostDesc = [...parsedCards].sort((a, b) => b.cost - a.cost);
-    const sortedByCostAsc = [...parsedCards].sort((a, b) => a.cost - b.cost);
-
-    const sideboardSentinels = deckSideboard.filter((c) => {
-      const cost = typeof c.cost === 'number' ? c.cost : parseInt(String(c.cost || '99'), 10);
-      return c.type === CardType.UNIT && cost <= 3;
-    });
-
-    const sideboardHighImpact = deckSideboard.filter((c) => {
-      const cost = typeof c.cost === 'number' ? c.cost : parseInt(String(c.cost || '0'), 10);
-      return c.type === CardType.EVENT || cost >= 4;
-    });
-
-    const sideboardMid = deckSideboard.filter((c) => {
-      const cost = typeof c.cost === 'number' ? c.cost : parseInt(String(c.cost || '0'), 10);
-      return cost >= 2 && cost <= 4;
-    });
-
-    // vs Aggro: cut slow 5+ cost units; bring in sentinels or cheap answers
-    const vsAggroCuts = sortedByCostDesc.filter(c => c.type !== CardType.EVENT && c.cost >= 5).slice(0, 3);
-    const vsAggroAdds = sideboardSentinels.length > 0 ? sideboardSentinels.slice(0, 3) : deckSideboard.slice(0, 3);
-
-    // vs Control: cut low-threat 1-2 cost ground units; bring in high-impact control/disruption
-    const vsControlCuts = sortedByCostAsc.filter(c => c.type === CardType.UNIT && c.cost <= 2).slice(0, 3);
-    const vsControlAdds = sideboardHighImpact.length > 0 ? sideboardHighImpact.slice(0, 3) : deckSideboard.slice(0, 3);
-
-    // vs Midrange: swap 1-of situational cards or upgrades
-    const vsMidCuts = parsedCards.filter(c => c.count === 1 || c.type === CardType.UPGRADE).slice(0, 2);
-    const vsMidAdds = sideboardMid.length > 0 ? sideboardMid.slice(0, 2) : deckSideboard.slice(0, 2);
-
-    const formatCardList = (cards: DeckCard[], prefix: string) => {
-      if (cards.length === 0) return `${prefix}: General flex adjustments`;
-      return cards
-        .map(c => `${prefix === 'Out' ? '-' : '+'}${c.count || 1} ${c.name?.split('|')[0]?.trim() || c.name}${c.cost != null ? ` (${c.cost}c)` : ''}`)
-        .join(', ');
-    };
-
-    return [
-      {
-        matchup: "vs. Hyper Aggro",
-        out: formatCardList(vsAggroCuts, 'Out'),
-        in: formatCardList(vsAggroAdds, 'In'),
-        outCards: vsAggroCuts,
-        inCards: vsAggroAdds,
-      },
-      {
-        matchup: "vs. Hard Control",
-        out: formatCardList(vsControlCuts, 'Out'),
-        in: formatCardList(vsControlAdds, 'In'),
-        outCards: vsControlCuts,
-        inCards: vsControlAdds,
-      },
-      {
-        matchup: "vs. Midrange Mirror",
-        out: formatCardList(vsMidCuts, 'Out'),
-        in: formatCardList(vsMidAdds, 'In'),
-        outCards: vsMidCuts,
-        inCards: vsMidAdds,
-      },
-    ];
-  }, [analysis, currentDeck.side]);
+  const sideboardPlan = useMemo(
+    () => buildSideboardPlan(analysis.parsedCards, resolvedSideCards),
+    [analysis.parsedCards, resolvedSideCards]
+  );
 
   // Execute AI Coach Analysis via Edge /api/coach with graceful heuristic fallback
   const runAiAnalysis = async () => {
@@ -793,7 +263,7 @@ export default function DeckGrader() {
       groundRatio: analysis.groundRatio,
       spaceRatio: analysis.spaceRatio,
       curve: analysis.curve,
-      deck: resolvedDeck,
+      deck: currentDeck,
     };
 
     try {
@@ -825,49 +295,16 @@ export default function DeckGrader() {
     }
 
     // Heuristic Edge fallback when GEMINI_API_KEY is not configured
-    const isAggro = analysis.inferredArchetype.includes('Aggro');
-    const isControl = analysis.inferredArchetype.includes('Control');
-    const hasSpaceBias = analysis.spaceRatio > 40;
-    const hasGroundBias = analysis.groundRatio > 70;
-
-    const mulliganNotes = isAggro
-      ? [
-          "Priority 1: Mulligan aggressively for 1-cost and 2-cost ground units to guarantee turn-1 initiative.",
-          "Priority 2: Ensure you have an aggressive reach event (e.g. direct base damage or attack buff) for turns 3-4.",
-          "Redraw: Pitch high-cost 5+ cards immediately if they appear in your opening hand."
-        ]
-      : isControl
-      ? [
-          "Priority 1: Keep at least 1 cheap removal event or sentinel to stall the opponent's opening round blitz.",
-          "Priority 2: Hold card-draw or ramp infrastructure to accelerate into late-game leader deployment.",
-          "Redraw: Pitch situational late-game bombs early to guarantee hitting your resource curve every turn."
-        ]
-      : [
-          "Priority 1: Look for on-curve 2-cost and 3-cost units that contest both ground and space arenas.",
-          "Priority 2: Keep action-compression cards to seize initiative going into leadership deployment turn.",
-          "Redraw: Resource situational answers that don't match the opponent's visible leader color profile."
-        ];
-
-    const tacticalNotes = [
-      `Leader Synergy: Leverage ${leaderName}${leaderSubtitle ? ` (${leaderSubtitle})` : ''} at key deployment resource points to swing tempo.`,
-      `Arena Split: ${analysis.groundRatio}% Ground / ${analysis.spaceRatio}% Space. ${
-        hasSpaceBias ? 'Strong space lane presence allows evading heavy ground blockers.' :
-        hasGroundBias ? 'Heavy ground presence demands vigilance against space raid flankers.' :
-        'Balanced dual-arena coverage allows contesting wherever the opponent is weakest.'
-      }`,
-      `Resource Curve: Average unit cost of ${analysis.avgUnitCost} requires aiming for ${isAggro ? 'quick 5-resource games' : isControl ? 'extended 7+ resource games' : '6-resource leader deployment'}.`
-    ];
-
-    setAiAnalysis({
-      summary: `Tactical Edge Assessment: Your deck exhibits a competitive ${analysis.inferredArchetype} profile running ${leaderName}${leaderSubtitle ? ` (${leaderSubtitle})` : ''} on ${baseName} (${allAspects.join(', ')}). Average unit cost is ${analysis.avgUnitCost} across ${analysis.totalCards} cards.`,
-      mulligan: mulliganNotes,
-      tactics: tacticalNotes,
-      sideboardPlan: sideboardPlan.map(p => ({
-        matchup: p.matchup,
-        out: p.out,
-        in: p.in,
-      })),
-    });
+    setAiAnalysis(
+      buildHeuristicAnalysis({
+        analysis,
+        leaderName,
+        leaderSubtitle,
+        baseName,
+        allAspects,
+        sideboardPlan,
+      })
+    );
     setAiSource('heuristic');
     setIsAnalyzing(false);
   };
@@ -933,7 +370,7 @@ export default function DeckGrader() {
           <div className="bg-slate-900/80 backdrop-blur-md p-6 rounded-2xl border border-slate-800/80 flex flex-col space-y-4 shadow-xl">
             <div className="flex justify-between items-center">
               <label className="text-xs font-semibold text-slate-300 uppercase tracking-wider flex items-center gap-2">
-                <FileText className="w-4 h-4 text-cyan-400" /> Deck List Input
+                <FileText className="w-4 h-4 text-cyan-400" /> Deck List
               </label>
               <span className="text-xs font-medium px-2 py-0.5 rounded bg-slate-950 text-slate-400 border border-slate-800">{analysis.totalCards} cards</span>
             </div>
@@ -964,11 +401,11 @@ export default function DeckGrader() {
             </div>
 
             <textarea
-              value={rawDeckInput}
-              onChange={(e) => handleDeckInputChange(e.target.value)}
+              value={deckDisplayText}
+              readOnly
               rows={11}
-              className="w-full bg-slate-950/90 border border-slate-800/90 rounded-xl p-3.5 text-xs font-mono text-slate-200 focus:outline-none focus:ring-2 focus:ring-cyan-500/50 resize-none shadow-inner"
-              placeholder="Paste decklist (e.g. '3x Luke Skywalker') or import above..."
+              className="w-full bg-slate-950/90 border border-slate-800/90 rounded-xl p-3.5 text-xs font-mono text-slate-300 focus:outline-none resize-none shadow-inner cursor-default"
+              placeholder="Select a meta preset or import a SWUDB deck above..."
             />
             <button 
               onClick={runAiAnalysis}
@@ -1017,16 +454,35 @@ export default function DeckGrader() {
                       {leaderSubtitle && (
                         <span className="text-slate-400 italic">· {leaderSubtitle}</span>
                       )}
-                      {leaderCardFromCache && (
-                        <button
-                          onClick={() => setPreviewCard({
-                            name: leaderName,
-                            url: getCardImageUrl(leaderCardFromCache, leaderCard) || ''
-                          })}
-                          className="text-[10px] text-cyan-400 hover:text-cyan-300 ml-1 inline-flex items-center gap-1 opacity-80 hover:opacity-100 cursor-pointer"
-                        >
-                          <Eye size={12} /> View Art
-                        </button>
+                      {leaderFrontUrl && (
+                        <>
+                          <button
+                            onClick={() => setPreviewCard({
+                              name: leaderName,
+                              url: leaderFrontUrl,
+                              orientation: 'horizontal',
+                              backUrl: leaderBackUrl,
+                              initialSide: 'front',
+                            })}
+                            className="text-[10px] text-cyan-400 hover:text-cyan-300 ml-1 inline-flex items-center gap-1 opacity-80 hover:opacity-100 cursor-pointer"
+                          >
+                            <Eye size={12} /> View Art
+                          </button>
+                          {leaderBackUrl && (
+                            <button
+                              onClick={() => setPreviewCard({
+                                name: leaderName,
+                                url: leaderFrontUrl,
+                                orientation: 'horizontal',
+                                backUrl: leaderBackUrl,
+                                initialSide: 'back',
+                              })}
+                              className="text-[10px] text-amber-400 hover:text-amber-300 ml-1 inline-flex items-center gap-1 opacity-80 hover:opacity-100 cursor-pointer"
+                            >
+                              <RotateCw size={11} /> View Back
+                            </button>
+                          )}
+                        </>
                       )}
                     </div>
 
@@ -1044,11 +500,12 @@ export default function DeckGrader() {
                           {baseHp} HP
                         </span>
                       )}
-                      {baseCardFromCache && (
+                      {baseFrontUrl && (
                         <button
                           onClick={() => setPreviewCard({
                             name: baseName,
-                            url: getCardImageUrl(baseCardFromCache, baseCard) || ''
+                            url: baseFrontUrl,
+                            orientation: 'horizontal',
                           })}
                           className="text-[10px] text-cyan-400 hover:text-cyan-300 ml-1 inline-flex items-center gap-1 opacity-80 hover:opacity-100 cursor-pointer"
                         >
@@ -1176,46 +633,162 @@ export default function DeckGrader() {
           </div>
         </div>
 
-        {/* CARD GALLERY — Parsed deck with lazy card art and lightbox click */}
-        {analysis.parsedCards.length > 0 && (
-          <section className="bg-slate-900/80 backdrop-blur-md border border-slate-800/80 rounded-2xl p-6 shadow-xl space-y-4">
-            <div className="flex justify-between items-center">
-              <h3 className="text-xs font-semibold text-slate-300 uppercase tracking-wider flex items-center gap-2">
-                <BarChart3 className="w-4 h-4 text-cyan-400" /> Deck Visual Gallery ({analysis.parsedCards.length} unique cards)
-              </h3>
-              <span className="text-[11px] text-slate-400 italic">Click any card to preview full art</span>
-            </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
-              {analysis.parsedCards.map((card, idx) => (
-                <div
-                  key={`${card.id || card.name}-${idx}`}
-                  onClick={() => card.imageUrl && setPreviewCard({ name: card.name, url: card.imageUrl })}
-                  className="group relative bg-slate-950/90 border border-slate-800/90 rounded-xl overflow-hidden hover:border-cyan-500/70 hover:scale-[1.02] transition-all cursor-pointer shadow-md"
-                >
-                  {card.imageUrl ? (
-                    <img
-                      src={card.imageUrl}
-                      alt={card.name}
-                      loading="lazy"
-                      className="w-full aspect-[5/7] object-cover opacity-90 group-hover:opacity-100 transition-opacity"
-                    />
-                  ) : (
-                    <div className="w-full aspect-[5/7] bg-slate-900 flex items-center justify-center p-2">
-                      <span className="text-[10px] text-slate-400 text-center font-medium">{card.name}</span>
+        {/* CARD GALLERY — Leader, Base, and Main/Sideboard cards with lazy art and lightbox click */}
+        {(leaderFrontUrl || baseFrontUrl || analysis.parsedCards.length > 0 || resolvedSideCards.length > 0) && (() => {
+          const activeGalleryView =
+            galleryView === 'side' && resolvedSideCards.length > 0 ? 'side' : 'main';
+          const galleryCards =
+            activeGalleryView === 'side' ? resolvedSideCards : analysis.parsedCards;
+
+          return (
+            <section className="bg-slate-900/80 backdrop-blur-md border border-slate-800/80 rounded-2xl p-6 shadow-xl space-y-4">
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                <div className="flex flex-wrap items-center gap-3">
+                  <h3 className="text-xs font-semibold text-slate-300 uppercase tracking-wider flex items-center gap-2">
+                    <BarChart3 className="w-4 h-4 text-cyan-400" /> Deck Visual Gallery ({galleryCards.length} unique cards)
+                  </h3>
+                  {resolvedSideCards.length > 0 && (
+                    <div className="inline-flex rounded-lg bg-slate-950 p-0.5 border border-slate-800 text-[11px] font-semibold">
+                      <button
+                        type="button"
+                        onClick={() => setGalleryView('main')}
+                        className={`px-2.5 py-1 rounded-md transition cursor-pointer ${
+                          activeGalleryView === 'main'
+                            ? 'bg-cyan-600 text-slate-950 font-bold shadow-sm'
+                            : 'text-slate-400 hover:text-slate-200'
+                        }`}
+                      >
+                        Main Deck ({analysis.parsedCards.length})
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setGalleryView('side')}
+                        className={`px-2.5 py-1 rounded-md transition cursor-pointer ${
+                          activeGalleryView === 'side'
+                            ? 'bg-cyan-600 text-slate-950 font-bold shadow-sm'
+                            : 'text-slate-400 hover:text-slate-200'
+                        }`}
+                      >
+                        Sideboard ({resolvedSideCards.length})
+                      </button>
                     </div>
                   )}
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-slate-950 via-slate-950/90 to-transparent p-2.5 pt-6">
-                    <p className="text-[11px] font-semibold text-slate-100 leading-tight truncate">{card.name}</p>
-                    <div className="flex items-center justify-between mt-1">
-                      <span className="text-[10px] text-slate-400">{formatCardTypeLabel(card.type)} · {card.cost}c</span>
-                      <span className="text-[10px] font-bold text-cyan-400 bg-cyan-950/80 px-1.5 py-0.2 rounded border border-cyan-800/60">×{card.count}</span>
+                </div>
+                <span className="text-[11px] text-slate-400 italic">Click any card to preview full art</span>
+              </div>
+
+              {(leaderFrontUrl || baseFrontUrl) && (
+                <div className="flex flex-wrap items-end gap-3 pb-4 border-b border-slate-800/80">
+                  {leaderFrontUrl && (
+                    <div
+                      onClick={() =>
+                        setPreviewCard({
+                          name: leaderName,
+                          url: leaderFrontUrl,
+                          orientation: 'horizontal',
+                          backUrl: leaderBackUrl,
+                          initialSide: 'front',
+                        })
+                      }
+                      className="group relative h-36 sm:h-44 aspect-[7/5] bg-slate-950/90 border border-slate-800/90 rounded-xl overflow-hidden hover:border-cyan-500/70 hover:scale-[1.02] transition-all cursor-pointer shadow-md"
+                    >
+                      <img
+                        src={leaderFrontUrl}
+                        alt={`${leaderName} (Leader Front)`}
+                        loading="lazy"
+                        className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity"
+                      />
+                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-slate-950 via-slate-950/90 to-transparent p-2.5 pt-6">
+                        <p className="text-[11px] font-semibold text-slate-100 leading-tight truncate">{leaderName}</p>
+                        <span className="text-[10px] font-semibold text-amber-400">Leader · Front</span>
+                      </div>
+                    </div>
+                  )}
+
+                  {leaderBackUrl && leaderFrontUrl && (
+                    <div
+                      onClick={() =>
+                        setPreviewCard({
+                          name: leaderName,
+                          url: leaderFrontUrl,
+                          orientation: 'horizontal',
+                          backUrl: leaderBackUrl,
+                          initialSide: 'back',
+                        })
+                      }
+                      className="group relative h-36 sm:h-44 aspect-[5/7] bg-slate-950/90 border border-slate-800/90 rounded-xl overflow-hidden hover:border-amber-500/70 hover:scale-[1.02] transition-all cursor-pointer shadow-md"
+                    >
+                      <img
+                        src={leaderBackUrl}
+                        alt={`${leaderName} (Leader Back)`}
+                        loading="lazy"
+                        className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity"
+                      />
+                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-slate-950 via-slate-950/90 to-transparent p-2.5 pt-6">
+                        <p className="text-[11px] font-semibold text-slate-100 leading-tight truncate">{leaderName}</p>
+                        <span className="text-[10px] font-semibold text-amber-400">Leader · Back</span>
+                      </div>
+                    </div>
+                  )}
+
+                  {baseFrontUrl && (
+                    <div
+                      onClick={() =>
+                        setPreviewCard({
+                          name: baseName,
+                          url: baseFrontUrl,
+                          orientation: 'horizontal',
+                        })
+                      }
+                      className="group relative h-36 sm:h-44 aspect-[7/5] bg-slate-950/90 border border-slate-800/90 rounded-xl overflow-hidden hover:border-cyan-500/70 hover:scale-[1.02] transition-all cursor-pointer shadow-md"
+                    >
+                      <img
+                        src={baseFrontUrl}
+                        alt={baseName}
+                        loading="lazy"
+                        className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity"
+                      />
+                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-slate-950 via-slate-950/90 to-transparent p-2.5 pt-6">
+                        <p className="text-[11px] font-semibold text-slate-100 leading-tight truncate">{baseName}</p>
+                        <span className="text-[10px] font-semibold text-cyan-400">Base · {baseHp} HP</span>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+                {galleryCards.map((card, idx) => (
+                  <div
+                    key={`${activeGalleryView}-${card.id || card.name}-${idx}`}
+                    onClick={() => card.imageUrl && setPreviewCard({ name: card.name, url: card.imageUrl })}
+                    className="group relative bg-slate-950/90 border border-slate-800/90 rounded-xl overflow-hidden hover:border-cyan-500/70 hover:scale-[1.02] transition-all cursor-pointer shadow-md"
+                  >
+                    {card.imageUrl ? (
+                      <img
+                        src={card.imageUrl}
+                        alt={card.name}
+                        loading="lazy"
+                        className="w-full aspect-[5/7] object-cover opacity-90 group-hover:opacity-100 transition-opacity"
+                      />
+                    ) : (
+                      <div className="w-full aspect-[5/7] bg-slate-900 flex items-center justify-center p-2">
+                        <span className="text-[10px] text-slate-400 text-center font-medium">{card.name}</span>
+                      </div>
+                    )}
+                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-slate-950 via-slate-950/90 to-transparent p-2.5 pt-6">
+                      <p className="text-[11px] font-semibold text-slate-100 leading-tight truncate">{card.name}</p>
+                      <div className="flex items-center justify-between mt-1">
+                        <span className="text-[10px] text-slate-400">{formatCardTypeLabel(card.type)} · {card.cost}c</span>
+                        <span className="text-[10px] font-bold text-cyan-400 bg-cyan-950/80 px-1.5 py-0.2 rounded border border-cyan-800/60">×{card.count}</span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
-          </section>
-        )}
+                ))}
+              </div>
+            </section>
+          );
+        })()}
 
         {/* DETAILED TABS SECTION */}
         <div id="tabs-section" className="bg-slate-900/80 backdrop-blur-md border border-slate-800/80 rounded-2xl overflow-hidden shadow-2xl">
@@ -1508,31 +1081,10 @@ export default function DeckGrader() {
         </div>
 
         {/* CARD ART PREVIEW LIGHTBOX */}
-        {previewCard && (
-          <div 
-            onClick={() => setPreviewCard(null)}
-            className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 cursor-pointer"
-          >
-            <div 
-              onClick={(e) => e.stopPropagation()}
-              className="bg-slate-900 border border-slate-800 rounded-2xl p-4 max-w-sm w-full space-y-3 shadow-2xl relative"
-            >
-              <div className="flex justify-between items-center">
-                <h4 className="text-xs font-bold text-slate-200 truncate">{previewCard.name}</h4>
-                <button onClick={() => setPreviewCard(null)} className="text-slate-400 hover:text-white cursor-pointer">
-                  <X size={16} />
-                </button>
-              </div>
-              <div className="w-full aspect-[5/7] rounded-xl overflow-hidden bg-slate-950 border border-slate-800 flex items-center justify-center">
-                <img 
-                  src={previewCard.url} 
-                  alt={previewCard.name}
-                  className="w-full h-full object-contain"
-                />
-              </div>
-            </div>
-          </div>
-        )}
+        <CardPreviewModal
+          preview={previewCard}
+          onClose={() => setPreviewCard(null)}
+        />
       </div>
     </>
   );

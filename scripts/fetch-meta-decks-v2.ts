@@ -6,7 +6,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { parseMetaDeck } from '../src/react-app/components/Decks.tsx';
+import { parseMetaDeck } from '../src/lib/decks.ts';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

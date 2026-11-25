@@ -4,7 +4,11 @@ import {
   type CardCache,
   parseSWUDBCard,
   parseSWUDBDeck,
-} from "./Decks";
+  getCardImageUrl,
+  getLeaderBackImageUrl,
+  formatDeckLines,
+  createEmptyDeck,
+} from "./decks";
 
 const sampleCache: CardCache = {
   ASH_011: {
@@ -189,5 +193,42 @@ describe("parseSWUDBDeck", () => {
       count: 3,
       quantity: 3,
     });
+  });
+});
+
+describe("card image URL helpers", () => {
+  it("resolves front and leader back SWUDB image URLs from set/number or id", () => {
+    expect(getCardImageUrl({ set: "JTL", number: "030" })).toBe(
+      "https://api.swu-db.com/cards/jtl/030?format=image"
+    );
+    expect(getLeaderBackImageUrl({ set: "ASH", number: "011" })).toBe(
+      "https://api.swu-db.com/cards/ash/011?format=image&face=back"
+    );
+    expect(getLeaderBackImageUrl({ id: "HMW_014" })).toBe(
+      "https://api.swu-db.com/cards/hmw/014?format=image&face=back"
+    );
+  });
+});
+
+describe("formatDeckLines", () => {
+  it("formats main deck and includes sideboard section when present", () => {
+    const deck = parseSWUDBDeck(
+      {
+        leader: { id: "ASH_011", count: 1 },
+        base: { id: "JTL_030", count: 1 },
+        deck: [{ id: "LAW_174", count: 3 }],
+        sideboard: [{ id: "SEC_042", count: 2 }],
+      },
+      sampleCache
+    );
+
+    expect(formatDeckLines(deck)).toBe(
+      "3x 0-0-0 (LAW_174)\n\nSideboard (2):\n2x Planetary Bombardment (SEC_042)"
+    );
+  });
+
+  it("omits sideboard section when sideboard is empty", () => {
+    const deck = createEmptyDeck();
+    expect(formatDeckLines(deck)).toBe("");
   });
 });
