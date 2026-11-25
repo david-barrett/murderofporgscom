@@ -8,6 +8,7 @@ import {
   computeMetaTargetCurves,
   extractSwudbDeckId,
   findCardData,
+  getMinimumDeckSize,
   parseDeckListText,
 } from "./deckGrader";
 
@@ -229,6 +230,37 @@ describe("analyzeDeck", () => {
     expect(result.validForEternal).toBe(false);
     expect(result.warnings.length).toBeGreaterThan(0);
     expect(result.grade).toBe("F");
+  });
+
+  it("respects base minimum deck size modifiers (e.g. Data Vault 60, Thermal Oscillator 45)", () => {
+    expect(
+      getMinimumDeckSize({ text: "Your minimum deck size is increased by 10 cards." })
+    ).toBe(60);
+    expect(
+      getMinimumDeckSize({ text: "Your minimum deck size is decreased by 5 cards." })
+    ).toBe(45);
+
+    const sixtyCards: DeckCard[] = Array.from({ length: 20 }, (_, i) =>
+      makeDeckCard({
+        id: `DV_${i + 1}`,
+        name: `Unit ${i + 1}`,
+        count: 3,
+        quantity: 3,
+        cost: 2,
+        arena: i < 6 ? "Space" : "Ground",
+        aspects: ["Command"],
+      })
+    );
+    const dataVaultResult = analyzeDeck(
+      sixtyCards,
+      ["Command"],
+      sampleCache,
+      {},
+      { text: "Your minimum deck size is increased by 10 cards." }
+    );
+    expect(dataVaultResult.totalCards).toBe(60);
+    expect(dataVaultResult.warnings).toEqual([]);
+    expect(dataVaultResult.bonuses).toContain("Optimized Deck Thickness (60-62 cards)");
   });
 });
 

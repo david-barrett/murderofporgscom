@@ -1,4 +1,5 @@
 import {
+  type Card,
   CardType,
   type CardCache,
   type DeckCard,
@@ -68,6 +69,7 @@ export interface AiCoachAnalysis {
   mulligan: string[];
   tactics?: string[];
   sideboardPlan?: Array<{ matchup: string; out: string; in: string }>;
+  suggestedChanges?: Array<{ cut: string; add: string; reason: string }>;
 }
 
 // Hardcoded competitive baseline curves
@@ -290,12 +292,36 @@ export function parseDeckListText(
   return nextMain;
 }
 
+/** Determine minimum legal deck size from Base card text (defaults to 50). */
+export function getMinimumDeckSize(
+  base?: Card | RawCard | null,
+  cardCache: CardCache = {}
+): number {
+  let text = String(base?.text ?? "");
+  if (!text && base?.id) {
+    text = String(findCardData(String(base.id), cardCache)?.text ?? "");
+  }
+
+  const incMatch = text.match(/minimum deck size is increased by (\d+)/i);
+  if (incMatch) {
+    return 50 + parseInt(incMatch[1], 10);
+  }
+
+  const decMatch = text.match(/minimum deck size is decreased by (\d+)/i);
+  if (decMatch) {
+    return Math.max(1, 50 - parseInt(decMatch[1], 10));
+  }
+
+  return 50;
+}
+
 /** Analyze a deck's curve, arena split, format legality, and overall competitive score. */
 export function analyzeDeck(
   main: DeckCard[],
   allAspects: string[],
   cardCache: CardCache,
-  metaTargetData: Record<string, MetaTargetBucket>
+  metaTargetData: Record<string, MetaTargetBucket>,
+  base?: Card | RawCard | null
 ): DeckAnalysis {
   const c: Record<string, number> = {
     "1": 0,
@@ -451,20 +477,24 @@ export function analyzeDeck(
   const warnings: string[] = [];
   const bonuses: string[] = [];
 
-  if (countTotal < 50) {
-    score -= (50 - countTotal) * 2;
+  const minDeckSize = getMinimumDeckSize(base, cardCache);
+
+  if (countTotal < minDeckSize) {
+    score -= (minDeckSize - countTotal) * 2;
     validForEternal = false;
     validForPremier = false;
     warnings.push(
-      `Deck contains only ${countTotal} cards (Standard minimum is 50).`
+      `Deck contains only ${countTotal} cards (Minimum is ${minDeckSize}).`
     );
-  } else if (countTotal > 54) {
-    score -= (countTotal - 50) * 1.5;
+  } else if (countTotal > minDeckSize + 4) {
+    score -= (countTotal - minDeckSize) * 1.5;
     warnings.push(
-      `Deck count (${countTotal}) exceeds optimal 50 cards, lowering draw consistency.`
+      `Deck count (${countTotal}) exceeds optimal ${minDeckSize} cards, lowering draw consistency.`
     );
   } else {
-    bonuses.push("Optimized Deck Thickness (50-52 cards)");
+    bonuses.push(
+      `Optimized Deck Thickness (${minDeckSize}-${minDeckSize + 2} cards)`
+    );
   }
 
   if (c["2"] < 8) {

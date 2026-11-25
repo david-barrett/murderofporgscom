@@ -221,8 +221,15 @@ export default function DeckGrader() {
   }, [metaDecks, resolvedCards]);
 
   const analysis = useMemo(
-    () => analyzeDeck(currentDeck.main, allAspects, resolvedCards, metaTargetData),
-    [currentDeck.main, allAspects, resolvedCards, metaTargetData]
+    () =>
+      analyzeDeck(
+        currentDeck.main,
+        allAspects,
+        resolvedCards,
+        metaTargetData,
+        currentDeck.base
+      ),
+    [currentDeck.main, currentDeck.base, allAspects, resolvedCards, metaTargetData]
   );
 
   const resolvedSideCards = useMemo(
@@ -1057,13 +1064,31 @@ export default function DeckGrader() {
                       <div className="pt-3 border-t border-slate-800/80 space-y-2">
                         <h4 className="font-bold text-purple-400 uppercase tracking-wider text-[11px]">Sideboard Plan</h4>
                         <div className="space-y-2">
-                          {aiAnalysis.sideboardPlan.map((p: any, i: number) => (
+                          {aiAnalysis.sideboardPlan.map((p, i) => (
                             <div key={i} className="bg-slate-900/60 rounded-lg p-3 space-y-1">
                               <span className="font-bold text-slate-200">{p.matchup}</span>
                               <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-[11px]">
                                 <span className="text-red-300">{p.out}</span>
                                 <span className="text-emerald-300">{p.in}</span>
                               </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {aiAnalysis.suggestedChanges && aiAnalysis.suggestedChanges.length > 0 && (
+                      <div className="pt-3 border-t border-slate-800/80 space-y-2">
+                        <h4 className="font-bold text-emerald-400 uppercase tracking-wider text-[11px]">Suggested Deck Changes</h4>
+                        <div className="space-y-2">
+                          {aiAnalysis.suggestedChanges.map((chg, i) => (
+                            <div key={i} className="bg-slate-900/60 rounded-lg p-3 space-y-1.5">
+                              <div className="flex flex-wrap items-center gap-2 text-[11px] font-semibold">
+                                <span className="text-red-300">{chg.cut}</span>
+                                <span className="text-slate-500">→</span>
+                                <span className="text-emerald-300">{chg.add}</span>
+                              </div>
+                              <p className="text-[11px] text-slate-400">{chg.reason}</p>
                             </div>
                           ))}
                         </div>

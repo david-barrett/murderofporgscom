@@ -122,84 +122,30 @@ app.get("/api/swudb/:deckId", async (c) => {
 });
 
 import cardCache from '../data/card-cache.json';
-import metaDecksCache from '../data/meta-decks.json';
+import metaDecksCache from '../data/meta-decks-v2.json';
 
-// Helper to format Deck into readable lines for the LLM prompt
-function formatDeckSummary(deck?: Deck): string {
-	if (!deck) return "N/A";
-	const lines: string[] = [];
-
-	if (deck.leader?.name || deck.leader?.id) {
-		lines.push(`Leader: ${deck.leader.name || "Unknown"} (${deck.leader.id || "N/A"})`);
+function findCachedCard(
+	cache: Record<string, any>,
+	rawId?: string,
+): Record<string, any> | undefined {
+	if (!rawId) return undefined;
+	const clean = String(rawId).trim().toUpperCase();
+	if (cache[clean]) return cache[clean];
+	const m = clean.match(/^([A-Z0-9]+)_0*(\d+)$/);
+	if (m) {
+		return cache[`${m[1]}_${m[2].padStart(3, "0")}`] ?? cache[`${m[1]}_${m[2]}`];
 	}
-	if (deck.base?.name || deck.base?.id) {
-		lines.push(`Base: ${deck.base.name || "Unknown"} (${deck.base.id || "N/A"})`);
-	}
-	if (Array.isArray(deck.main) && deck.main.length > 0) {
-		lines.push("Main Deck:");
-		for (const card of deck.main) {
-			const qty = card.count ?? card.quantity ?? 1;
-			lines.push(`- ${qty}x ${card.name || card.id || "Unknown"} (${card.id || "N/A"})`);
-		}
-	}
-	if (Array.isArray(deck.side) && deck.side.length > 0) {
-		lines.push("Sideboard:");
-		for (const card of deck.side) {
-			const qty = card.count ?? card.quantity ?? 1;
-			lines.push(`- ${qty}x ${card.name || card.id || "Unknown"} (${card.id || "N/A"})`);
-		}
-	}
-
-	return lines.length > 0 ? lines.join("\n") : "N/A";
+	return undefined;
 }
 
-function extractRelevantCardPool(
-	cache: Record<string, any> | undefined,
-	deck: Deck | undefined,
-	metaDecks: Record<string, any> | undefined,
+function sanitizeCardForPrompt(
+	card: any,
+	cache: Record<string, any>,
 ): Record<string, any> {
-	if (!cache || typeof cache !== "object") return {};
-
-	const ids = new Set<string>();
-	const addId = (rawId?: string) => {
-		if (!rawId) return;
-		const clean = String(rawId).trim().toUpperCase();
-		ids.add(clean);
-		const m = clean.match(/^([A-Z0-9]+)_0*(\d+)$/);
-		if (m) {
-			ids.add(`${m[1]}_${m[2].padStart(3, "0")}`);
-			ids.add(`${m[1]}_${m[2]}`);
-		}
-	};
-
-	if (deck) {
-		addId(deck.leader?.id);
-		addId(deck.base?.id);
-		for (const card of deck.main || []) addId(card.id);
-		for (const card of deck.side || []) addId(card.id);
-	}
-
-	if (metaDecks && typeof metaDecks === "object") {
-		for (const metaKey of Object.keys(metaDecks)) {
-			const md = metaDecks[metaKey];
-			addId(md?.leader?.id);
-			addId(md?.base?.id);
-			for (const item of md?.deck || []) addId(item.id);
-			for (const item of md?.sideboard || []) addId(item.id);
-		}
-	}
-
-	const pool: Record<string, any> = {};
-	for (const [key, value] of Object.entries(cache)) {
-		if (ids.has(key.toUpperCase())) {
-			pool[key] = value;
-		}
-	}
-	return Object.keys(pool).length > 0 ? pool : cache;
-}
-
-function sanitizeCardForPrompt(card: any): Record<string, any> {
 	if (!card || typeof card !== "object") return {};
+
+	const cached = findCachedCard(cache, card.id);
+	const merged = cached ? { ...cached, ...card } : card;
 
 	const {
 		imageUrl: _imageUrl,
@@ -207,7 +153,7 @@ function sanitizeCardForPrompt(card: any): Record<string, any> {
 		set: _set,
 		number: _number,
 		...rest
-	} = card;
+	} = merged;
 
 	const cleaned: Record<string, any> = {};
 	for (const [key, value] of Object.entries(rest)) {
@@ -219,23 +165,42 @@ function sanitizeCardForPrompt(card: any): Record<string, any> {
 	if (cleaned.count === undefined && card.quantity !== undefined) {
 		cleaned.count = card.quantity;
 	}
+	if (!cleaned.text && cached?.text) cleaned.text = cached.text;
+	if (!cleaned.back_text && cached?.back_text) cleaned.back_text = cached.back_text;
 
 	return cleaned;
 }
 
-function sanitizeDeckForPrompt(deck?: Deck): Record<string, any> | null {
+function sanitizeDeckForPrompt(
+	deck: Deck | undefined,
+	cache: Record<string, any>,
+): Record<string, any> | null {
 	if (!deck) return null;
 
 	return {
-		...(deck.leader ? { leader: sanitizeCardForPrompt(deck.leader) } : {}),
-		...(deck.base ? { base: sanitizeCardForPrompt(deck.base) } : {}),
+		...(deck.leader ? { leader: sanitizeCardForPrompt(deck.leader, cache) } : {}),
+		...(deck.base ? { base: sanitizeCardForPrompt(deck.base, cache) } : {}),
 		...(Array.isArray(deck.main)
-			? { main: deck.main.map(sanitizeCardForPrompt) }
+			? { main: deck.main.map((c) => sanitizeCardForPrompt(c, cache)) }
 			: {}),
 		...(Array.isArray(deck.side)
-			? { side: deck.side.map(sanitizeCardForPrompt) }
+			? { side: deck.side.map((c) => sanitizeCardForPrompt(c, cache)) }
 			: {}),
 	};
+}
+
+function buildMetaSnapshot(metaDecks: Record<string, any>): string {
+	const entries = Object.values(metaDecks || {});
+	if (entries.length === 0) return "None";
+	return entries
+		.map((md: any) => {
+			const name = md?.metadata?.name || "Meta Deck";
+			const leader = md?.leader?.name || md?.leader?.id || "Unknown Leader";
+			const base = md?.base?.name || md?.base?.id || "Unknown Base";
+			const leaderAbility = md?.leader?.text ? ` — Ability: ${md.leader.text}` : "";
+			return `- ${name}: Leader ${leader}${leaderAbility} | Base ${base}`;
+		})
+		.join("\n");
 }
 
 // ── AI Coach Endpoint ───────────────────────────────────────────────
@@ -266,51 +231,63 @@ app.post("/api/coach", async (c) => {
 			curve?: Record<string, number>;
 		}>();
 
-		const compactMetaDecks = JSON.stringify(metaDecksCache ?? {}, null, 2).slice(0, 8000);
-		const compactCardCache = JSON.stringify(cardCache ?? {}).slice(0, 12000);
-
-		const sanitizedDeck = sanitizeDeckForPrompt(body.deck);
-		const relevantCardPool = extractRelevantCardPool(
-			cardCache as Record<string, any>,
-			body.deck,
-			metaDecksCache as Record<string, any>,
-		);
-
-		// - Card Pool Reference (JSON)
-// ${JSON.stringify(relevantCardPool, null, 2)}
-
-// Current Meta Decks (JSON)
-// ${JSON.stringify(metaDecksCache ?? {}, null, 2)}
+		const cacheMap = (cardCache ?? {}) as Record<string, any>;
+		const sanitizedDeck = sanitizeDeckForPrompt(body.deck, cacheMap);
+		const metaSnapshot = buildMetaSnapshot((metaDecksCache ?? {}) as Record<string, any>);
 
 		const prompt = `You are an elite competitive Star Wars: Unlimited TCG strategic coach.
-Analyze this deck setup:
+Analyze this decklist, including the card text, traits, aspects, and cost of the Leader (both front \`text\` and deployed \`back_text\`), Base, Main Deck, and Sideboard.
 
-
-Provide strategic guidance. Return ONLY a single JSON object (no markdown, no backticks) with this structure:
+Return ONLY a single valid JSON object (no markdown, no backticks) with this exact structure:
 {
-  "summary": "2-3 sentence executive strategic assessment of this specific deck and leader synergy",
+  "summary": "2-3 sentence executive strategic assessment explaining how the Leader's front/back abilities and Base synergize with key cards and traits in the main deck.",
   "mulligan": [
-    "Priority 1: ...",
-    "Priority 2: ...",
-    "Redraw Rule: ..."
+    "Priority 1: Name specific early-game cards to keep and why...",
+    "Priority 2: Name synergy/curve pieces to look for...",
+    "Redraw Rule: Name specific cards or cost ranges to pitch..."
   ],
   "tactics": [
-    "Leader deployment timing & swing turn ...",
-    "Ground vs Space lane prioritization ...",
-    "Resource curve management ..."
+    "Leader Synergy & Deployment: Explain how Leader front/back text interacts with specific cards in the deck and the optimal resource turn to deploy...",
+    "Ground vs Space Lane Plan: Explain how specific units/events control lanes...",
+    "Resource Curve Management: ..."
   ],
   "sideboardPlan": [
-    { "matchup": "vs. Hyper Aggro", "out": "Cut slow 5+ cost units", "in": "Add cheap sentinels / base healing" },
-    { "matchup": "vs. Hard Control", "out": "Cut low-threat ground units", "in": "Add disruption / hand control / fast space" },
-    { "matchup": "vs. Midrange Mirror", "out": "Cut narrow situational cards", "in": "Add targeted removal / tempo tools" }
+    {
+      "matchup": "vs. Hyper Aggro",
+      "out": "Cut -X <Exact Card Name>, -Y <Exact Card Name> (when/why: e.g. too slow before turn 4)",
+      "in": "Add +X <Exact Sideboard Card Name>, +Y <Exact Sideboard Card Name> (when/why: e.g. stabilizes ground early)"
+    },
+    {
+      "matchup": "vs. Hard Control",
+      "out": "Cut -X <Exact Card Name> (when/why)",
+      "in": "Add +X <Exact Sideboard Card Name> (when/why)"
+    },
+    {
+      "matchup": "vs. Midrange Mirror",
+      "out": "Cut -X <Exact Card Name> (when/why)",
+      "in": "Add +X <Exact Sideboard Card Name> (when/why)"
+    }
+  ],
+  "suggestedChanges": [
+    {
+      "cut": "-X <Exact Card Name from main deck>",
+      "add": "+X <Recommended Card Name or role/cost profile>",
+      "reason": "Concrete reason referencing curve, meta matchups, or Leader/card-text synergy"
+    }
   ]
 }
 
-Consider the current meta and how this deck may need to compete against those deck's
-Don't suggest to stop resourcing earlier than resources needed for leader deploy.
-When analysing the deck look up the card id XXX_123 using the card pool reference to understand the card.
+Coaching Rules:
+- Read \`leader.text\`, \`leader.back_text\`, \`base.text\`, and each card's \`text\`, \`traits\`, and \`aspects\` in the Deck JSON to identify concrete synergies (e.g. cost triggers, trait payoffs, exhaust/attack triggers).
+- In \`sideboardPlan\`, ALWAYS name exact cards and quantities from \`main\` (to cut) and \`side\` (to bring in) along with when/why to swap them. If \`side\` is empty, recommend specific sideboard cards to add.
+- In \`suggestedChanges\`, provide 2-3 actionable main-deck improvements (cuts/adds or ratio tweaks) to sharpen Leader synergy or shore up weak meta matchups.
+- Never suggest stopping resourcing earlier than the resources needed to deploy the Leader.
+- Factor in how this deck competes against the current tournament meta below.
 
-Deck to Analyse
+Current Tournament Meta:
+${metaSnapshot}
+
+Deck to Analyse:
 - Leader: ${body.leader || "Unknown"}
 - Base: ${body.base || "Unknown"}
 - Aspects: ${(body.aspects || []).join(", ") || "None"}
@@ -319,7 +296,7 @@ Deck to Analyse
 - Average Unit Cost: ${body.avgUnitCost || "N/A"}
 - Arena Breakdown: ${body.groundRatio || 0}% Ground vs ${body.spaceRatio || 0}% Space
 - Resource Curve: ${JSON.stringify(body.curve || {})}
-- Full Deck JSON:
+- Full Deck JSON (with card text):
 ${sanitizedDeck ? JSON.stringify(sanitizedDeck, null, 2) : "N/A"}
 `;
 
