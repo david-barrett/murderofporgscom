@@ -189,6 +189,18 @@ function sanitizeDeckForPrompt(
 	};
 }
 
+function formatCompactCardList(cards: any[]): string {
+	if (!Array.isArray(cards) || cards.length === 0) return "None";
+	return cards
+		.map((c: any) => {
+			const qty = c?.count ?? c?.quantity ?? 1;
+			const name = c?.name || c?.id || "Unknown";
+			const cost = c?.cost !== undefined ? ` (${c.cost}c)` : "";
+			return `${qty}x ${name}${cost}`;
+		})
+		.join(", ");
+}
+
 function buildMetaSnapshot(metaDecks: Record<string, any>): string {
 	const entries = Object.values(metaDecks || {});
 	if (entries.length === 0) return "None";
@@ -198,7 +210,9 @@ function buildMetaSnapshot(metaDecks: Record<string, any>): string {
 			const leader = md?.leader?.name || md?.leader?.id || "Unknown Leader";
 			const base = md?.base?.name || md?.base?.id || "Unknown Base";
 			const leaderAbility = md?.leader?.text ? ` — Ability: ${md.leader.text}` : "";
-			return `- ${name}: Leader ${leader}${leaderAbility} | Base ${base}`;
+			const mainList = formatCompactCardList(md?.deck || md?.main || []);
+			const sideList = formatCompactCardList(md?.sideboard || md?.side || []);
+			return `- ${name}: Leader ${leader}${leaderAbility} | Base ${base}\n  Main: ${mainList}\n  Side: ${sideList}`;
 		})
 		.join("\n");
 }
