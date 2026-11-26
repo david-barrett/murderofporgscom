@@ -123,6 +123,12 @@ export default function DeckGrader() {
   const [loadingPhraseIdx, setLoadingPhraseIdx] = useState(0);
 
   useEffect(() => {
+    setAiAnalysis(null);
+    setAiSource(null);
+    setAiError(null);
+  }, [selectedMetaDeck]);
+
+  useEffect(() => {
     if (!isAnalyzing) {
       setLoadingPhraseIdx(0);
       return;
@@ -255,6 +261,7 @@ export default function DeckGrader() {
   const runAiAnalysis = async () => {
     setIsAnalyzing(true);
     setActiveTab('ai');
+    setAiError(null);
 
     setTimeout(() => {
       document.getElementById('tabs-section')?.scrollIntoView({ behavior: 'smooth' });
@@ -420,7 +427,7 @@ export default function DeckGrader() {
               className="w-full py-3 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 disabled:opacity-60 text-slate-950 font-bold rounded-xl flex items-center justify-center gap-2 shadow-lg shadow-cyan-950/30 transition-all text-xs tracking-wide cursor-pointer"
             >
               <Cpu size={16} className={isAnalyzing ? "animate-spin" : ""} />
-              {isAnalyzing ? "Analyzing Deck Profile..." : "Run AI Edge Coach Analysis"}
+              {isAnalyzing ? "Analyzing Deck Profile..." : "Run AI Analysis"}
             </button>
           </div>
 
@@ -1012,7 +1019,11 @@ export default function DeckGrader() {
                     className="bg-cyan-500 hover:bg-cyan-400 disabled:opacity-50 text-slate-950 font-bold px-3.5 py-2 rounded-xl text-xs transition shadow-md cursor-pointer flex items-center gap-1.5"
                   >
                     <Cpu size={14} className={isAnalyzing ? "animate-spin" : ""} />
-                    {isAnalyzing ? "Analyzing..." : "Refresh Analysis"}
+                    {isAnalyzing
+                      ? "Analyzing..."
+                      : aiAnalysis
+                        ? "Refresh Analysis"
+                        : "Run AI Analysis"}
                   </button>
                 </div>
 
@@ -1097,7 +1108,7 @@ export default function DeckGrader() {
                   </div>
                 ) : (
                   <div className="bg-slate-950/90 p-8 rounded-2xl border border-slate-800/90 text-center space-y-2">
-                    <p className="text-xs text-slate-400">Click &quot;Run AI Edge Coach Analysis&quot; above to generate strategic advice for this deck.</p>
+                    <p className="text-xs text-slate-400">Click &quot;Run AI Analysis&quot; above to generate strategic advice for this deck.</p>
                   </div>
                 )}
               </div>
