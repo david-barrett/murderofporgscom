@@ -2,6 +2,29 @@ import { Hono } from "hono";
 import { callGeminiWithTrace, generateHexId } from "../gemini"
 import { Deck } from "../lib/decks"
 
+import { PREMIER_BAN_LIST, SET_CONFIG } from "../react-app/lib/consts"; // adjust path to match your repo
+
+function getPremierLegalityRules(nowMs = Date.now()): {
+	legalSets: string[];
+	bannedOrSuspendedNames: string[];
+} {
+	const legalSets = Object.entries(SET_CONFIG)
+		.filter(([, cfg]) => {
+			if (!cfg.dateRotatedOut) return true;
+			const rotMs = Date.parse(cfg.dateRotatedOut);
+			return Number.isFinite(rotMs) && rotMs > nowMs;
+		})
+		.map(([code, cfg]) => `${code} (${cfg.label})`);
+
+	const bannedOrSuspendedNames = Object.values(PREMIER_BAN_LIST)
+		.filter((entry) => !entry.unban_date)
+		.map((entry) => entry.card_name);
+
+	return { legalSets, bannedOrSuspendedNames };
+}
+
+const { legalSets, bannedOrSuspendedNames } = getPremierLegalityRules();
+
 const SLUG_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
 function isValidSlug(slug: string): boolean {
@@ -10,6 +33,7 @@ function isValidSlug(slug: string): boolean {
 
 interface WorkerEnv extends Env {
 	GEMINI_API_KEY?: string;
+	ENABLE_GEMINI_INTERACTIONS?: string;
 }
 
 const app = new Hono<{ Bindings: WorkerEnv }>();
@@ -147,26 +171,16 @@ function sanitizeCardForPrompt(
 	const cached = findCachedCard(cache, card.id);
 	const merged = cached ? { ...cached, ...card } : card;
 
-	const {
-		imageUrl: _imageUrl,
-		quantity: _quantity,
-		set: _set,
-		number: _number,
-		...rest
-	} = merged;
-
 	const cleaned: Record<string, any> = {};
-	for (const [key, value] of Object.entries(rest)) {
-		if (value === undefined || value === null) continue;
-		if (Array.isArray(value) && value.length === 0) continue;
-		cleaned[key] = value;
-	}
+	const count = merged.count ?? card.quantity ?? 1;
+	cleaned.count = count;
 
-	if (cleaned.count === undefined && card.quantity !== undefined) {
-		cleaned.count = card.quantity;
-	}
-	if (!cleaned.text && cached?.text) cleaned.text = cached.text;
-	if (!cleaned.back_text && cached?.back_text) cleaned.back_text = cached.back_text;
+	if (merged.name) cleaned.name = merged.name;
+	if (merged.cost !== undefined && merged.cost !== null) cleaned.cost = merged.cost;
+	if (Array.isArray(merged.aspects) && merged.aspects.length > 0) cleaned.aspects = merged.aspects;
+	if (Array.isArray(merged.traits) && merged.traits.length > 0) cleaned.traits = merged.traits;
+	if (merged.text) cleaned.text = merged.text;
+	if (merged.back_text) cleaned.back_text = merged.back_text;
 
 	return cleaned;
 }
@@ -201,21 +215,87 @@ function formatCompactCardList(cards: any[]): string {
 		.join(", ");
 }
 
-function buildMetaSnapshot(metaDecks: Record<string, any>): string {
-	const entries = Object.values(metaDecks || {});
+function buildMetaSnapshot(metaDecks: Record<string, any>, maxDecks = 5): string {
+	const entries = Object.values(metaDecks || {}).slice(0, maxDecks);
 	if (entries.length === 0) return "None";
 	return entries
 		.map((md: any) => {
 			const name = md?.metadata?.name || "Meta Deck";
 			const leader = md?.leader?.name || md?.leader?.id || "Unknown Leader";
 			const base = md?.base?.name || md?.base?.id || "Unknown Base";
-			const leaderAbility = md?.leader?.text ? ` — Ability: ${md.leader.text}` : "";
 			const mainList = formatCompactCardList(md?.deck || md?.main || []);
-			const sideList = formatCompactCardList(md?.sideboard || md?.side || []);
-			return `- ${name}: Leader ${leader}${leaderAbility} | Base ${base}\n  Main: ${mainList}\n  Side: ${sideList}`;
+			return `- ${name}: ${leader} | ${base}\n  Main: ${mainList}`;
 		})
 		.join("\n");
 }
+
+function getPremierLegalCardNames(
+	cache: Record<string, any>,
+	aspects: string[] = [],
+	limit = 45,
+): string[] {
+	const { legalSets, bannedOrSuspendedNames } = getPremierLegalityRules();
+	const legalSetCodes = new Set(
+		legalSets.map((entry) => entry.split(" ")[0].toUpperCase()),
+	);
+	const blockedNames = new Set(
+		bannedOrSuspendedNames.map((n) => n.toLowerCase()),
+	);
+	const allowedAspects = new Set(aspects.map((a) => a.toLowerCase()));
+
+	const names: string[] = [];
+	const seen = new Set<string>();
+
+	for (const [key, card] of Object.entries(cache || {})) {
+		if (!card || typeof card !== "object" || !card.name) continue;
+		const idUpper = String(card.id || key).toUpperCase();
+		const setCode = String(card.set || idUpper.split("_")[0] || "").toUpperCase();
+		if (setCode && legalSetCodes.size > 0 && !legalSetCodes.has(setCode)) continue;
+
+		const nameStr = String(card.name).trim();
+		const lowerName = nameStr.toLowerCase();
+		if (!nameStr || seen.has(lowerName) || blockedNames.has(lowerName)) continue;
+
+		if (allowedAspects.size > 0 && Array.isArray(card.aspects) && card.aspects.length > 0) {
+			const cardAspects = card.aspects.map((a: unknown) => String(a).toLowerCase());
+			const matchesAspect = cardAspects.some((a: string) => allowedAspects.has(a));
+			if (!matchesAspect) continue;
+		}
+
+		seen.add(lowerName);
+		names.push(nameStr);
+		if (names.length >= limit) break;
+	}
+
+	return names;
+}
+
+type ModelCandidate = {
+	model: string;
+	mode: "interactions" | "generateContent";
+	timeoutMs: number;
+};
+
+const ALL_CANDIDATE_MODELS: ModelCandidate[] = [
+	{ model: "gemini-3.8-flash", mode: "interactions", timeoutMs: 12000 },
+	{ model: "gemini-3.1-flash-lite", mode: "generateContent", timeoutMs: 10000 },
+	{ model: "gemini-3.5-flash", mode: "generateContent", timeoutMs: 12000 },
+	{ model: "gemini-3.8-flash", mode: "generateContent", timeoutMs: 12000 },
+];
+
+function getCandidateModels(env: WorkerEnv, forceInteractions = false): ModelCandidate[] {
+	const allowInteractions =
+		forceInteractions || env.ENABLE_GEMINI_INTERACTIONS?.toLowerCase() === "true";
+	return ALL_CANDIDATE_MODELS.filter((m) => allowInteractions || m.mode !== "interactions");
+}
+
+function isRetryableGeminiError(errText: string): boolean {
+	return /\b(408|429|500|502|503|504)\b|timeout|aborted|service_unavailable|UNAVAILABLE|RESOURCE_EXHAUSTED/i.test(
+		errText,
+	);
+}
+
+const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
 // ── AI Coach Endpoint ───────────────────────────────────────────────
 app.post("/api/coach", async (c) => {
@@ -243,11 +323,18 @@ app.post("/api/coach", async (c) => {
 			spaceRatio?: number;
 			deck: Deck;
 			curve?: Record<string, number>;
+			testInteractions?: boolean;
 		}>();
+
+		if (!body?.deck || typeof body.deck !== "object") {
+			return c.json({ success: false, configured: true, error: "Missing deck payload." }, 400);
+		}
 
 		const cacheMap = (cardCache ?? {}) as Record<string, any>;
 		const sanitizedDeck = sanitizeDeckForPrompt(body.deck, cacheMap);
 		const metaSnapshot = buildMetaSnapshot((metaDecksCache ?? {}) as Record<string, any>);
+		const premierCardPool = getPremierLegalCardNames(cacheMap, body.aspects || []);
+
 
 		const prompt = `You are an elite competitive Star Wars: Unlimited TCG strategic coach.
 Analyze this decklist, including the card text, traits, aspects, and cost of the Leader (both front \`text\` and deployed \`back_text\`), Base, Main Deck, and Sideboard.
@@ -269,23 +356,23 @@ Return ONLY a single valid JSON object (no markdown, no backticks) with this exa
     {
       "matchup": "vs. Hyper Aggro",
       "out": "Cut -X <Exact Card Name>, -Y <Exact Card Name> (when/why: e.g. too slow before turn 4)",
-      "in": "Add +X <Exact Sideboard Card Name>, +Y <Exact Sideboard Card Name> (when/why: e.g. stabilizes ground early)"
+      "in": "Add +X <Exact Card Name>, +Y <Exact Card Name> (when/why: e.g. stabilizes ground early)"
     },
     {
       "matchup": "vs. Hard Control",
       "out": "Cut -X <Exact Card Name> (when/why)",
-      "in": "Add +X <Exact Sideboard Card Name> (when/why)"
+      "in": "Add +X <Exact Card Name> (when/why)"
     },
     {
       "matchup": "vs. Midrange Mirror",
       "out": "Cut -X <Exact Card Name> (when/why)",
-      "in": "Add +X <Exact Sideboard Card Name> (when/why)"
+      "in": "Add +X <Exact Card Name> (when/why)"
     }
   ],
   "suggestedChanges": [
     {
       "cut": "-X <Exact Card Name from main deck>",
-      "add": "+X <Recommended Card Name or role/cost profile>",
+      "add": "+X <Exact Premier-Legal Card Name>",
       "reason": "Concrete reason referencing curve, meta matchups, or Leader/card-text synergy"
     }
   ]
@@ -293,10 +380,16 @@ Return ONLY a single valid JSON object (no markdown, no backticks) with this exa
 
 Coaching Rules:
 - Read \`leader.text\`, \`leader.back_text\`, \`base.text\`, and each card's \`text\`, \`traits\`, and \`aspects\` in the Deck JSON to identify concrete synergies (e.g. cost triggers, trait payoffs, exhaust/attack triggers).
-- In \`sideboardPlan\`, ALWAYS name exact cards and quantities from \`main\` (to cut) and \`side\` (to bring in) along with when/why to swap them. If \`side\` is empty, recommend specific sideboard cards to add.
+- ASPECT PENALTY RULES: Cards with aspects outside the deck's leader/base aspects are still legal and playable, but cost 2 extra resources per unmatched aspect icon. Never call an off-aspect card "unplayable" or "illegal"—evaluate it on whether paying the extra aspect cost is worth its effect or synergy.
+- PREMIER LEGALITY: Only recommend cards from Premier-legal sets (${legalSets.join(", ")}). NEVER recommend cards from rotated sets (SOR, SHD, TWI) such as Resupply, or banned/suspended Premier cards (${bannedOrSuspendedNames.join(", ")}).
+- EXACT CARD NAMES ONLY: In \`sideboardPlan\` (\`out\` and \`in\`) and \`suggestedChanges\` (\`cut\` and \`add\`), ALWAYS name exact Premier-legal cards and quantities (e.g., "Add +2 <Exact Card Name> (...)"). When \`side\` is empty, still recommend specific Premier-legal cards by exact name—never use vague categories like "removal", "threats", "disruption", or "utility units".
+- EMPTY SIDEBOARD HANDLING: If \`side\` is empty or lacks a card for a matchup, explicitly recommend specific Premier-legal sideboard cards to add (with exact names and counts) rather than listing cards from \`main\` as if they were already in \`side\`.
 - In \`suggestedChanges\`, provide 2-3 actionable main-deck improvements (cuts/adds or ratio tweaks) to sharpen Leader synergy or shore up weak meta matchups.
 - Never suggest stopping resourcing earlier than the resources needed to deploy the Leader.
 - Factor in how this deck competes against the current tournament meta below.
+
+Premier-Legal Card Pool (choose exact names from here when recommending cards):
+${premierCardPool.join(", ")}
 
 Current Tournament Meta:
 ${metaSnapshot}
@@ -311,48 +404,57 @@ Deck to Analyse:
 - Arena Breakdown: ${body.groundRatio || 0}% Ground vs ${body.spaceRatio || 0}% Space
 - Resource Curve: ${JSON.stringify(body.curve || {})}
 - Full Deck JSON (with card text):
-${sanitizedDeck ? JSON.stringify(sanitizedDeck, null, 2) : "N/A"}
+${sanitizedDeck ? JSON.stringify(sanitizedDeck) : "N/A"}
 `;
-
 		const traceId = generateHexId(16);
 		let rawContent = "";
 		let lastErrorText = "";
 
-		// 1. Primary call: Interactions API
-		const primary = await callGeminiWithTrace({
-			c,
-			traceId,
-			name: "coach-interactions",
-			model: "gemini-3.8-flash",
-			prompt,
-			apiKey,
-			mode: "interactions",
-			timeoutMs: 10000,
-		});
+		const forceInteractions =
+			c.req.query("interactions") === "1" || body.testInteractions === true;
+		const candidateModels = getCandidateModels(c.env, forceInteractions);
 
-		rawContent = primary.text;
-		lastErrorText = primary.errorText;
+		const MAX_TOTAL_MS = 25000;
+		const startedAt = Date.now();
 
-		// 2. Fallback calls: generateContent across candidate models
-		if (!rawContent) {
-			const candidateModels = ["gemini-3.8-flash", "gemini-3.6-flash", "gemini-3.5-flash", "gemini-3.1-flash-lite"];
-			for (const model of candidateModels) {
-				const fallback = await callGeminiWithTrace({
-					c,
-					traceId,
-					name: `coach-generate-${model}`,
-					model,
-					prompt,
-					apiKey,
-					mode: "generateContent",
-					timeoutMs: 8000,
-				});
-
-				if (fallback.text) {
-					rawContent = fallback.text;
+		for (let i = 0; i < candidateModels.length; i++) {
+			if (i > 0) {
+				if (Date.now() - startedAt >= MAX_TOTAL_MS) {
+					lastErrorText = lastErrorText || "Exceeded total coaching time budget";
 					break;
 				}
-				lastErrorText = fallback.errorText;
+				await sleep(350 + Math.floor(Math.random() * 250));
+			}
+
+			if (Date.now() - startedAt >= MAX_TOTAL_MS) {
+				lastErrorText = lastErrorText || "Exceeded total coaching time budget";
+				break;
+			}
+
+			const step = candidateModels[i];
+			if (i > 0) {
+				await sleep(350 + Math.floor(Math.random() * 250));
+			}
+
+			const res = await callGeminiWithTrace({
+				c,
+				traceId,
+				name: `coach-${step.model}`,
+				model: step.model,
+				prompt,
+				apiKey,
+				mode: step.mode,
+				timeoutMs: step.timeoutMs,
+			});
+
+			if (res.text) {
+				rawContent = res.text;
+				break;
+			}
+
+			lastErrorText = res.errorText || "Unknown Gemini error";
+			if (!isRetryableGeminiError(lastErrorText)) {
+				break;
 			}
 		}
 
@@ -373,6 +475,7 @@ ${sanitizedDeck ? JSON.stringify(sanitizedDeck, null, 2) : "N/A"}
 				mulligan: ["Review opening hand for turn 1-2 plays."],
 				tactics: ["Deploy leader on-curve for maximum tempo."],
 				sideboardPlan: [],
+				suggestedChanges: [],
 			};
 		}
 

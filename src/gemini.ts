@@ -1,8 +1,3 @@
-type GeminiAttemptResult = {
-	text: string;
-	errorText: string;
-};
-
 export function generateHexId(bytes: number): string {
 	const arr = new Uint8Array(bytes);
 	crypto.getRandomValues(arr);
@@ -133,8 +128,33 @@ async function sendLangfuseGeneration(
 	}
 }
 
+export type GeminiAttemptResult = {
+	text: string;
+	errorText: string;
+	status?: number;
+};
+
+function extractInteractionText(data: any): string {
+	if (typeof data?.text === "string" && data.text) return data.text;
+
+	if (Array.isArray(data?.outputs)) {
+		for (const out of data.outputs) {
+			if (typeof out?.text === "string" && out.text) return out.text;
+		}
+	}
+
+	const step = Array.isArray(data?.steps)
+		? data.steps.find((s: any) => s?.type === "model_output")
+		: undefined;
+	const textPart = Array.isArray(step?.content)
+		? step.content.find((part: any) => part?.type === "text" || typeof part?.text === "string")
+		: undefined;
+
+	return typeof textPart?.text === "string" ? textPart.text : "";
+}
+
 export async function callGeminiWithTrace(opts: {
-	c: any; // Hono context with env & executionCtx
+	c: any;
 	traceId: string;
 	name: string;
 	model: string;
@@ -142,12 +162,14 @@ export async function callGeminiWithTrace(opts: {
 	apiKey: string;
 	mode: "interactions" | "generateContent";
 	timeoutMs?: number;
+	metadata?: Record<string, unknown>;
 }): Promise<GeminiAttemptResult> {
-	const { c, traceId, name, model, prompt, apiKey, mode, timeoutMs = 10000 } = opts;
+	const { c, traceId, name, model, prompt, apiKey, mode, timeoutMs = 15000, metadata } = opts;
 	const startTime = new Date().toISOString();
 
 	let text = "";
 	let errorText = "";
+	let status: number | undefined;
 	let level: "DEFAULT" | "WARNING" | "ERROR" = "DEFAULT";
 	let statusMessage: string | undefined;
 	let usage: { input?: number; output?: number } | undefined;
@@ -164,13 +186,12 @@ export async function callGeminiWithTrace(opts: {
 				signal: AbortSignal.timeout(timeoutMs),
 				body: JSON.stringify({ model, input: prompt }),
 			});
+			status = res.status;
 
 			if (res.ok) {
 				const data = (await res.json()) as any;
 				rawOutput = data;
-				const step = data.steps?.find((s: any) => s.type === "model_output");
-				const textPart = step?.content?.find((c: any) => c.type === "text" || typeof c.text === "string");
-				if (textPart?.text) text = textPart.text;
+				text = extractInteractionText(data);
 				usage = {
 					input: data.usage?.inputTokens ?? data.usageMetadata?.promptTokenCount,
 					output: data.usage?.outputTokens ?? data.usageMetadata?.candidatesTokenCount,
@@ -182,9 +203,7 @@ export async function callGeminiWithTrace(opts: {
 				rawOutput = errorText;
 			}
 		} else {
-			const geminiUrl = apiKey.startsWith("AQ.")
-				? `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`
-				: `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+			const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
 
 			const res = await fetch(geminiUrl, {
 				method: "POST",
@@ -201,12 +220,13 @@ export async function callGeminiWithTrace(opts: {
 					},
 				}),
 			});
+			status = res.status;
 
 			if (res.ok) {
 				const data = (await res.json()) as any;
 				rawOutput = data;
 				const candidateText = data.candidates?.[0]?.content?.parts?.[0]?.text;
-				if (candidateText) text = candidateText;
+				if (typeof candidateText === "string") text = candidateText;
 				usage = {
 					input: data.usageMetadata?.promptTokenCount,
 					output: data.usageMetadata?.candidatesTokenCount,
@@ -226,23 +246,25 @@ export async function callGeminiWithTrace(opts: {
 	}
 
 	const endTime = new Date().toISOString();
+	const traceTask = sendLangfuseGeneration(c.env, {
+		traceId,
+		name,
+		model,
+		input: prompt,
+		output: text || rawOutput,
+		startTime,
+		endTime,
+		level,
+		statusMessage,
+		usage,
+		metadata: { mode, ...(metadata ?? {}) },
+	}).catch((err) => console.error("Langfuse background task failed:", err));
 
-	// Flush in background without blocking the API response
-	c.executionCtx.waitUntil(
-		sendLangfuseGeneration(c.env, {
-			traceId,
-			name,
-			model,
-			input: prompt,
-			output: text || rawOutput,
-			startTime,
-			endTime,
-			level,
-			statusMessage,
-			usage,
-			metadata: { mode, leader: c.req.raw ? undefined : undefined },
-		}).catch((err) => console.error("Langfuse background task failed:", err))
-	);
+	if (c.executionCtx?.waitUntil) {
+		c.executionCtx.waitUntil(traceTask);
+	} else {
+		await traceTask;
+	}
 
-	return { text, errorText };
+	return { text, errorText, status };
 }

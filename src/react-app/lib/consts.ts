@@ -122,7 +122,7 @@ interface BanEntry {
 }
 
 export const PREMIER_BAN_LIST: Record<string, BanEntry> = {
-    "SOR_15": {
+    "SOR_015": {
       "card_name": "Boba Fett, Collecting the Bounty",
       "set": "Spark of Rebellion",
       "card_number": "015",
@@ -130,7 +130,7 @@ export const PREMIER_BAN_LIST: Record<string, BanEntry> = {
       "unban_date": null,
       "status": "Rotated out of Premier / Legal in Eternal"
     },
-    "TWI_16": {
+    "TWI_016": {
       "card_name": "Jango Fett, Concealing the Conspiracy",
       "set": "Twilight of the Republic",
       "card_number": "016",
@@ -220,5 +220,13 @@ export const ETERNAL_BAN_LIST: Record<string, BanEntry> = {
         "ban_date": "2026-04-24",
         "unban_date": "2026-10-09",
         "status": "Unsuspended (Homeworlds release)"
+    },
+     "JTL_024": {
+        "card_name": "Data Vault",
+        "set": "Jump to Lightspeed",
+        "card_number": "24",
+        "ban_date": "2026-11-23",
+        "unban_date": null,
+        "status": "Suspended"
     }
 }
