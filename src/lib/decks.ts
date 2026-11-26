@@ -54,6 +54,14 @@ export interface Deck {
   side: DeckCard[];
 }
 
+export type DrawnCard = {
+  id?: string;
+  name: string;
+  cost: number;
+  type?: CardType | string;
+  imageUrl?: string | null;
+};
+
 export type CardCache = Record<string, RawCard>;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -458,4 +466,30 @@ export function formatDeckLines(deck: Deck): string {
   }
   const sideText = formatDeckMainLines(deck.side);
   return `${mainText}\n\nSideboard (${deck.side.reduce((sum, c) => sum + (c.count || 1), 0)}):\n${sideText}`;
+}
+
+export function expandMainDeckPool(cards: DeckCard[]): DrawnCard[] {
+  const pool: DrawnCard[] = [];
+  for (const card of cards) {
+    const copies = Math.max(0, Number(card.count) || 1);
+    for (let i = 0; i < copies; i++) {
+      pool.push({
+        id: card.id,
+        name: card.name,
+        cost: card.cost,
+        type: card.type,
+        imageUrl: card.imageUrl,
+      });
+    }
+  }
+  return pool;
+}
+
+export function drawSixCards(pool: DrawnCard[]): DrawnCard[] {
+  const copy = [...pool];
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy.slice(0, 6);
 }

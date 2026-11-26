@@ -2,7 +2,7 @@ import { useState, useMemo, useEffect } from 'react';
 import { 
   Cpu, Database, TrendingUp, Swords, 
   CheckCircle2, AlertTriangle, ArrowRightLeft, BarChart3, Sparkles, Crosshair, FileText,
-  Crown, Shield, Compass, Download, HelpCircle, Eye, X, RotateCw
+  Crown, Shield, Compass, Download, HelpCircle, Eye, X, RotateCw, Shuffle
 } from 'lucide-react';
 import { 
   BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid, Legend 
@@ -12,7 +12,10 @@ import { CardPreviewModal, type CardPreviewState } from '../components/CardPrevi
 import { ASPECT_CONFIG, SET_CONFIG } from '../lib/consts';
 import {
   type Deck,
+  DrawnCard,
   createEmptyDeck,
+  drawSixCards,
+  expandMainDeckPool,
   formatCardTypeLabel,
   formatDeckLines,
   getCardImageUrl,
@@ -122,11 +125,8 @@ export default function DeckGrader() {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [loadingPhraseIdx, setLoadingPhraseIdx] = useState(0);
 
-  useEffect(() => {
-    setAiAnalysis(null);
-    setAiSource(null);
-    setAiError(null);
-  }, [selectedMetaDeck]);
+  const [openingHand, setOpeningHand] = useState<DrawnCard[]>([]);
+  const [mulliganCount, setMulliganCount] = useState(0);
 
   useEffect(() => {
     if (!isAnalyzing) {
@@ -237,6 +237,25 @@ export default function DeckGrader() {
       ),
     [currentDeck.main, currentDeck.base, allAspects, resolvedCards, metaTargetData]
   );
+
+  const mainDeckPool = useMemo(
+    () => expandMainDeckPool(analysis.parsedCards),
+    [analysis.parsedCards]
+  );
+
+  const handleMulligan = () => {
+    setOpeningHand(drawSixCards(mainDeckPool));
+    setMulliganCount(prev => prev + 1);
+  };
+
+  useEffect(() => {
+    setAiAnalysis(null);
+    setAiSource(null);
+    setAiError(null);
+    setOpeningHand(drawSixCards(mainDeckPool));
+    setMulliganCount(0);
+  }, [selectedMetaDeck, mainDeckPool]);
+
 
   const resolvedSideCards = useMemo(
     () =>
@@ -812,6 +831,7 @@ export default function DeckGrader() {
               { id: 'overview', label: 'Curve Visualizer', icon: BarChart3 },
               { id: 'matchup', label: 'Meta Matchup Strategy', icon: TrendingUp },
               { id: 'sideboard', label: 'Sideboard Swap Guide', icon: ArrowRightLeft },
+              { id: 'hand', label: 'Hand Draw Visualizer', icon: Shuffle },
               { id: 'ai', label: 'AI Tactical Coach', icon: Sparkles }
             ].map(tab => {
               const Icon = tab.icon;
@@ -994,6 +1014,71 @@ export default function DeckGrader() {
                     </div>
                   ))}
                 </div>
+              </div>
+            )}
+
+            {activeTab === 'hand' && (
+              <div className="space-y-5">
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 bg-slate-950/90 p-5 rounded-2xl border border-slate-800/90 shadow-md">
+                  <div>
+                    <h3 className="text-sm font-bold text-slate-100 uppercase tracking-wider flex items-center gap-2">
+                      <Shuffle className="w-4 h-4 text-cyan-400" /> Opening Hand Visualizer (6 Cards)
+                    </h3>
+                    <p className="text-xs text-slate-400 mt-0.5">
+                      Simulated draw from {mainDeckPool.length} main deck cards
+                      {mulliganCount > 0 ? ` · Mulligans taken: ${mulliganCount}` : ''}. Click a card to inspect art.
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={handleMulligan}
+                    disabled={mainDeckPool.length === 0}
+                    className="bg-cyan-500 hover:bg-cyan-400 disabled:opacity-40 text-slate-950 font-bold px-4 py-2 rounded-xl text-xs transition shadow-md cursor-pointer flex items-center gap-1.5 shrink-0"
+                  >
+                    <Shuffle size={14} />
+                    Mulligan
+                  </button>
+                </div>
+
+                {openingHand.length === 0 ? (
+                  <div className="bg-slate-950/90 p-8 rounded-2xl border border-slate-800/90 text-center">
+                    <p className="text-xs text-slate-400">No main deck cards available to draw.</p>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
+                    {openingHand.map((card, idx) => (
+                      <div
+                        key={`hand-${card.id || card.name}-${mulliganCount}-${idx}`}
+                        onClick={() => card.imageUrl && setPreviewCard({ name: card.name, url: card.imageUrl })}
+                        className="group relative bg-slate-950/90 border border-slate-800/90 rounded-xl overflow-hidden hover:border-cyan-500/70 hover:scale-[1.02] transition-all cursor-pointer shadow-md"
+                      >
+                        {card.imageUrl ? (
+                          <img
+                            src={card.imageUrl}
+                            alt={card.name}
+                            loading="lazy"
+                            className="w-full aspect-[5/7] object-cover opacity-90 group-hover:opacity-100 transition-opacity"
+                          />
+                        ) : (
+                          <div className="w-full aspect-[5/7] bg-slate-900 flex items-center justify-center p-2">
+                            <span className="text-[10px] text-slate-400 text-center font-medium">{card.name}</span>
+                          </div>
+                        )}
+                        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-slate-950 via-slate-950/90 to-transparent p-2.5 pt-6">
+                          <p className="text-[11px] font-semibold text-slate-100 leading-tight truncate">{card.name}</p>
+                          <div className="flex items-center justify-between mt-1">
+                            <span className="text-[10px] text-slate-400">
+                              {card.type ? formatCardTypeLabel(card.type) : 'Card'}
+                            </span>
+                            <span className="text-[10px] font-bold text-cyan-400 bg-cyan-950/80 px-1.5 py-0.2 rounded border border-cyan-800/60">
+                              {card.cost}c
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             )}
 
