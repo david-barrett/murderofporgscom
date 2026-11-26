@@ -262,6 +262,7 @@ export default function DeckGrader() {
     setIsAnalyzing(true);
     setActiveTab('ai');
     setAiError(null);
+    setAiSource(null)
 
     setTimeout(() => {
       document.getElementById('tabs-section')?.scrollIntoView({ behavior: 'smooth' });
