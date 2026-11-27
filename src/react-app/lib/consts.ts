@@ -230,3 +230,9 @@ export const ETERNAL_BAN_LIST: Record<string, BanEntry> = {
         "status": "Suspended"
     }
 }
+
+export const STARTING_HAND_MODIFIERS: Record<string, number> = {
+  JTL_021: -1, // Colossus (5 starting cards)
+  JTL_028: 3,  // Nabat Village (9 starting cards)
+  IC27_006: 2, // Luke Skywalker (8 starting cards)
+};

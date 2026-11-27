@@ -14,8 +14,9 @@ import {
   type Deck,
   DrawnCard,
   createEmptyDeck,
-  drawSixCards,
+  drawCards,
   expandMainDeckPool,
+  getStartingHandSize,
   formatCardTypeLabel,
   formatDeckLines,
   getCardImageUrl,
@@ -124,9 +125,6 @@ export default function DeckGrader() {
   const [aiError, setAiError] = useState<string | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [loadingPhraseIdx, setLoadingPhraseIdx] = useState(0);
-
-  const [openingHand, setOpeningHand] = useState<DrawnCard[]>([]);
-  const [mulliganCount, setMulliganCount] = useState(0);
 
   useEffect(() => {
     if (!isAnalyzing) {
@@ -238,25 +236,41 @@ export default function DeckGrader() {
     [currentDeck.main, currentDeck.base, allAspects, resolvedCards, metaTargetData]
   );
 
-  const mainDeckPool = useMemo(
+const mainDeckPool = useMemo(
     () => expandMainDeckPool(analysis.parsedCards),
     [analysis.parsedCards]
   );
 
+  const defaultHandSize = useMemo(
+    () =>
+      getStartingHandSize(
+        leaderCardFromCache,
+        leaderCard,
+        baseCardFromCache,
+        baseCard
+      ),
+    [leaderCardFromCache, leaderCard, baseCardFromCache, baseCard]
+  );
+
+  const [handSize, setHandSize] = useState<number>(6);
+  const [openingHand, setOpeningHand] = useState<DrawnCard[]>([]);
+  const [mulliganCount, setMulliganCount] = useState(0);
+
   const handleMulligan = () => {
-    setOpeningHand(drawSixCards(mainDeckPool));
-    setMulliganCount(prev => prev + 1);
+    setOpeningHand(drawCards(mainDeckPool, handSize));
+    setMulliganCount((prev) => prev + 1);
   };
 
   useEffect(() => {
     setAiAnalysis(null);
     setAiSource(null);
     setAiError(null);
-    setOpeningHand(drawSixCards(mainDeckPool));
+    setGalleryView('main');
+    setHandSize(defaultHandSize);
+    setOpeningHand(drawCards(mainDeckPool, defaultHandSize));
     setMulliganCount(0);
-  }, [selectedMetaDeck, mainDeckPool]);
-
-
+  }, [selectedMetaDeck, mainDeckPool, defaultHandSize]);
+  
   const resolvedSideCards = useMemo(
     () =>
       (currentDeck.side || []).map((card) => {

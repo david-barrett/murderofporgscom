@@ -1,3 +1,5 @@
+import { STARTING_HAND_MODIFIERS } from '../react-app/lib/consts'
+
 export enum CardType {
   LEADER,
   BASE,
@@ -485,11 +487,67 @@ export function expandMainDeckPool(cards: DeckCard[]): DrawnCard[] {
   return pool;
 }
 
-export function drawSixCards(pool: DrawnCard[]): DrawnCard[] {
+export function getStartingHandSize(
+  ...sources: Array<RawCard | Card | LeaderCard | null | undefined>
+): number {
+  const DEFAULT_HAND_SIZE = 6;
+  let modifier = 0;
+  let explicitHandSize: number | null = null;
+  const seenKeys = new Set<string>();
+
+  for (const src of sources) {
+    if (!src) continue;
+
+    const record = src as Record<string, unknown>;
+    const derivedId =
+      String(src.id ?? "").trim() ||
+      (src.set && src.number ? `${src.set}_${src.number}` : "");
+    const normalizedId = normalizeCardId(derivedId).toUpperCase();
+
+    if (normalizedId) {
+      if (seenKeys.has(normalizedId)) continue;
+      seenKeys.add(normalizedId);
+    }
+
+    if (normalizedId && normalizedId in STARTING_HAND_MODIFIERS) {
+      modifier += STARTING_HAND_MODIFIERS[normalizedId];
+      continue;
+    }
+
+    const textBlob = [src.text, record.front_text, record.abilityText]
+      .filter((v): v is string => typeof v === "string" && v.length > 0)
+      .join(" ");
+
+    if (!textBlob) continue;
+
+    const addMatch = textBlob.match(
+      /\bdraw\s+(\d+)\s+more\s+cards?\s+in\s+your\s+starting\s+hand\b/i
+    );
+    if (addMatch) {
+      modifier += Number(addMatch[1]) || 0;
+    }
+
+    const setMatch = textBlob.match(
+      /\bstarting\s+hand\s+(?:size\s+(?:is|becomes)\s+|of\s+)(\d+)\s+cards?\b/i
+    );
+    if (setMatch) {
+      explicitHandSize = Number(setMatch[1]) || DEFAULT_HAND_SIZE;
+    }
+  }
+
+  const baseCount = explicitHandSize ?? DEFAULT_HAND_SIZE;
+  return Math.max(1, baseCount + modifier);
+}
+
+export function drawCards(pool: DrawnCard[], count: number): DrawnCard[] {
   const copy = [...pool];
   for (let i = copy.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [copy[i], copy[j]] = [copy[j], copy[i]];
   }
-  return copy.slice(0, 6);
+  return copy.slice(0, Math.max(0, count));
+}
+
+export function drawSixCards(pool: DrawnCard[]): DrawnCard[] {
+  return drawCards(pool, 6);
 }
