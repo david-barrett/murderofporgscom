@@ -596,3 +596,84 @@ export function getMaxMulligans(
 
   return resolvedMax ?? DEFAULT_MAX_MULLIGANS;
 }
+
+const TYPE_SORT_ORDER: Record<number, number> = {
+  [CardType.UNIT]: 0,
+  [CardType.UPGRADE]: 1,
+  [CardType.EVENT]: 2,
+};
+
+const PRIMARY_ASPECT_ORDER = [
+  "vigilance",
+  "command",
+  "aggression",
+  "cunning",
+  "heroism",
+  "hero",
+  "villainy",
+  "villany",
+];
+
+const ALIGNMENT_SUB_ORDER = new Map<string, number>([
+  ["none", 0],
+  ["heroism", 1],
+  ["hero", 1],
+  ["villainy", 2],
+  ["villany", 2],
+]);
+
+function getAspectSortRank(aspects: string[] = []): number {
+  const cleaned = aspects.map((a) => String(a).trim().toLowerCase()).filter(Boolean);
+  if (cleaned.length === 0) {
+    return PRIMARY_ASPECT_ORDER.length; // "None" bucket before multi-aspect
+  }
+  if (cleaned.length >= 2) {
+    return PRIMARY_ASPECT_ORDER.length + 1; // Double / multi-aspect last
+  }
+
+  const single = cleaned[0];
+  if (single === "none") return PRIMARY_ASPECT_ORDER.length;
+
+  const idx = PRIMARY_ASPECT_ORDER.indexOf(single);
+  return idx === -1 ? PRIMARY_ASPECT_ORDER.length : idx;
+}
+
+function getAlignmentSortRank(aspects: string[] = []): number {
+  const cleaned = aspects.map((a) => String(a).trim().toLowerCase()).filter(Boolean);
+  if (cleaned.length === 0) return 0;
+
+  let bestRank = 99;
+  for (const asp of cleaned) {
+    const rank = ALIGNMENT_SUB_ORDER.get(asp);
+    if (rank !== undefined && rank < bestRank) {
+      bestRank = rank;
+    }
+  }
+  return bestRank === 99 ? 0 : bestRank;
+}
+
+export function sortMainDeckCards(cards: DeckCard[]): DeckCard[] {
+  return [...cards].sort((a, b) => {
+    const typeA = typeof a.type === "number" ? a.type : mapCardType(a.type);
+    const typeB = typeof b.type === "number" ? b.type : mapCardType(b.type);
+    const rankTypeA = TYPE_SORT_ORDER[typeA] ?? 99;
+    const rankTypeB = TYPE_SORT_ORDER[typeB] ?? 99;
+    if (rankTypeA !== rankTypeB) return rankTypeA - rankTypeB;
+
+    const costA = Number.isFinite(Number(a.cost)) ? Number(a.cost) : 0;
+    const costB = Number.isFinite(Number(b.cost)) ? Number(b.cost) : 0;
+    if (costA !== costB) return costA - costB;
+
+    const aspectsA = a.aspects ?? [];
+    const aspectsB = b.aspects ?? [];
+    const aspectRankA = getAspectSortRank(aspectsA);
+    const aspectRankB = getAspectSortRank(aspectsB);
+    if (aspectRankA !== aspectRankB) return aspectRankA - aspectRankB;
+
+    const alignRankA = getAlignmentSortRank(aspectsA);
+    const alignRankB = getAlignmentSortRank(aspectsB);
+    if (alignRankA !== alignRankB) return alignRankA - alignRankB;
+
+    return String(a.name || a.id || "").localeCompare(String(b.name || b.id || ""));
+  });
+}

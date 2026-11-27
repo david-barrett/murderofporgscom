@@ -24,6 +24,7 @@ import {
   getMaxMulligans,
   parseMetaDeck,
   parseSWUDBDeck,
+  sortMainDeckCards,
 } from '../../lib/decks';
 import {
   type AiCoachAnalysis,
@@ -276,6 +277,26 @@ const mainDeckPool = useMemo(
     setMulliganCount((prev) => prev + 1);
   };
 
+  const resolvedSideCards = useMemo(
+    () =>
+      (currentDeck.side || []).map((card) => {
+        const cached = findCardData(card.id || card.name, resolvedCards);
+        const aspects =
+          card.aspects?.length > 0
+            ? card.aspects
+            : Array.isArray(cached?.aspects)
+              ? cached.aspects.map(String)
+              : [];
+        return {
+          ...card,
+          name: card.name || cached?.name || card.id || 'Unknown Card',
+          imageUrl: getCardImageUrl(cached, card),
+          aspects,
+        };
+      }),
+    [currentDeck.side, resolvedCards]
+  );
+
   useEffect(() => {
     setAiAnalysis(null);
     setAiSource(null);
@@ -285,19 +306,6 @@ const mainDeckPool = useMemo(
     setOpeningHand(drawCards(mainDeckPool, defaultHandSize));
     setMulliganCount(0);
   }, [selectedMetaDeck, mainDeckPool, defaultHandSize]);
-
-  const resolvedSideCards = useMemo(
-    () =>
-      (currentDeck.side || []).map((card) => {
-        const cached = findCardData(card.id || card.name, resolvedCards);
-        return {
-          ...card,
-          name: card.name || cached?.name || card.id || 'Unknown Card',
-          imageUrl: getCardImageUrl(cached, card),
-        };
-      }),
-    [currentDeck.side, resolvedCards]
-  );
 
   // Compute specific sideboard recommendations naming actual cards to add/remove
   const sideboardPlan = useMemo(
@@ -700,8 +708,9 @@ const mainDeckPool = useMemo(
         {(leaderFrontUrl || baseFrontUrl || analysis.parsedCards.length > 0 || resolvedSideCards.length > 0) && (() => {
           const activeGalleryView =
             galleryView === 'side' && resolvedSideCards.length > 0 ? 'side' : 'main';
-          const galleryCards =
-            activeGalleryView === 'side' ? resolvedSideCards : analysis.parsedCards;
+          const galleryCards = sortMainDeckCards(
+            activeGalleryView === 'side' ? resolvedSideCards : analysis.parsedCards
+          );
 
           return (
             <section className="bg-slate-900/80 backdrop-blur-md border border-slate-800/80 rounded-2xl p-6 shadow-xl space-y-4">
