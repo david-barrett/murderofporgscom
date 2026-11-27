@@ -21,6 +21,7 @@ import {
   formatDeckLines,
   getCardImageUrl,
   getLeaderBackImageUrl,
+  getMaxMulligans,
   parseMetaDeck,
   parseSWUDBDeck,
 } from '../../lib/decks';
@@ -256,7 +257,21 @@ const mainDeckPool = useMemo(
   const [openingHand, setOpeningHand] = useState<DrawnCard[]>([]);
   const [mulliganCount, setMulliganCount] = useState(0);
 
+  const maxMulligans = useMemo(
+    () =>
+      getMaxMulligans(
+        leaderCardFromCache,
+        leaderCard,
+        baseCardFromCache,
+        baseCard
+      ),
+    [leaderCardFromCache, leaderCard, baseCardFromCache, baseCard]
+  );
+
+  const canMulligan = mainDeckPool.length > 0 && mulliganCount < maxMulligans;
+
   const handleMulligan = () => {
+    if (!canMulligan) return;
     setOpeningHand(drawCards(mainDeckPool, handSize));
     setMulliganCount((prev) => prev + 1);
   };
@@ -270,7 +285,7 @@ const mainDeckPool = useMemo(
     setOpeningHand(drawCards(mainDeckPool, defaultHandSize));
     setMulliganCount(0);
   }, [selectedMetaDeck, mainDeckPool, defaultHandSize]);
-  
+
   const resolvedSideCards = useMemo(
     () =>
       (currentDeck.side || []).map((card) => {
@@ -1035,22 +1050,20 @@ const mainDeckPool = useMemo(
               <div className="space-y-5">
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 bg-slate-950/90 p-5 rounded-2xl border border-slate-800/90 shadow-md">
                   <div>
-                    <h3 className="text-sm font-bold text-slate-100 uppercase tracking-wider flex items-center gap-2">
-                      <Shuffle className="w-4 h-4 text-cyan-400" /> Opening Hand Visualizer (6 Cards)
-                    </h3>
                     <p className="text-xs text-slate-400 mt-0.5">
-                      Simulated draw from {mainDeckPool.length} main deck cards
-                      {mulliganCount > 0 ? ` · Mulligans taken: ${mulliganCount}` : ''}. Click a card to inspect art.
+                      Simulated draw from {mainDeckPool.length} main deck cards · Mulligans:{' '}
+                      {mulliganCount}/{maxMulligans}
+                      {maxMulligans === 0 ? ' (Mulligans disabled by card effect)' : ''}. Click a card to inspect art.
                     </p>
                   </div>
                   <button
                     type="button"
                     onClick={handleMulligan}
-                    disabled={mainDeckPool.length === 0}
+                    disabled={!canMulligan}
                     className="bg-cyan-500 hover:bg-cyan-400 disabled:opacity-40 text-slate-950 font-bold px-4 py-2 rounded-xl text-xs transition shadow-md cursor-pointer flex items-center gap-1.5 shrink-0"
                   >
                     <Shuffle size={14} />
-                    Mulligan
+                    {maxMulligans === 0 ? 'No Mulligan Allowed' : 'Mulligan'}
                   </button>
                 </div>
 

@@ -1,4 +1,4 @@
-import { STARTING_HAND_MODIFIERS } from '../react-app/lib/consts'
+import { MAX_MULLIGAN_OVERRIDES, STARTING_HAND_MODIFIERS } from '../react-app/lib/consts'
 
 export enum CardType {
   LEADER,
@@ -550,4 +550,49 @@ export function drawCards(pool: DrawnCard[], count: number): DrawnCard[] {
 
 export function drawSixCards(pool: DrawnCard[]): DrawnCard[] {
   return drawCards(pool, 6);
+}
+
+export function getMaxMulligans(
+  ...sources: Array<RawCard | Card | LeaderCard | null | undefined>
+): number {
+  const DEFAULT_MAX_MULLIGANS = 1;
+  const seenKeys = new Set<string>();
+  let resolvedMax: number | null = null;
+
+  for (const src of sources) {
+    if (!src) continue;
+
+    const record = src as Record<string, unknown>;
+    const derivedId =
+      String(src.id ?? "").trim() ||
+      (src.set && src.number ? `${src.set}_${src.number}` : "");
+    const normalizedId = normalizeCardId(derivedId).toUpperCase();
+
+    if (normalizedId) {
+      if (seenKeys.has(normalizedId)) continue;
+      seenKeys.add(normalizedId);
+    }
+
+    if (normalizedId && normalizedId in MAX_MULLIGAN_OVERRIDES) {
+      const override = MAX_MULLIGAN_OVERRIDES[normalizedId];
+      resolvedMax =
+        resolvedMax === null ? override : Math.min(resolvedMax, override);
+      continue;
+    }
+
+    const textBlob = [src.text, record.front_text, record.abilityText]
+      .filter((v): v is string => typeof v === "string" && v.length > 0)
+      .join(" ");
+
+    if (!textBlob) continue;
+
+    if (
+      /\b(?:cannot|can't|may\s+not|no)\s+mulligan\b/i.test(textBlob) ||
+      /\bmulligans?\s+(?:are\s+)?not\s+allowed\b/i.test(textBlob)
+    ) {
+      resolvedMax = resolvedMax === null ? 0 : Math.min(resolvedMax, 0);
+    }
+  }
+
+  return resolvedMax ?? DEFAULT_MAX_MULLIGANS;
 }

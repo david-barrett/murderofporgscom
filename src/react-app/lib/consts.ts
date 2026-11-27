@@ -236,3 +236,7 @@ export const STARTING_HAND_MODIFIERS: Record<string, number> = {
   JTL_028: 3,  // Nabat Village (9 starting cards)
   IC27_006: 2, // Luke Skywalker (8 starting cards)
 };
+
+export const MAX_MULLIGAN_OVERRIDES: Record<string, number> = {
+  JTL_028: 0, // Nabat Village does not allow a mulligan
+};
